@@ -16,15 +16,10 @@ namespace YuGiOh.ApplicationServices.Seed {
             }
         }
         public static async Task<Code> GetInitialCodeAsync() {
-            string? data = await File.ReadAllTextAsync("Data/CodeSeedData.json");
-            Dictionary<string, Code> text = 
-                JsonConvert.DeserializeObject<Dictionary<string, Code>>(data);
-            Code code = new()
-            {
-                Id = text["Code"].Id,
-                Text = text["Code"].Text
-            };
-            return code;
+            string? json = await File.ReadAllTextAsync("Data/CodeSeedData.json");
+            Dictionary<string, Code> data = 
+                JsonConvert.DeserializeObject<Dictionary<string, Code>>(json);
+            return data["Code"];
         }
     }
 }

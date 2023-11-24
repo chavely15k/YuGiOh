@@ -2,14 +2,14 @@ using YuGiOh.Domain.Models;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.ApplicationCore.Repository;
 using System.Data.Common;
+using YuGiOh.Infrastructure.Repository;
 
 namespace YuGiOh.Infrastructure.Service {
-    public class CodeService : ICodeService
+    public class CodeService : DataService, ICodeService
     {
-        protected readonly IDataRepository Repository;
-        public CodeService(IDataRepository dataRepository) {
-            this.Repository = dataRepository;
-        }
+        public CodeService(IDataRepository dataRepository) :
+            base(dataRepository){  }  
+
         public async Task<string> GenerateAsync()
         {
             string random = RandomGenerator();
