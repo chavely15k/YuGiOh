@@ -24,8 +24,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile
 
 builder.Services
     .AddScoped<IDataRepository, DataRepository>()
-     .AddScoped<ICodeService, CodeService>()
-//     .AddScoped<IUserService, UserService>()
+    .AddScoped<ICodeService, CodeService>()
+    .AddScoped<IUserService, UserService>()
 //     .AddScoped<CodeController>()
      .AddScoped<CodeSeed>()
 //     .AddScoped<RoleSeed>()
