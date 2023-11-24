@@ -12,8 +12,8 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231121172339_UserRole")]
-    partial class UserRole
+    [Migration("20231124212833_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,11 +47,13 @@ namespace YuGiOh.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("enumValue")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("enumValue")
+                        .IsUnique();
 
                     b.ToTable("Roles");
                 });

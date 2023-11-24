@@ -5,6 +5,9 @@ using YuGiOh.Infrastructure;
 using YuGiOh.ApplicationServices.Seed;
 using YuGiOh.Infrastructure.Service;
 using YuGiOh.Infrastructure.Repository;
+using YuGiOh.Infrastructure.Mappings;
+using Microsoft.Extensions.DependencyInjection;
+
 // using YuGiOh.Infrastructure.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,7 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")!, x => x.MigrationsAssembly("YuGiOh.Infrastructure"));
 });
+builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
 
 builder.Services
     .AddScoped<IDataRepository, DataRepository>()

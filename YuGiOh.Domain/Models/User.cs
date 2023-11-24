@@ -12,6 +12,6 @@ namespace YuGiOh.Domain.Models
         public string Address { get; set; }
         public int PhoneNumber { get; set; }
 
-        public IEnumerable<UserRole> UserRoles { get; set; }
+        public List<UserRole> UserRoles { get; set; }
     }
 }

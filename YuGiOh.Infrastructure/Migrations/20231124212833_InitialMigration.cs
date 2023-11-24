@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace YuGiOh.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UserRole : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,7 +28,7 @@ namespace YuGiOh.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Type = table.Column<string>(type: "text", nullable: false)
+                    enumValue = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,6 +77,12 @@ namespace YuGiOh.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roles_enumValue",
+                table: "Roles",
+                column: "enumValue",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Nick",

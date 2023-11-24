@@ -11,9 +11,12 @@ namespace YuGiOh.Domain.Configurations
 
             builder.HasKey(r => r.Id);
 
-            builder.Property(r => r.Type)
-                .IsRequired()
-                .HasConversion<string>();
+            builder.Property(r => r.enumValue)
+                .IsRequired();
+
+            builder.HasIndex(r => r.enumValue)
+                .IsUnique();
+
             builder.HasMany(r => r.UserRoles)
                 .WithOne(ur => ur.Role)
                 .HasForeignKey(ur => ur.RoleId)

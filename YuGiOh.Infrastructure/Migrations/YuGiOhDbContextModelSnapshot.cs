@@ -44,11 +44,13 @@ namespace YuGiOh.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("enumValue")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("enumValue")
+                        .IsUnique();
 
                     b.ToTable("Roles");
                 });

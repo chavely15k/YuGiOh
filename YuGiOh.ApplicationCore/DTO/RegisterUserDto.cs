@@ -1,7 +1,7 @@
 using YuGiOh.Domain.Models;
 
 namespace YuGiOh.ApplicationCore.DTO {
-    public class RegisterUserRequest {
+    public class RegisterUserDto {
         public string Name { get; set; }
         public string Nick { get; set; }
         public string Password { get; set; }

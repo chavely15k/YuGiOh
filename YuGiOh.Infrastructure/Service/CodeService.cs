@@ -3,7 +3,7 @@ using YuGiOh.ApplicationServices.Service;
 using YuGiOh.ApplicationCore.Repository;
 
 namespace YuGiOh.Infrastructure.Service {
-    public class CodeService : DataService, ICodeService
+    public class CodeService : AbstractDataRepository, ICodeService
     {
         public CodeService(IDataRepository dataRepository) :
             base(dataRepository){  }  
@@ -17,19 +17,19 @@ namespace YuGiOh.Infrastructure.Service {
 
         public async Task<string> GetAsync()
         {            
-            Code code = (await Repository.GetAllAsync<Code>()).ToList()[0];
+            Code code = (await _dataRepository.GetAllAsync<Code>()).ToList()[0];
             return code.Text;
         }
 
         public async Task SetAsync(string text)
         {
-            List<Code> code = (await Repository.GetAllAsync<Code>()).ToList();
+            List<Code> code = (await _dataRepository.GetAllAsync<Code>()).ToList();
             if (code.Count() == 0) {
-                await Repository.CreateAsync<Code>(new Code() { Id = Guid.NewGuid(), Text = text});
+                await _dataRepository.CreateAsync<Code>(new Code() { Id = Guid.NewGuid(), Text = text});
             }
             else {
                 code[0].Text = text;
-                await Repository.UpdateAsync<Code>(code[0]);
+                await _dataRepository.UpdateAsync<Code>(code[0]);
             }
         }
 
