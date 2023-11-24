@@ -1,8 +1,6 @@
 using YuGiOh.Domain.Models;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.ApplicationCore.Repository;
-using System.Data.Common;
-using YuGiOh.Infrastructure.Repository;
 
 namespace YuGiOh.Infrastructure.Service {
     public class CodeService : DataService, ICodeService
