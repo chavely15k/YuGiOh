@@ -20,8 +20,8 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")!, x => x.MigrationsAssembly("YuGiOh.Infrastructure"));
 });
-builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
-
+//builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services
     .AddScoped<IDataRepository, DataRepository>()
     .AddScoped<ICodeService, CodeService>()
