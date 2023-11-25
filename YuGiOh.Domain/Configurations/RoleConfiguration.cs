@@ -17,7 +17,7 @@ namespace YuGiOh.Domain.Configurations
             builder.HasIndex(r => r.enumValue)
                 .IsUnique();
 
-            builder.HasMany(r => r.UserRoles)
+            builder.HasMany(r => r.Users)
                 .WithOne(ur => ur.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
