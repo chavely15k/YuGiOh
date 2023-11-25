@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231125175052_InitialMigration")]
+    [Migration("20231125214820_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -123,7 +123,7 @@ namespace YuGiOh.Infrastructure.Migrations
             modelBuilder.Entity("YuGiOh.Domain.Models.UserRole", b =>
                 {
                     b.HasOne("YuGiOh.Domain.Models.Role", "Role")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -137,11 +137,6 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>

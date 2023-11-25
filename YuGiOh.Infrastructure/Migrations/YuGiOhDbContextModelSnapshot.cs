@@ -120,7 +120,7 @@ namespace YuGiOh.Infrastructure.Migrations
             modelBuilder.Entity("YuGiOh.Domain.Models.UserRole", b =>
                 {
                     b.HasOne("YuGiOh.Domain.Models.Role", "Role")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -134,11 +134,6 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>

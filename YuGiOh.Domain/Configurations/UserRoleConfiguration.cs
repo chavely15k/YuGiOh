@@ -13,7 +13,7 @@ namespace YuGiOh.Domain.Configurations
             builder.HasKey(ur => new { ur.UserId, ur.RoleId });
 
             builder.HasOne(ur => ur.Role)
-                .WithMany(r => r.Users)
+                .WithMany()
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
             

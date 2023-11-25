@@ -57,7 +57,7 @@ namespace YuGiOh.Infrastructure.Repository
         {
             return await Context.Set<TEntity>().Where(predicate).ToListAsync();
         }
-        //NotImplementedException;
+        
         public async Task<IEnumerable<TEntity>> GetPageAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, PageQuery pageQuery) 
             where TEntity : Entity
         {
