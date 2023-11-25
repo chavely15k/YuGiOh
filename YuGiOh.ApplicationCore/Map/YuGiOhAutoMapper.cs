@@ -5,7 +5,7 @@ using YuGiOh.ApplicationCore.DTO;
 namespace YuGiOh.ApplicationCore.Map {
     public class YuGiOhAutoMapper {
         public YuGiOhAutoMapper() {
-
+            //var config = new MapperConfiguration
         CreateMap<RegisterUserRequest, User>()
             .ForMember(dto => dto.Name, ent => ent.MapFrom(src => src.Name))
             .ForMember(dto => dto.Nick, ent => ent.MapFrom(src => src.Nick))
