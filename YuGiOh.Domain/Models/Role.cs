@@ -5,6 +5,6 @@ namespace YuGiOh.Domain.Models
     public class Role : Entity
     {
         public int enumValue { get; set; }
-        public IEnumerable<UserRole> UserRoles { get; set; }
+        public List<UserRole> Users { get; set; }
     }
 }

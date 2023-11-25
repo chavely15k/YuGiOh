@@ -46,8 +46,8 @@ public class UserService : AbstractDataService, IUserService
                     // return Error
                  }
             }
-            _user.UserRoles = new List<UserRole>();
-            _user.UserRoles.Add(await GetUserRoles(role,_user));
+            _user.Roles = new List<UserRole>();
+            _user.Roles.Add(await GetUserRoles(role,_user));
         }
         await _dataRepository.CreateAsync<User>(_user);
        
