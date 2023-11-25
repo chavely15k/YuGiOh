@@ -110,9 +110,6 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");

@@ -4,6 +4,7 @@ namespace YuGiOh.Domain.Models
 {
     public class User : Entity
     {
+       
         public string Nick { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }

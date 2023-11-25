@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231124212833_InitialMigration")]
+    [Migration("20231125164957_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -111,9 +111,6 @@ namespace YuGiOh.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
                     b.HasKey("UserId", "RoleId");

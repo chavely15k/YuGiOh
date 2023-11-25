@@ -31,6 +31,7 @@ public class UserService : AbstractDataService, IUserService
     public async Task<User?> RegisterUserAsync(RegisterUserDto registerDto)
     {
         var _user = _mapper.Map<User>(registerDto);
+        _user.Id = Guid.NewGuid();
         //Todo: es necesario implementar un task  que me deje obtener por Nick
         //Si no cuando de inserte un unsuario con un nick igual que el otro
         //Dara error al insertar en la Bd
@@ -45,26 +46,31 @@ public class UserService : AbstractDataService, IUserService
                     // return Error
                  }
             }
-            _user.UserRoles.Add(await GetUserRole(role));
+            _user.UserRoles = new List<UserRole>();
+            _user.UserRoles.Add(await GetUserRoles(role,_user));
         }
         await _dataRepository.CreateAsync<User>(_user);
-        foreach (var userRole in _user.UserRoles)
-        {
-            await _dataRepository.CreateAsync<UserRole>(userRole);
-        }
+       
         return _user;
     }
     // Por Convenio Asumiremos que Admin en el valor 0 
-    private async Task<UserRole> GetUserRole(int roleType)
+    private async Task<Role?> GetRole(int roleType)
     {   
-        List<UserRole> userRoles =  (await _dataRepository.GetAllAsync<UserRole>()).ToList();
-        UserRole? matchingUserRole = userRoles.FirstOrDefault(ur => ur.Role.enumValue == roleType);
+        List<Role> userRoles =  (await _dataRepository.GetAllAsync<Role>()).ToList();
+        Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.enumValue == roleType);
         return matchingUserRole;
     }
 
-    
+    private async Task<UserRole> GetUserRoles(int roleType,User user)
+    {
+        //Todo : Debe haber una comprobacion de si role no existe
+        var role = await GetRole(roleType);
+        UserRole userRole = new(user.Id,role.Id);
+        return userRole;
+    }
 
-    protected async Task<bool> CheckCode(string code)
+
+    private async Task<bool> CheckCode(string code)
     {
         return true;
     }
