@@ -9,11 +9,11 @@ namespace YuGiOh.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RegisterDeckController : ControllerBase
+    public class DeckController : ControllerBase
     {
         private readonly IDeckService _deckService;
 
-        public RegisterDeckController(IDeckService deckService)
+        public DeckController(IDeckService deckService)
         {
             _deckService = deckService ?? throw new ArgumentNullException(nameof(deckService));
         }
@@ -25,13 +25,6 @@ namespace YuGiOh.API.Controllers
             return Ok(decks);
         }
 
-        // [HttpGet("userNick/{nick}")]
-        // public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserNickAsync(string nick)
-        // {
-        //     //var decks = await _deckService.GetDecksByUserNickAsync(nick);
-        //     //return Ok(decks);
-        // }
-
         [HttpPost]
         public async Task<ActionResult<RegisterDeckDto>> RegisterDeck(RegisterDeckDto register)
         {
@@ -40,6 +33,13 @@ namespace YuGiOh.API.Controllers
             return Ok(registeredDeck);
 
         }
+
+        // [HttpGet("userNick/{nick}")]
+        // public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserNickAsync(string nick)
+        // {
+        //     //var decks = await _deckService.GetDecksByUserNickAsync(nick);
+        //     //return Ok(decks);
+        // }
     }
 }
 

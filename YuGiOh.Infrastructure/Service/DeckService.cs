@@ -23,12 +23,6 @@ public class DeckService : AbstractDataService, IDeckService
         return _mapper.Map<IEnumerable<RegisterDeckDto>>(_decks);
     }
 
-    // public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserNickAsync(string nick)
-    // {
-    //     var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Nick == nick);
-    //     return _mapper.Map<IEnumerable<RegisterDeckDto>>(_decks);
-    // }
-
     public async Task<RegisterDeckDto> RegisterDeck(RegisterDeckDto register)
     {
         var _deck = _mapper.Map<Deck>(register);
@@ -42,4 +36,10 @@ public class DeckService : AbstractDataService, IDeckService
         }
         return _mapper.Map<RegisterDeckDto>(_deck);
     }
+
+    // public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserNickAsync(string nick)
+    // {
+    //     var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Nick == nick);
+    //     return _mapper.Map<IEnumerable<RegisterDeckDto>>(_decks);
+    // }
 }
