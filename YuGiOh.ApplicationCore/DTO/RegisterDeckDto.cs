@@ -8,4 +8,6 @@ public class RegisterDeckDto
     public int SideDeckSize { get; set; }
     public int ExtraDeckSize { get; set; }
     public Guid PalyerId { get; set; }
+
+    public string Nick{get;set;}
 }

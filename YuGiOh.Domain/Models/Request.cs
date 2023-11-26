@@ -5,13 +5,13 @@ namespace YuGiOh.Domain.Models
     [EntityTypeConfiguration(typeof(RequestConfiguration))]
     public class Request
     {
-        public int PlayerId { get; set; }
+        public Guid PlayerId { get; set; }
         public User Player { get; set; }
 
-        public int TournamentId { get; set; }
+        public Guid TournamentId { get; set; }
         public Tournament Tournament { get; set; }
 
-        public int DeckId { get; set; }
+        public Guid DeckId { get; set; }
         public Deck Deck { get; set; }
         
         public DateTime Date { get; set; }
