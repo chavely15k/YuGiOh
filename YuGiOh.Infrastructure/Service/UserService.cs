@@ -23,20 +23,29 @@ public class UserService : AbstractDataService, IUserService
         throw new NotImplementedException();
     }
 
-    public Task<bool> LoginAsync(LoginRequestDto loginDto)
+    public async Task<bool> LoginAsync(LoginRequestDto loginDto)
     {
-        throw new NotImplementedException();
+        var foundUser = (await _dataRepository.FindAsync<User>(u => u.Nick == loginDto.Nick)).ToList();
+        return foundUser.Count != 0 ? foundUser[0].Password == loginDto.Password : false;
     }
+
+
 
     public async Task<bool> IsNickTakenAsync(string nick)
     {
         var foundUsers = await _dataRepository.FindAsync<User>(u => u.Nick == nick);
         return foundUsers.Count()!=0;
     }
+     public async Task<User?> GetUserByIdAsync(Guid id)
+    {
+        var foundUsers = await _dataRepository.GetByIdAsync<User,Guid>(id);
+        return foundUsers;
+    }
+
     public async Task<RegisterUserDto> RegisterUserAsync(RegisterUserDto registerDto)
     {
         var _user = _mapper.Map<User>(registerDto);
-        _user.Id = Guid.NewGuid();
+        //_user.Id = Guid.NewGuid();
         //Todo: es necesario implementar un task  que me deje obtener por Nick
         //Si no cuando de inserte un unsuario con un nick igual que el otro
         //Dara error al insertar en la Bd
