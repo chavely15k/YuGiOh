@@ -7,7 +7,7 @@ namespace YuGiOh.API.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AccountController : ControllerBase
     {
         public readonly IUserService userService;
@@ -15,15 +15,16 @@ namespace YuGiOh.API.Controllers
         {
             this.userService = userService;
         }
-        // [HttpGet]
-        // [Route("login")]
-        // public async Task<ActionResult> Get(LoginRequest loginRequest)
-        // {
-        //     User? user = await userService.Get(loginRequest);
-        //     return Ok(user);
-        // }
-        [HttpPost]
-        public async Task<ActionResult> Create(RegisterUserDto registerUser)
+        [HttpGet("login")]
+        public async Task<ActionResult> Login(LoginRequestDto loginRequest)
+        {
+            bool isSuccessful = await userService.LoginAsync(loginRequest);
+            return isSuccessful
+                ? Ok(new { Message = "Inicio de sesión exitoso", IsSuccessful = true })
+                : BadRequest(new { Message = "Credenciales incorrectas", IsSuccessful = false });
+        }
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(RegisterUserDto registerUser)
         {
             if (await userService.IsNickTakenAsync(registerUser.Nick))
             {
@@ -35,7 +36,7 @@ namespace YuGiOh.API.Controllers
             var response = new
             {
                 Message = "Registro exitoso.",
-                User = register 
+                User = register
             };
 
             return Ok(response);
