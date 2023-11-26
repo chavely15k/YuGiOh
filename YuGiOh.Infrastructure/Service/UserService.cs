@@ -28,7 +28,12 @@ public class UserService : AbstractDataService, IUserService
         throw new NotImplementedException();
     }
 
-    public async Task<User?> RegisterUserAsync(RegisterUserDto registerDto)
+    public async Task<bool> IsNickTakenAsync(string nick)
+    {
+        var foundUsers = await _dataRepository.FindAsync<User>(u => u.Nick == nick);
+        return foundUsers.Count()!=0;
+    }
+    public async Task<RegisterUserDto> RegisterUserAsync(RegisterUserDto registerDto)
     {
         var _user = _mapper.Map<User>(registerDto);
         _user.Id = Guid.NewGuid();
@@ -46,12 +51,12 @@ public class UserService : AbstractDataService, IUserService
                     // return Error
                  }
             }
-            _user.UserRoles = new List<UserRole>();
-            _user.UserRoles.Add(await GetUserRoles(role,_user));
+            _user.Roles = new List<UserRole>();
+            _user.Roles.Add(await GetUserRoles(role,_user));
         }
         await _dataRepository.CreateAsync<User>(_user);
        
-        return _user;
+        return _mapper.Map<RegisterUserDto>(_user);
     }
     // Por Convenio Asumiremos que Admin en el valor 0 
     private async Task<Role?> GetRole(int roleType)
@@ -60,7 +65,6 @@ public class UserService : AbstractDataService, IUserService
         Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.enumValue == roleType);
         return matchingUserRole;
     }
-
     private async Task<UserRole> GetUserRoles(int roleType,User user)
     {
         //Todo : Debe haber una comprobacion de si role no existe
@@ -68,8 +72,6 @@ public class UserService : AbstractDataService, IUserService
         UserRole userRole = new(user.Id,role.Id);
         return userRole;
     }
-
-
     private async Task<bool> CheckCode(string code)
     {
         return true;

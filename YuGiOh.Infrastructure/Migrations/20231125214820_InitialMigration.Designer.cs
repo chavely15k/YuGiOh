@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231125164957_InitialMigration")]
+    [Migration("20231125214820_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -123,13 +123,13 @@ namespace YuGiOh.Infrastructure.Migrations
             modelBuilder.Entity("YuGiOh.Domain.Models.UserRole", b =>
                 {
                     b.HasOne("YuGiOh.Domain.Models.Role", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YuGiOh.Domain.Models.User", "User")
-                        .WithMany("UserRoles")
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -139,14 +139,9 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
             modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

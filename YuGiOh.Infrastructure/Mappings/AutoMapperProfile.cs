@@ -9,7 +9,7 @@ namespace YuGiOh.Infrastructure.Mappings
         public AutoMapperProfile()
         {
             CreateMap<RegisterUserDto, User>()
-            .ForMember(dest => dest.UserRoles,opt => opt.Ignore());
+            .ForMember(dest => dest.Roles,opt => opt.Ignore());
 
             CreateMap<User, RegisterUserDto>()
             .ForMember(dest => dest.Code,opt => opt.Ignore())
