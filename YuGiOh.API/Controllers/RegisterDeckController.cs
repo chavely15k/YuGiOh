@@ -25,12 +25,12 @@ namespace YuGiOh.API.Controllers
             return Ok(decks);
         }
 
-        [HttpGet("userNick/{nick}")]
-        public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserNickAsync(string nick)
-        {
-            var decks = await _deckService.GetDecksByUserNickAsync(nick);
-            return Ok(decks);
-        }
+        // [HttpGet("userNick/{nick}")]
+        // public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserNickAsync(string nick)
+        // {
+        //     //var decks = await _deckService.GetDecksByUserNickAsync(nick);
+        //     //return Ok(decks);
+        // }
 
         [HttpPost]
         public async Task<ActionResult<RegisterDeckDto>> RegisterDeck(RegisterDeckDto register)
