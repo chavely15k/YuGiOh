@@ -1,0 +1,58 @@
+.principalContainer
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+}
+
+.containerLogo
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 50px;
+  color: white;
+}
+ 
+.containerOptions
+{
+  margin: 50px;
+  height: 70%;
+  width: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 25px;
+  box-shadow: 1px 1px 5px white;
+}
+
+.containerButtons
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 45%;
+  width: 90%;
+  margin: 25px;
+}
+
+footer
+{
+  margin: 35px;
+  padding-top: 32px;
+  width: 80%;
+  text-align: center;
+}
+
+footer p
+{
+  font-size: 20px;
+  margin-bottom: 8px;
+  user-select: none;
+}

@@ -1,0 +1,19 @@
+.containerEdit
+{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+}
+
+.head
+{
+  margin-top: 10px;
+  color: white;
+  font-size: 35px;
+  text-shadow: 1px 1px 2px white;
+  user-select: none;
+}
+
