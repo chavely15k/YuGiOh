@@ -1,0 +1,94 @@
+.formEA
+{
+  margin: 5px;
+  height: 50%;
+  width: 60%;
+  background-color: white;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: space-evenly;
+  border-radius: 25px;
+  box-shadow: 1px 1px 5px white;
+}
+
+.inputEA
+{
+  background-color: blueviolet;
+  color: white;
+  font-size: large;
+  border-radius: 25px;
+  width: 90%;
+  font-weight: bold;
+  border: none;
+  box-shadow: 5x 5px 5px white;
+  user-select: none;
+  padding: 7px 5px;
+  margin: 1px 0;
+}
+
+.labelEA
+{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  color: blueviolet;
+  font-weight: bold;
+  user-select: none;
+  text-shadow: 1px 1px 2px blueviolet;
+  font-size: larger;
+}
+
+.buttonEA
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: blueviolet;
+  color: white;
+  width: 50%;
+  height: 50%;
+  margin: auto 0;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  padding: 8px 0px;
+  margin-top: 15px 0px;
+}
+
+.buttonEA:hover
+{
+  color: yellow;
+  background-color: black;
+}
+
+.row
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.containerFieldsEA
+{
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  width: 90%;
+  gap: 2px;
+}
+
+.containerButtonEA
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 60px;
+}
+

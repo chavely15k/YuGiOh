@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace YuGiOh.ApplicationCore.DTO
 {
-    public class CreateTournamentDto
+    public class TournamentDto
     {
         public string Name { get; set; }
         public string Address { get; set; }
 
         public DateTime StartDate { get; set; }
 
-        public int AdminId {get;set;}
+        public Guid AdminId {get;set;}
         
     }
 

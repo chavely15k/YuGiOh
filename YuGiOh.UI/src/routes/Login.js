@@ -1,10 +1,11 @@
 //components
+import { NavLink } from 'react-router-dom'
 import { Form } from '../components/FormLogReg'
 
 //styles
 import '../styles/styles-routes/LoginRegister.css'
 
-export function Login() 
+export function Login(props) 
 {
   return (
     <div className='principalContainer'>
@@ -28,7 +29,9 @@ export function Login()
           userName: '',
           password: ''
         }}
-        buttonText='sign in'/>
+        buttonText='sign in'
+        data={props.data}
+        page='login'/>
     </div>
   )
 }

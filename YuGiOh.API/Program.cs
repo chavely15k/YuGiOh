@@ -40,15 +40,15 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services
     .AddScoped<IDataRepository, DataRepository>()
-    .AddScoped<IEntityRepository,EntityRepository>()
+    .AddScoped<IEntityRepository, EntityRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
     .AddScoped<IDeckService, DeckService>()
-    
-//     .AddScoped<CodeController>()
-     .AddScoped<CodeSeed>()
-//     .AddScoped<RoleSeed>()
-;
+    .AddScoped<ITournamentServices, TournamentServices>()
+    .AddScoped<CodeSeed>();
+  //.AddScoped<CodeController>()
+  //.AddScoped<RoleSeed>()
+
 
 
 var app = builder.Build();

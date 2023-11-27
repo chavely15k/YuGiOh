@@ -1,8 +1,12 @@
 //dependencies
 import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+import { Register } from "../routes/Register"
 
-export const useForm = (initialForm) => {
+export const useForm = (initialForm, data, page) => {
   const [formState, setFormState] = useState(initialForm)
+  var newFormState = {}
+  const navigate = useNavigate()
 
   const onInputChange = (e) => {
     formState[e.target.id] = e.target.value
@@ -11,11 +15,10 @@ export const useForm = (initialForm) => {
 
   const onClickSubmit = (e) => {
     e.preventDefault()
-    var newFormState = {}
 
 		for(let element in formState)
 		{
-			if(formState[element] == '' && (element != 'phoneNumber' || element != 'adminCode'))
+			if(formState[element] == '' && (element != 'phoneNumber' && element != 'adminCode'))
 				{  
 					alert(`Should fill all the required input's fields`)
 					return
@@ -36,11 +39,18 @@ export const useForm = (initialForm) => {
       }
 		}
 
-    console.log(newFormState)
+    data({
+      ...newFormState,
+      id: 1
+    })
+
+    navigate(`${page == 'register' ? '/' : '/Login/Admin'}`)
   }
 
   return {
     onInputChange, 
     onClickSubmit
   }
+
+ 
 }

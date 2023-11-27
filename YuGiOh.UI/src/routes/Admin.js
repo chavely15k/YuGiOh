@@ -5,7 +5,7 @@ import { useAdmin } from '../hooks/useAdmin'
 //styles
 import '../styles/styles-routes/Admin.css'
 
-export function Admin() 
+export function Admin(props) 
 {
   const { list, onClickDelete } = useAdmin()
 

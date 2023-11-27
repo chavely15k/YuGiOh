@@ -1,50 +1,50 @@
 import { useForm } from "../hooks/useFormTournament";
-import '../styles/Form.css'
+import '../styles/FormEA.css'
 
 export function Form(props) {
   const { onClickSubmit, onInputChange } = useForm(props.initialForm)
 
   return (
     <form
-      className="formLR"
+      className="formEA"
       onSubmit={onClickSubmit}>
-      <div className="containerFields">
-        <div className="containerRow">
+      <div className="containerFieldsEA">
+        <div className="row">
           <label
             htmlFor="nameTournament"
-            className="labelTournament labelLR">
+            className="labelTournament labelEA">
             Name
           </label>
           <input
-            className="inputLR"
+            className="inputEA"
             id="nameTournament"
             type="text"
             name="name"
             onChange={onInputChange}
             placeholder="Ingress a tournament name"/>
         </div>
-        <div className="containerRow">
+        <div className="row">
           <label
             htmlFor="dateTournament"
-            className="labelTournament labelLR">
+            className="labelTournament labelEA">
             Date
           </label>
           <input
-            className="inputLR"
+            className="inputEA"
             id="dateTournament"
             type="date"
             name="date"
             onChange={onInputChange}
             placeholder="Ingress a tournament date"/>
         </div>
-        <div className="containerRow">
+        <div className="row">
           <label
             htmlFor="addressTournament"
-            className="labelTournament labelLR">
+            className="labelTournament labelEA">
             Address
           </label>
           <input
-            className="inputLR"
+            className="inputEA"
             id="addressTournament"
             type="text"
             name="address"
@@ -52,9 +52,9 @@ export function Form(props) {
             placeholder="Ingress a tournament address"/>
         </div>
       </div>
-      <div className="containerButtonLR">
+      <div className="containerButtonEA">
         <button
-          className="buttonLR"
+          className="buttonEA"
           type="Submit">
           {props.nameButton}
         </button>

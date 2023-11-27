@@ -6,7 +6,7 @@
 
 .App
 {
-  background-color: dimgray;
+  background-color: blueviolet;
 }
 
 h1
@@ -16,6 +16,7 @@ h1
   user-select: none;
   width: 80%;
   font-size: 38px;
+  margin-left: 5px;
 }
 
 header
@@ -24,7 +25,28 @@ header
   padding-top: 5px;
   width: 100%;
   display: flex;
+  justify-content: space-between;
   height: 40px;
   color: white;
   border-bottom: 1px solid white;
+}
+
+.logoStats
+{
+  display: flex;
+  width: 40px;
+  height: 100%;
+  user-select: none;
+  padding: 0px 5px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+.logoStats:hover
+{
+  background-color: black;
+  color: yellow;
 }
