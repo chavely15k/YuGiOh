@@ -41,6 +41,7 @@ builder.Services
     .AddScoped<IDataRepository, DataRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
+    .AddScoped<IDeckService, DeckService>()
 //     .AddScoped<CodeController>()
      .AddScoped<CodeSeed>()
 //     .AddScoped<RoleSeed>()

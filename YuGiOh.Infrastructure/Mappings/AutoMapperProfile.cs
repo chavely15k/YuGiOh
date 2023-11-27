@@ -8,7 +8,7 @@ namespace YuGiOh.Infrastructure.Mappings
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile(IUserService userService)
+        public AutoMapperProfile()
         {
             CreateMap<RegisterUserDto, User>()
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
@@ -18,14 +18,17 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
 
             CreateMap<RegisterDeckDto, Deck>()
-                .ForMember(dest => dest.Player, opt => opt.Ignore())
-                .AfterMap(async (src, dest) =>
-                {
-                    dest.Player = await userService.GetUserByIdAsync(src.PalyerId);
-                });
+                .ForMember(dest => dest.Player, opt => opt.Ignore());
+               
              CreateMap<Deck, RegisterDeckDto>()
+<<<<<<< HEAD
             .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id));
             
+=======
+            .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id))
+            .ForMember(dest => dest.Nick, opt => opt.MapFrom(src => src.Player.Nick));
+
+>>>>>>> dcc558df80b29aec3d2157192edb751389a64ac0
         }
     }
 }
