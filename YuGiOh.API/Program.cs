@@ -4,7 +4,6 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.Infrastructure;
 using YuGiOh.ApplicationServices.Seed;
 using YuGiOh.Infrastructure.Service;
-using YuGiOh.Infrastructure.Repository;
 using YuGiOh.Infrastructure.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 using YuGiOh.Domain.Models;
@@ -39,7 +38,6 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 //builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services
-    .AddScoped<IDataRepository, DataRepository>()
     .AddScoped<IEntityRepository, EntityRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
@@ -47,7 +45,6 @@ builder.Services
     .AddScoped<ITournamentServices, TournamentServices>()
     .AddScoped<RoleSeed>()
     .AddScoped<CodeSeed>();
-
 
 //.AddScoped<CodeController>()
 

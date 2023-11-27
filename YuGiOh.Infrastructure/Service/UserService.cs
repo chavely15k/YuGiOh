@@ -4,12 +4,13 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
 using YuGiOh.Domain.Enums;
+using YuGiOh.ApplicationServices.Service.AbstractClass;
 
 namespace YuGiOh.Infrastructure.Service;
 
-public class UserService : AbstractDataService, IUserService
+public class UserService : AbstractDataServices, IUserService
 {
-    public UserService(IDataRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
+    public UserService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
     {
     }
 

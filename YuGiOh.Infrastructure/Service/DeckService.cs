@@ -30,8 +30,7 @@ public class DeckService : AbstractDataServices, IDeckService
         var _deck = _mapper.Map<Deck>(register);
 
         //var _user = await _dataRepository.GetByIdAsync<User,Guid>(register.PalyerId);
-        var _user = new List<User>();
-        // await _dataRepository.FindAsync<User>(d => d.Nick == register.Nick);
+        var _user = await _dataRepository.FindAsync<User>(d => d.Nick == register.Nick);
         if (_user.Count() != 0)
         {
             _deck.Player = _user.First();

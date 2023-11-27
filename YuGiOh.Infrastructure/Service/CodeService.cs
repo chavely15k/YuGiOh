@@ -5,7 +5,7 @@ using YuGiOh.ApplicationCore.Repository;
 namespace YuGiOh.Infrastructure.Service {
     public class CodeService : AbstractDataRepository, ICodeService
     {
-        public CodeService(IDataRepository dataRepository) :
+        public CodeService(IEntityRepository dataRepository) :
             base(dataRepository){  }  
 
         public async Task<string> GenerateAsync()

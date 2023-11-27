@@ -3,7 +3,7 @@ using YuGiOh.Domain.Configurations;
 namespace YuGiOh.Domain.Models
 {
     [EntityTypeConfiguration(typeof(RequestConfiguration))]
-    public class Request 
+    public class Request : IEntity
     {
         public Guid PlayerId { get; set; }
         public User Player { get; set; }
@@ -13,9 +13,14 @@ namespace YuGiOh.Domain.Models
 
         public Guid DeckId { get; set; }
         public Deck Deck { get; set; }
-        
+
         public DateTime Date { get; set; }
         public RequestStatus Status { get; set; }
+
+        public object GetById()
+        {
+            return new { PlayerId, TournamentId };
+        }
     }
     public enum RequestStatus
     {

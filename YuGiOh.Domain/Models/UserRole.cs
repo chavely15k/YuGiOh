@@ -4,7 +4,7 @@ using YuGiOh.Domain.Configurations;
 namespace YuGiOh.Domain.Models
 {
     [EntityTypeConfiguration(typeof(UserRoleConfiguration))]
-    public class UserRole
+    public class UserRole : IEntity
     {
 
         public UserRole(Guid userId, Guid roleId)
@@ -18,5 +18,10 @@ namespace YuGiOh.Domain.Models
 
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
+
+        public object GetById()
+        {
+            return new { UserId, RoleId };
+        }
     }
 }

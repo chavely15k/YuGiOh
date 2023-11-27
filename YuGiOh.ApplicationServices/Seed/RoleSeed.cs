@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 
 namespace YuGiOh.ApplicationServices.Seed {
     public class RoleSeed {
-        public readonly IDataRepository Repository;
-        public RoleSeed(IDataRepository repository) {
+        public readonly IEntityRepository Repository;
+        public RoleSeed(IEntityRepository repository) {
             this.Repository = repository;
         }
         public async Task SetInitialRoleAsync() {
@@ -17,7 +17,7 @@ namespace YuGiOh.ApplicationServices.Seed {
                 foreach (var type in roles.Keys) {
                     await Repository.CreateAsync<Role>(new Role() {
                         Id = roles[type].Id,
-                        Type = roles[type].Type
+                        enumValue = roles[type].enumValue
                     });
                 }
 
