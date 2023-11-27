@@ -2,11 +2,11 @@
 import { useForm } from "../hooks/useFormLogReg"
 
 //styles
-import "../styles/Form.css"
+import "../styles/FormLR.css"
 
 export function Form(props) 
 {
-  const { onInputChange, onClickSubmit } = useForm(props.initialForm)
+  const { onInputChange, onClickSubmit } = useForm(props.initialForm, props.data, props.page)
 
   return (
     <form 

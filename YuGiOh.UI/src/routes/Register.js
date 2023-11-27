@@ -4,7 +4,7 @@ import { Form } from '../components/FormLogReg'
 //styles
 import '../styles/styles-routes/LoginRegister.css'
 
-export function Register() 
+export function Register(props) 
 {
   return (
     <div className="principalContainer">
@@ -72,9 +72,13 @@ export function Register()
           province: '',
           phoneNumber: '',
           password: '',
-          repeatPassword: ''
+          repeatPassword: '',
+          adminCode: ''
         }}
-        buttonText='sign up'/>
+        buttonText='sign up'
+        data={props.data}
+        page='register'/>     
     </div>
   )
 }
+

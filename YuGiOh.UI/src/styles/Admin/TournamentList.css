@@ -16,23 +16,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: dimgray;
+  background-color: blueviolet;
   color: white;
   width: 80%;
   height: 10%;
   margin: 15px;
   border-radius: 25px;
-  box-shadow: 1px 1px 2px dimgray;
+  box-shadow: 1px 1px 2px blueviolet;
   user-select: none;
 }
 
 .containerList
 {
-  background-color: dimgray;
+  background-color: blueviolet;
   width: 85%;
   height: 100%;
   border-radius: 25px;
-  box-shadow: 1px 1px 2px dimgray;
+  box-shadow: 1px 1px 2px blueviolet;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -44,7 +44,7 @@
   width: 90%;
   background-color: white;
   border-radius: 25px;
-  box-shadow: 1px 1px 2px dimgray;
+  box-shadow: 1px 1px 2px blueviolet;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,7 +71,7 @@
 
 .buttonTournament
 {
-  background-color: dimgray;
+  background-color: blueviolet;
   color: white;
   text-decoration: none;
   font-weight: bold;

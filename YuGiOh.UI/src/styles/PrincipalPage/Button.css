@@ -7,9 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: dimgray;
+  background-color: blueviolet;
   color: white;
-  box-shadow: 1px 1px 5px dimgray;
+  box-shadow: 1px 1px 5px blueviolet;
   border-radius: inherit;
   margin: 15px;
   padding: 25px;
