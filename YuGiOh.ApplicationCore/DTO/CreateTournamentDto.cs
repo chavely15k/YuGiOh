@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YuGiOh.ApplicationCore.DTO
 {
-    public class CrateTournamentDto
+    public class CreateTournamentDto
     {
         public string Name { get; set; }
         public string Address { get; set; }
