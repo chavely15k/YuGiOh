@@ -6,20 +6,22 @@ using AutoMapper;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
+using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
 
 namespace YuGiOh.Infrastructure.Service;
 
-public class DeckService : AbstractDataService, IDeckService
+public class DeckService : AbstractDataServices, IDeckService
 {
-    public DeckService(IDataRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
+    public DeckService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
     {
     }
 
     public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserIdAsync(Guid userId)
     {
         var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Id == userId);
+        
         return _mapper.Map<IEnumerable<RegisterDeckDto>>(_decks);
     }
 
@@ -28,11 +30,13 @@ public class DeckService : AbstractDataService, IDeckService
         var _deck = _mapper.Map<Deck>(register);
 
         //var _user = await _dataRepository.GetByIdAsync<User,Guid>(register.PalyerId);
-        var _user = await _dataRepository.FindAsync<User>(d => d.Nick == register.Nick);
+        var _user = new List<User>();
+        // await _dataRepository.FindAsync<User>(d => d.Nick == register.Nick);
         if (_user.Count() != 0)
         {
             _deck.Player = _user.First();
             await _dataRepository.CreateAsync<Deck>(_deck);
+            
         }
         return _mapper.Map<RegisterDeckDto>(_deck);
     }

@@ -8,6 +8,7 @@ namespace YuGiOh.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Deck> builder)
         {
+            
             builder.Property(d => d.Name)
                 .IsRequired()
                 .HasMaxLength(40);

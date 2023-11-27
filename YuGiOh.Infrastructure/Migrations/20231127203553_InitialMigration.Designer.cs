@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231126155631_InitialMigration")]
+    [Migration("20231127203553_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

@@ -3,7 +3,7 @@ using YuGiOh.Domain.Configurations;
 namespace YuGiOh.Domain.Models
 {
     [EntityTypeConfiguration(typeof(RequestConfiguration))]
-    public class Request
+    public class Request 
     {
         public Guid PlayerId { get; set; }
         public User Player { get; set; }

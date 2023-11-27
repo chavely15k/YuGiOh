@@ -12,6 +12,7 @@ namespace YuGiOh.API.Controllers
     public class DeckController : ControllerBase
     {
         private readonly IDeckService _deckService;
+        
 
         public DeckController(IDeckService deckService)
         {
@@ -28,7 +29,7 @@ namespace YuGiOh.API.Controllers
         [HttpPost]
         public async Task<ActionResult<RegisterDeckDto>> RegisterDeck(RegisterDeckDto register)
         {
-
+            
             var registeredDeck = await _deckService.RegisterDeck(register);
             return Ok(registeredDeck);
 
