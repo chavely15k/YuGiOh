@@ -45,9 +45,12 @@ builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<IDeckService, DeckService>()
     .AddScoped<ITournamentServices, TournamentServices>()
+    .AddScoped<RoleSeed>()
     .AddScoped<CodeSeed>();
-  //.AddScoped<CodeController>()
-  //.AddScoped<RoleSeed>()
+
+
+//.AddScoped<CodeController>()
+
 
 
 
@@ -80,5 +83,5 @@ app.Run();
 static async void InitializeData(WebApplication app, IServiceProvider serviceProvider)
 {
     await serviceProvider.GetService<CodeSeed>()!.SetInitialCodeAsync();
-    //await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
+    await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
 }
