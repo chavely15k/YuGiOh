@@ -19,16 +19,11 @@ namespace YuGiOh.Infrastructure.Mappings
 
             CreateMap<RegisterDeckDto, Deck>()
                 .ForMember(dest => dest.Player, opt => opt.Ignore());
-               
-             CreateMap<Deck, RegisterDeckDto>()
-<<<<<<< HEAD
-            .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id));
-            
-=======
-            .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id))
-            .ForMember(dest => dest.Nick, opt => opt.MapFrom(src => src.Player.Nick));
+   
+            CreateMap<Deck, RegisterDeckDto>()
+                .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id))
+                .ForMember(dest => dest.Nick, opt => opt.MapFrom(src => src.Player.Nick));
 
->>>>>>> dcc558df80b29aec3d2157192edb751389a64ac0
         }
     }
 }
