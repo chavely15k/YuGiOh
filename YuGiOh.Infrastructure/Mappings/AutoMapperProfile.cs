@@ -17,7 +17,6 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.Code, opt => opt.Ignore())
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
 
-
             CreateMap<RegisterDeckDto, Deck>()
                 .ForMember(dest => dest.Player, opt => opt.Ignore())
                 .AfterMap(async (src, dest) =>
@@ -26,7 +25,7 @@ namespace YuGiOh.Infrastructure.Mappings
                 });
              CreateMap<Deck, RegisterDeckDto>()
             .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id));
-
+            
         }
     }
 }
