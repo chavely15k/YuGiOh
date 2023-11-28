@@ -1,0 +1,30 @@
+.button
+{
+  width: 80%;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: blueviolet;
+  color: white;
+  box-shadow: 1px 1px 5px blueviolet;
+  border-radius: inherit;
+  margin: 15px;
+  padding: 25px;
+  border-radius: 25px;
+  user-select: none;
+  text-decoration: none;
+}
+
+.button
+{
+  cursor: pointer;
+}
+
+.button:hover
+{
+  color: yellow;
+  background-color: black;
+}

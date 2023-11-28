@@ -4,8 +4,8 @@ using YuGiOh.ApplicationCore.Repository;
 
 namespace YuGiOh.ApplicationServices.Seed {
     public class CodeSeed {
-        public readonly IDataRepository dataRepository;
-        public CodeSeed(IDataRepository repository) {
+        public readonly IEntityRepository dataRepository;
+        public CodeSeed(IEntityRepository repository) {
             this.dataRepository = repository;
         }
         public async Task SetInitialCodeAsync() {

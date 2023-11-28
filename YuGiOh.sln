@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuGiOh", "YuGiOh.API\YuGiOh.csproj", "{6C877BC0-86C6-48CC-B522-81E195246B6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuGiOh", "YuGiOh.API\YuGiOh.API.csproj", "{6C877BC0-86C6-48CC-B522-81E195246B6E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YuGiOh.ApplicationCore", "YuGiOh.ApplicationCore\YuGiOh.ApplicationCore.csproj", "{CC823FD5-6831-4ACE-9DB2-97BEA23838DC}"
 EndProject

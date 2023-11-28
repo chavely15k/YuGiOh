@@ -1,0 +1,93 @@
+.containerTournaments
+{
+  height: 100%;
+  background-color: white;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 1px 1px 2px white;
+  border-radius: 25px;
+}
+
+.tournamentsHead
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: blueviolet;
+  color: white;
+  width: 80%;
+  height: 10%;
+  margin: 15px;
+  border-radius: 25px;
+  box-shadow: 1px 1px 2px blueviolet;
+  user-select: none;
+}
+
+.containerList
+{
+  background-color: blueviolet;
+  width: 85%;
+  height: 100%;
+  border-radius: 25px;
+  box-shadow: 1px 1px 2px blueviolet;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.containerLi
+{
+  width: 90%;
+  background-color: white;
+  border-radius: 25px;
+  box-shadow: 1px 1px 2px blueviolet;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10px;
+  padding: 5px;
+  margin: 5px;
+  user-select: none;
+  list-style: none;
+}
+
+.containerElim
+{
+  color: blueviolet;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerElim:hover
+{
+  color: red;
+}
+
+.buttonTournament
+{
+  background-color: blueviolet;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  width: 20%;
+  height: 10%;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonTournament:hover
+{
+  background-color: black;
+  color: yellow;
+}

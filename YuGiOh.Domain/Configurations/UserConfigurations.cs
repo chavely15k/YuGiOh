@@ -41,7 +41,7 @@ namespace YuGiOh.Domain.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
-            builder.HasMany(u => u.UserRoles)
+            builder.HasMany(u => u.Roles)
                 .WithOne(ur => ur.User)
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);

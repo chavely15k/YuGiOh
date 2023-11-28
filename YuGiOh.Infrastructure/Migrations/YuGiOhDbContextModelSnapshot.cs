@@ -22,11 +22,34 @@ namespace YuGiOh.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("YuGiOh.Domain.Models.Archetype", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Archetype");
+                });
+
             modelBuilder.Entity("YuGiOh.Domain.Models.Code", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -38,96 +61,301 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.ToTable("Codes");
                 });
 
-            modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
+            modelBuilder.Entity("YuGiOh.Domain.Models.Deck", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Type")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArchetypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ExtraDeckSize")
+                        .HasColumnType("integer")
+                        .HasAnnotation("Range", new[] { 0, 15 });
+
+                    b.Property<int>("MainDeckSize")
+                        .HasColumnType("integer")
+                        .HasAnnotation("Range", new[] { 40, 60 });
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SideDeckSize")
+                        .HasColumnType("integer")
+                        .HasAnnotation("Range", new[] { 0, 15 });
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArchetypeId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("Decks");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Match", b =>
+                {
+                    b.Property<int>("PlayerOneId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PlayerOneResult")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerTwoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerTwoResult")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Round")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TournamentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PlayerOneId", "Date");
+
+                    b.HasIndex("PlayerTwoId");
+
+                    b.HasIndex("TournamentId");
+
+                    b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Request", b =>
+                {
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TournamentId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DeckId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.HasKey("PlayerId", "TournamentId");
+
+                    b.HasIndex("DeckId");
+
+                    b.HasIndex("TournamentId");
+
+                    b.ToTable("Requests");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>
+            modelBuilder.Entity("YuGiOh.Domain.Models.Tournament", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tournaments");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Nick")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                        .HasColumnType("text");
 
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("integer");
 
                     b.Property<string>("Province")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Township")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Nick")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.UserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UsersRole");
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Deck", b =>
+                {
+                    b.HasOne("YuGiOh.Domain.Models.Archetype", "Archetype")
+                        .WithMany()
+                        .HasForeignKey("ArchetypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YuGiOh.Domain.Models.User", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Archetype");
+
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Match", b =>
+                {
+                    b.HasOne("YuGiOh.Domain.Models.User", "PlayerOne")
+                        .WithMany()
+                        .HasForeignKey("PlayerOneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YuGiOh.Domain.Models.User", "PlayerTwo")
+                        .WithMany()
+                        .HasForeignKey("PlayerTwoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YuGiOh.Domain.Models.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlayerOne");
+
+                    b.Navigation("PlayerTwo");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Request", b =>
+                {
+                    b.HasOne("YuGiOh.Domain.Models.Deck", "Deck")
+                        .WithMany()
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YuGiOh.Domain.Models.User", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YuGiOh.Domain.Models.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deck");
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Tournament", b =>
+                {
+                    b.HasOne("YuGiOh.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.UserRole", b =>
                 {
                     b.HasOne("YuGiOh.Domain.Models.Role", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YuGiOh.Domain.Models.User", "User")
-                        .WithMany("UserRoles")
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -137,14 +365,9 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
             modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }
