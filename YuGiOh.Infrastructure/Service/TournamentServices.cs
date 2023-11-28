@@ -32,6 +32,13 @@ namespace YuGiOh.Infrastructure.Service
 
         }
 
+        public async Task<bool> DeleteTournament(int Id)
+        {
+            var result = await _dataRepository.DeleteAsync<Tournament, int>(Id);
+            if(result != null) return true;
+            else return false;
+        }
+
         public async Task<IEnumerable<TournamentDto>> GetAllTournaments()
         {
             var _Tournaments = await _dataRepository.GetAllAsync<Tournament>();

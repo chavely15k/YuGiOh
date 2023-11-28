@@ -12,43 +12,43 @@ export function Register(props)
       <Form
         elements={[
           {
-            id: 'name',
+            id: 'Name',
             name: 'Name',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your name'
           },
           {
-            id: 'nickname',
+            id: 'Nick',
             name: 'Nick Name',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your nick name'
           },
           {
-            id: 'province',
+            id: 'Province',
             name: 'Province',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your province'
           },
           {
-            id: 'township',
+            id: 'Township',
             name: 'TownShip',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your township'
           },
           {
-            id: 'address',
+            id: 'Address',
             name: 'Address',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your address'
           },
           {
-            id: 'phoneNumber',
+            id: 'PhoneNumber',
             name: 'Phone Number (opcional)',
             inputType: 'number',
             inputPlaceHolder: 'Ingress your phone number'
           },
           {
-            id: 'password',
+            id: 'Password',
             name: 'Password',
             inputType: 'password',
             inputPlaceHolder: 'Ingress your password'
@@ -60,23 +60,23 @@ export function Register(props)
             inputPlaceHolder: 'Repeat the password'
           },
           {
-            id: 'adminCode',
+            id: 'Code',
             name: 'Admin Code (opcional)',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your code'
           }
         ]} 
         initialForm={{
-          name: '',
-          nickname: '',
-          province: '',
-          phoneNumber: '',
-          password: '',
+          Name: '',
+          Nick: '',
+          Province: '',
+          PhoneNumber: '',
+          Password: '',
           repeatPassword: '',
-          adminCode: ''
+          Code: ''
         }}
         buttonText='sign up'
-        data={props.data}
+        info={props.info}
         page='register'/>     
     </div>
   )

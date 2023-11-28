@@ -16,7 +16,7 @@ import { useState } from 'react'
 
 function App() 
 {
-  const [data, setData] = useState({})
+  const [info, setInfo] = useState({})
   
   return (
     <div className='App'>
@@ -33,11 +33,11 @@ function App()
         </Route>
         <Route 
           path='/Login' 
-          element={<Login data={setData}/>}>
+          element={<Login info={setInfo}/>}>
         </Route>
         <Route 
           path='/Register' 
-          element={<Register data={setData}/>}>
+          element={<Register info={setInfo}/>}>
         </Route>    
         <Route 
           path='/Login/Admin' 

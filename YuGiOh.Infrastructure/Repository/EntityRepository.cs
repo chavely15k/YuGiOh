@@ -23,8 +23,9 @@ namespace YuGiOh.Domain.Models
             return result.Entity;
         }
 
-        public async Task DeleteAsync<TEntity, TKey>(TKey key)
-            where TEntity : class, IEntity
+
+        public async Task<TEntity> DeleteAsync<TEntity, TKey>(TKey key)
+            where TEntity : class,IEntity
             where TKey : IEquatable<TKey>
         {
             var entityToDelete = await GetByIdAsync<TEntity, TKey>(key);
@@ -33,6 +34,7 @@ namespace YuGiOh.Domain.Models
                 context.Set<TEntity>().Remove(entityToDelete);
                 await context.SaveChangesAsync();
             }
+            return entityToDelete;
         }
 
         public async Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity

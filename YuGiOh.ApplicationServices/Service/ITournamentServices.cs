@@ -11,5 +11,6 @@ namespace YuGiOh.ApplicationServices.Service
         public Task<TournamentDto> CreateTournament(TournamentDto create);
         public  Task<IEnumerable<TournamentDto>> GetAllTournaments();
         public  Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(int AdminId);
+        public Task<bool> DeleteTournament(int Id);
     }
 }

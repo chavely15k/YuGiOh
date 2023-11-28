@@ -30,7 +30,7 @@ export function Login(props)
           password: ''
         }}
         buttonText='sign in'
-        data={props.data}
+        info={props.info}
         page='login'/>
     </div>
   )
