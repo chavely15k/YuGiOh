@@ -1,13 +1,11 @@
  
 {
-    "Administrator": 
+    "Admin": 
     {
-        "Id": "0",
-        "Type": "Administrator"
+        "Type": "0"
     },
     "Player":
     {
-        "Id": "1",
-        "Type": "Player"
+        "Type": "1"
     }
 } 

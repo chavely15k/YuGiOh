@@ -2,8 +2,14 @@ using YuGiOh.Domain.Enums;
 
 namespace YuGiOh.Domain.Models
 {
-    public class Role : Entity
+    public class Role : IEntity
     {
-        public int enumValue { get; set; }
+        public int Id {get;set;}
+        public int Type { get; set; }
+
+        public object GetById()
+        {
+            return Id;
+        }
     }
 }

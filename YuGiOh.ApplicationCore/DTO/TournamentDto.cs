@@ -11,9 +11,9 @@ namespace YuGiOh.ApplicationCore.DTO
         public string Name { get; set; }
         public string Address { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
-        public Guid AdminId {get;set;}
+        public int AdminId {get;set;}
         
     }
 

@@ -8,7 +8,7 @@ using YuGiOh.ApplicationServices.Service;
 namespace YuGiOh.API.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("Tournament")]
     public class TournamentControler: ControllerBase
     {
         private readonly ITournamentServices _TournamentService;
@@ -28,7 +28,7 @@ namespace YuGiOh.API.Controllers
         
         [HttpGet]
         [Route("userId/{userId}")]
-        public async Task<ActionResult<IEnumerable<TournamentDto>>> GetAllToutnamentsById(Guid AdminId)
+        public async Task<ActionResult<IEnumerable<TournamentDto>>> GetAllToutnamentsById(int AdminId)
         {
             var tournaments = await _TournamentService.GetAllTournamentsByAdmin(AdminId);
             return Ok(tournaments);

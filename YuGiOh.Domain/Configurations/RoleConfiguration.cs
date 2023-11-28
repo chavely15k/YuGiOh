@@ -10,10 +10,10 @@ namespace YuGiOh.Domain.Configurations
         {
             builder.HasKey(r => r.Id);
 
-            builder.Property(r => r.enumValue)
+            builder.Property(r => r.Type)
                 .IsRequired();
 
-            builder.HasIndex(r => r.enumValue)
+            builder.HasIndex(r => r.Type)
                 .IsUnique();
         }
     }

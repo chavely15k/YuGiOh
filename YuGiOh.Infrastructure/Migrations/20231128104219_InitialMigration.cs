@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -12,10 +13,24 @@ namespace YuGiOh.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Archetype",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Archetype", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Codes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Text = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
@@ -27,8 +42,9 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    enumValue = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +55,8 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nick = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
@@ -57,17 +74,24 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Decks",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    Archetype = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     MainDeckSize = table.Column<int>(type: "integer", nullable: false),
                     SideDeckSize = table.Column<int>(type: "integer", nullable: false),
                     ExtraDeckSize = table.Column<int>(type: "integer", nullable: false),
-                    PlayerId = table.Column<Guid>(type: "uuid", nullable: false)
+                    ArchetypeId = table.Column<int>(type: "integer", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Decks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Decks_Archetype_ArchetypeId",
+                        column: x => x.ArchetypeId,
+                        principalTable: "Archetype",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Decks_Users_PlayerId",
                         column: x => x.PlayerId,
@@ -80,11 +104,12 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Tournaments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Address = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    StartDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,8 +126,8 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,10 +150,10 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Matches",
                 columns: table => new
                 {
-                    PlayerOneId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PlayerTwoId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TournamentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PlayerOneId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    PlayerTwoId = table.Column<int>(type: "integer", nullable: false),
+                    TournamentId = table.Column<int>(type: "integer", nullable: false),
                     PlayerOneResult = table.Column<int>(type: "integer", nullable: false),
                     PlayerTwoResult = table.Column<int>(type: "integer", nullable: false),
                     Round = table.Column<int>(type: "integer", nullable: false)
@@ -160,10 +185,10 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Requests",
                 columns: table => new
                 {
-                    PlayerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TournamentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DeckId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: false),
+                    TournamentId = table.Column<int>(type: "integer", nullable: false),
+                    DeckId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -188,6 +213,17 @@ namespace YuGiOh.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Archetype_Name",
+                table: "Archetype",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Decks_ArchetypeId",
+                table: "Decks",
+                column: "ArchetypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Decks_PlayerId",
@@ -248,6 +284,9 @@ namespace YuGiOh.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Archetype");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -4,12 +4,13 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
 using YuGiOh.Domain.Enums;
+using YuGiOh.ApplicationServices.Service.AbstractClass;
 
 namespace YuGiOh.Infrastructure.Service;
 
-public class UserService : AbstractDataService, IUserService
+public class UserService : AbstractDataServices, IUserService
 {
-    public UserService(IDataRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
+    public UserService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
     {
     }
 
@@ -35,9 +36,9 @@ public class UserService : AbstractDataService, IUserService
         return foundUsers.Count() != 0;
     }
 
-    public async Task<User?> GetUserByIdAsync(Guid id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
-        var foundUsers = await _dataRepository.GetByIdAsync<User, Guid>(id);
+        var foundUsers = await _dataRepository.GetByIdAsync<User, int>(id);
         return foundUsers;
     }
 
@@ -68,7 +69,7 @@ public class UserService : AbstractDataService, IUserService
     private async Task<Role?> GetRole(int roleType)
     {
         List<Role> userRoles = (await _dataRepository.GetAllAsync<Role>()).ToList();
-        Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.enumValue == roleType);
+        Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.Type == roleType);
         return matchingUserRole;
     }
     private async Task<UserRole> GetUserRoles(int roleType, User user)

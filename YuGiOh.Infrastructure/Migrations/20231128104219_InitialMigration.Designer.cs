@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231126155631_InitialMigration")]
+    [Migration("20231128104219_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,11 +25,34 @@ namespace YuGiOh.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("YuGiOh.Domain.Models.Archetype", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Archetype");
+                });
+
             modelBuilder.Entity("YuGiOh.Domain.Models.Code", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -43,14 +66,14 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Deck", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Archetype")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArchetypeId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("ExtraDeckSize")
                         .HasColumnType("integer")
@@ -65,14 +88,16 @@ namespace YuGiOh.Infrastructure.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("SideDeckSize")
                         .HasColumnType("integer")
                         .HasAnnotation("Range", new[] { 0, 15 });
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArchetypeId");
 
                     b.HasIndex("PlayerId");
 
@@ -81,17 +106,17 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Match", b =>
                 {
-                    b.Property<Guid>("PlayerOneId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("PlayerOneId")
+                        .HasColumnType("integer");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTimeOffset>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PlayerOneResult")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("PlayerTwoId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("PlayerTwoId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PlayerTwoResult")
                         .HasColumnType("integer");
@@ -99,8 +124,8 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Property<int>("Round")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("TournamentId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TournamentId")
+                        .HasColumnType("integer");
 
                     b.HasKey("PlayerOneId", "Date");
 
@@ -113,17 +138,17 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Request", b =>
                 {
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("TournamentId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TournamentId")
+                        .HasColumnType("integer");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTimeOffset>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("DeckId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("DeckId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -140,11 +165,13 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Role", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<int>("enumValue")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -154,9 +181,11 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Tournament", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -168,11 +197,11 @@ namespace YuGiOh.Infrastructure.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTimeOffset>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -183,9 +212,11 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -221,11 +252,11 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.UserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -236,11 +267,19 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Deck", b =>
                 {
+                    b.HasOne("YuGiOh.Domain.Models.Archetype", "Archetype")
+                        .WithMany()
+                        .HasForeignKey("ArchetypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("YuGiOh.Domain.Models.User", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Archetype");
 
                     b.Navigation("Player");
                 });

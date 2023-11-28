@@ -7,14 +7,15 @@ using Npgsql.Replication;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
+using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
 
 namespace YuGiOh.Infrastructure.Service
 {
-    public class TournamentServices : AbstractDataService, ITournamentServices
+    public class TournamentServices : AbstractDataServices, ITournamentServices
     {
-        public TournamentServices(IDataRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
+        public TournamentServices(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
         {
         }
 
@@ -22,7 +23,6 @@ namespace YuGiOh.Infrastructure.Service
         {
             var _Tournament = _mapper.Map<Tournament>(create);
             var _user = await _dataRepository.FindAsync<User>(d => d.Id == create.AdminId);
-
             if (_user.Count() != 0)
             {
                 _Tournament.User = _user.First();
@@ -38,13 +38,11 @@ namespace YuGiOh.Infrastructure.Service
             return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
         }
 
-        public async Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(Guid AdminId)
+        public async Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(int AdminId)
         {
             var _Tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == AdminId);
             return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
         }
-
-
 
     }
 }

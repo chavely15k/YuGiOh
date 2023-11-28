@@ -2,9 +2,9 @@ using YuGiOh.ApplicationCore.Repository;
 
 public abstract class AbstractDataRepository
 {
-   protected readonly IDataRepository _dataRepository;
+   protected readonly IEntityRepository _dataRepository;
 
-   public AbstractDataRepository(IDataRepository dataRepository)
+   public AbstractDataRepository(IEntityRepository dataRepository)
    {
        _dataRepository = dataRepository;
    }

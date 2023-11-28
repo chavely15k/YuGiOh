@@ -4,7 +4,6 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.Infrastructure;
 using YuGiOh.ApplicationServices.Seed;
 using YuGiOh.Infrastructure.Service;
-using YuGiOh.Infrastructure.Repository;
 using YuGiOh.Infrastructure.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 using YuGiOh.Domain.Models;
@@ -39,15 +38,17 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 //builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services
-    .AddScoped<IDataRepository, DataRepository>()
+    .AddScoped<IEntityRepository, EntityRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
     .AddScoped<IDeckService, DeckService>()
     .AddScoped<ITournamentServices, TournamentServices>()
-//     .AddScoped<CodeController>()
-     .AddScoped<CodeSeed>()
-//     .AddScoped<RoleSeed>()
-;
+    .AddScoped<RoleSeed>()
+    .AddScoped<CodeSeed>();
+
+//.AddScoped<CodeController>()
+
+
 
 
 var app = builder.Build();
@@ -79,5 +80,5 @@ app.Run();
 static async void InitializeData(WebApplication app, IServiceProvider serviceProvider)
 {
     await serviceProvider.GetService<CodeSeed>()!.SetInitialCodeAsync();
-    //await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
+    await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
 }
