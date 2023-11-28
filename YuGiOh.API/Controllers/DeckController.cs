@@ -27,12 +27,21 @@ namespace YuGiOh.API.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
         public async Task<ActionResult<RegisterDeckDto>> RegisterDeck(RegisterDeckDto register)
         {
             
             var registeredDeck = await _deckService.RegisterDeck(register);
             return Ok(registeredDeck);
 
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<ActionResult> DeleteDeck(int deck)
+        {
+            var result = await _deckService.DeleteDeck(deck);
+            return Ok(result); 
         }
 
         // [HttpGet("userNick/{nick}")]

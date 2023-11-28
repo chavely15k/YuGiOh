@@ -17,7 +17,7 @@ public interface IEntityRepository
         where TKey : IEquatable<TKey>;
     Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity;
 
-    Task DeleteAsync<TEntity, TKey>(TKey key)
+    Task<TEntity> DeleteAsync<TEntity, TKey>(TKey key)
         where TEntity : class, IEntity
         where TKey : IEquatable<TKey>;
     Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate)

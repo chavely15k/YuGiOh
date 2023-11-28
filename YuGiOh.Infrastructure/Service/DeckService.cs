@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Query;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
@@ -40,6 +41,12 @@ public class DeckService : AbstractDataServices, IDeckService
         return _mapper.Map<RegisterDeckDto>(_deck);
     }
 
+    public async Task<bool> DeleteDeck(int deck)
+    {
+        var result = await _dataRepository.DeleteAsync<Deck,int>(deck);
+        if(result != null) return true;
+        else return false; 
+    }
     // public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserNickAsync(string nick)
     // {
     //     var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Nick == nick);
