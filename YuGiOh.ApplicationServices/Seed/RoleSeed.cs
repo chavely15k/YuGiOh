@@ -17,7 +17,7 @@ namespace YuGiOh.ApplicationServices.Seed {
                 foreach (var type in roles.Keys) {
                     await Repository.CreateAsync<Role>(new Role() {
                         Id = roles[type].Id,
-                        Type = roles[type].Type
+                        enumValue = roles[type].enumValue
                     });
                 }
 
