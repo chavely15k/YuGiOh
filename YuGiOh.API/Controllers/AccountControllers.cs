@@ -20,25 +20,28 @@ namespace YuGiOh.API.Controllers
         {
             bool isSuccessful = await userService.LoginAsync(loginRequest);
             return isSuccessful
-                ? Ok(new { Message = "Inicio de sesión exitoso", IsSuccessful = true })
+                ? Ok(new
+                {
+                    Message = "Inicio de sesión exitoso",
+                    Success = true
+
+
+                })
                 : BadRequest(new { Message = "Credenciales incorrectas", IsSuccessful = false });
         }
         [HttpPost("register")]
-        public async Task<ActionResult> Register(RegisterUserDto registerUser)
+        public async Task<ActionResult> Register(UserDto registerUser)
         {
             if (await userService.IsNickTakenAsync(registerUser.Nick))
             {
-                return BadRequest(new { Message = "El nick ya está en uso." });
+                return BadRequest(new
+                {
+                    Message = "Nick already in use.",
+                    Success = false
+                });
             }
 
-            var register = await userService.RegisterUserAsync(registerUser);
-
-            var response = new
-            {
-                Message = "Registro exitoso.",
-                User = register
-            };
-
+            var response = await userService.RegisterUserAsync(registerUser);
             return Ok(response);
         }
     }

@@ -10,10 +10,10 @@ namespace YuGiOh.Infrastructure.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<RegisterUserDto, User>()
+            CreateMap<UserDto, User>()
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
 
-            CreateMap<User, RegisterUserDto>()
+            CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Code, opt => opt.Ignore())
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
 

@@ -42,20 +42,25 @@ public class UserService : AbstractDataServices, IUserService
         return foundUsers;
     }
 
-    public async Task<RegisterUserDto> RegisterUserAsync(RegisterUserDto registerDto)
+    public async Task<RegisterDto> RegisterUserAsync(UserDto registerDto)
     {
         var _user = _mapper.Map<User>(registerDto);
-        //_user.Id = Guid.NewGuid();
+        
+
         //Todo: es necesario implementar un task  que me deje obtener por Nick
-        //Si no cuando de inserte un unsuario con un nick igual que el otro
-        //Dara error al insertar en la Bd
+
         foreach (var role in registerDto.Roles)
         {
             if (role == (int)RoleType.Admin)
             {
                 if (await CheckCode(registerDto.Code))
                 {
-                    //Todo: Si el codigo es errone entonces return 
+                    
+                    return new RegisterDto
+                    {
+                        Message = "Invalid admin code",
+                        Success = false
+                    };
                 }
             }
             _user.Roles = new List<UserRole>();
@@ -63,7 +68,11 @@ public class UserService : AbstractDataServices, IUserService
         }
         await _dataRepository.CreateAsync<User>(_user);
 
-        return _mapper.Map<RegisterUserDto>(_user);
+        return new RegisterDto
+        {
+            Message = "Succesful Register",
+            Success = true,
+        };
     }
     // ! Por Convenio Asumiremos que Admin en el valor 0 
     private async Task<Role?> GetRole(int roleType)
@@ -80,9 +89,10 @@ public class UserService : AbstractDataServices, IUserService
         return userRole;
     }
     //Todo: Hay que hacer el admin y el check
-    private async Task<bool> CheckCode(string code)
+    protected async Task<bool> CheckCode(string code)
     {
-        return true;
+        var textResult = await _dataRepository.FindAsync<Code>(c => c.Text == code);
+        return textResult.Count() != 0;
     }
 
 }
