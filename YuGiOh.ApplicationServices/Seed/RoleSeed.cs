@@ -17,10 +17,6 @@ namespace YuGiOh.ApplicationServices.Seed {
                     JsonConvert.DeserializeObject<Dictionary<string, Role>>(data);
                 foreach (var type in roles.Keys) {
                     await Repository.CreateAsync<Role>(new Role() {
-<<<<<<< HEAD
-                        Id = roles[type].Id,
-=======
->>>>>>> newBranch
                         Type = roles[type].Type
                     });
                 }
