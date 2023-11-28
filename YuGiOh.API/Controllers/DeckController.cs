@@ -37,7 +37,7 @@ namespace YuGiOh.API.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
+        [Route("delete/{id}")]
         public async Task<ActionResult> DeleteDeck(int deck)
         {
             var result = await _deckService.DeleteDeck(deck);
@@ -52,5 +52,3 @@ namespace YuGiOh.API.Controllers
         // }
     }
 }
-
-

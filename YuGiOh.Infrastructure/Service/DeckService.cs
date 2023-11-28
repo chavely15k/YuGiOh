@@ -32,11 +32,12 @@ public class DeckService : AbstractDataServices, IDeckService
 
         //var _user = await _dataRepository.GetByIdAsync<User,Guid>(register.PalyerId);
         var _user = await _dataRepository.FindAsync<User>(d => d.Nick == register.Nick);
+        var _Archetype = await _dataRepository.FindAsync<Archetype>(d => d.Id == register.Archetype);
         if (_user.Count() != 0)
         {
             _deck.Player = _user.First();
+            _deck.Archetype = _Archetype.First();
             await _dataRepository.CreateAsync<Deck>(_deck);
-            
         }
         return _mapper.Map<RegisterDeckDto>(_deck);
     }
