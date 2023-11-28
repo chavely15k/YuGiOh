@@ -24,7 +24,7 @@ builder.Services
 //     .AddScoped<IUserService, UserService>()
 //     .AddScoped<CodeController>()
      .AddScoped<CodeSeed>()
-//     .AddScoped<RoleSeed>()
+     .AddScoped<RoleSeed>()
 ;
 
 
@@ -55,5 +55,5 @@ app.Run();
 static async void InitializeData(WebApplication app, IServiceProvider serviceProvider)
 {
     await serviceProvider.GetService<CodeSeed>()!.SetInitialCodeAsync();
-    //await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
+    await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
 }
