@@ -38,15 +38,7 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 //builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services
-<<<<<<< HEAD
-    .AddScoped<IDataRepository, DataRepository>()
-     .AddScoped<ICodeService, CodeService>()
-//     .AddScoped<IUserService, UserService>()
-//     .AddScoped<CodeController>()
-     .AddScoped<CodeSeed>()
-     .AddScoped<RoleSeed>()
-;
-=======
+
     .AddScoped<IEntityRepository, EntityRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
@@ -54,11 +46,7 @@ builder.Services
     .AddScoped<ITournamentServices, TournamentServices>()
     .AddScoped<RoleSeed>()
     .AddScoped<CodeSeed>();
-
 //.AddScoped<CodeController>()
-
-
->>>>>>> newBranch
 
 
 var app = builder.Build();
