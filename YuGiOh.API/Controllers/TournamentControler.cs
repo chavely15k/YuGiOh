@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace YuGiOh.API.Controllers
         }
         
         [HttpGet]
-        [Route("userId/{userId}")]
+        [Route("userId/{AdminId}")]
         public async Task<ActionResult<IEnumerable<TournamentDto>>> GetAllToutnamentsById(int AdminId)
         {
             var tournaments = await _TournamentService.GetAllTournamentsByAdmin(AdminId);
@@ -41,6 +42,19 @@ namespace YuGiOh.API.Controllers
             var tournament = await _TournamentService.CreateTournament(newTournament);
             return Ok(tournament);
         }
-
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await _TournamentService.DeleteTournament(id);
+            return Ok(result);
+        }
+        [HttpPut]
+        [Route("update")]
+        public async Task<ActionResult> Update(TournamentDto tournament)
+        {
+            var result = await _TournamentService.UpdateTournament(tournament);
+            return Ok(result);
+        }
     }
 }

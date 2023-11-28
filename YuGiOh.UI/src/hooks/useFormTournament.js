@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 
-export const useForm = (initialForm) => {
+export const useForm = (initialForm, action) => {
   const [formState, setFormState] = useState(initialForm)
   const navigate = useNavigate()
 

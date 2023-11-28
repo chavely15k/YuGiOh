@@ -7,11 +7,10 @@ import { AiFillTrophy } from "react-icons/ai";
 //styles
 import '../styles/styles-routes/PrincipalPage.css'
 
-export function PrincipalPage() 
-{
+export function PrincipalPage() {
   return (
     <div className='principalContainer'>
-      <div className='containerLogo'><AiFillTrophy size={120}/></div> 
+      <div className='containerLogo'><AiFillTrophy size={120} /></div>
       <div className='containerOptions'>
         <div className='containerButtons'>
           <Button

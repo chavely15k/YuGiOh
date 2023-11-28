@@ -1,9 +1,11 @@
 //components
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
 import { Form } from '../components/FormLogReg'
+import { Rol } from './Rol'
 
 //styles
 import '../styles/styles-routes/LoginRegister.css'
+
 
 export function Login(props) 
 {
@@ -13,21 +15,21 @@ export function Login(props)
       <Form
         elements={[
           {
-            id: 'userName',
+            id: 'Nick',
             name: 'User Name',
             inputType: 'text',
             inputPlaceHolder: 'Ingress your user name'
           },
           {
-            id: 'password',
+            id: 'Password',
             name: 'Password',
             inputType: 'password',
             inputPlaceHolder: 'Ingress your password'
           }
         ]} 
         initialForm={{
-          userName: '',
-          password: ''
+          Nick: '',
+          Password: ''
         }}
         buttonText='sign in'
         info={props.info}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Npgsql.Replication;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
@@ -49,6 +50,12 @@ namespace YuGiOh.Infrastructure.Service
         {
             var _Tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == AdminId);
             return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
+        }
+        public async Task<bool> UpdateTournament(TournamentDto tournament)
+        {
+            var newTournament = _mapper.Map<Tournament>(tournament);
+            var result = await _dataRepository.UpdateAsync<Tournament>(newTournament);
+            return result != null;
         }
 
     }

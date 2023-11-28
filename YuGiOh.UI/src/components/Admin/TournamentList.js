@@ -20,7 +20,12 @@ export function TournamentList(props) {
                 {element.name}
             </li>
             <div 
-              className="containerElim"
+              className="containerIcon"
+              onCLick={props.onClickEdit}>
+
+            </div>
+            <div 
+              className="containerIcon"
               onClick={props.onClickDelete}>
                 <AiFillCloseCircle/>
             </div>

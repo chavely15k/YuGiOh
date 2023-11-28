@@ -1,0 +1,42 @@
+.containerPrincipalRol
+{
+  height: 100vh;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerFormRol
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  background-color: white;
+  height: 50%;
+  width: 50%;
+  margin: 10px;
+  box-shadow: 1px 1px 3px white;
+  border-radius: 25px;
+}
+
+.containerButtonsRol
+{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.headerRol
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: 35px;
+  color: blueviolet;
+  text-shadow: 1px 1px 3px blueviolet;
+  font-weight: bold;
+}

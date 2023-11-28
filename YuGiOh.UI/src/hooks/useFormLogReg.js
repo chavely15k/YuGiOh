@@ -1,12 +1,14 @@
 //dependencies
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
+import { useFetch } from "./useFetch"
 
 export const useForm = (initialForm, info, page) => {
   const [formState, setFormState] = useState(initialForm)
   var newFormState = {}
   const navigate = useNavigate()
   const [data, setData] = useState({})
+  const { infoAPI } = useFetch()
 
   const onInputChange = (e) => {
     formState[e.target.id] = e.target.value
@@ -16,22 +18,18 @@ export const useForm = (initialForm, info, page) => {
   const onClickSubmit = (e) => {
     e.preventDefault()
 
-    for (let element in formState) 
-    {
-      if (formState[element] == '' && (element != 'PhoneNumber' && element != 'Code')) 
-      {
+    for (let element in formState) {
+      if (formState[element] == '' && (element != 'PhoneNumber' && element != 'Code')) {
         alert(`Should fill all the required input's fields`)
         return
       }
 
-      if (element == 'repeatPassword' && formState.Password != formState[element]) 
-      {
+      if (element == 'repeatPassword' && formState.Password != formState[element]) {
         alert(`Password's and Repeat Password's fields doesn't match`)
         return
       }
 
-      if (element == 'Code') 
-      {
+      if (element == 'Code') {
         formState[element] == ''
           ? newFormState = {
             ...newFormState,
@@ -53,22 +51,28 @@ export const useForm = (initialForm, info, page) => {
       }
     }
 
-    getInfoAPI()
-    //console.log(data)
-    //navigate(`${page == 'register' ? '/' : '/Login/Admin'}`)
-  }
+    infoAPI(`'http://localhost:5138/Account/${page}`,
+      `${page == 'register' ? 'POST' : 'GET'}`, setData, newFormState)
 
-  const getInfoAPI = () => {
-    fetch('http://localhost:5138/Account/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newFormState)
+    if(!data.success)
+    {
+      alert(data.message)
+      return
+    }
+
+    if(page == 'register')
+    {
+      navigate('/Login')
+      return
+    }
+      
+    info({
+      id: data.id,
+      Nick: data.Nick,
+      Roles: data.Roles
     })
-      .then(response => response.json())
-      .then(info => console.log(info))
-      .catch(error => alert(`An error has occurred: ${error}`))
+
+    navigate(`${data.Roles.length > 1 ? '.Login/Rol' : 'Login/User'}`)
   }
 
   return {
