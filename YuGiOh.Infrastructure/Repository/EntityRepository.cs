@@ -5,7 +5,6 @@ using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.Domain.Models;
 using YuGiOh.Infrastructure;
 
-
 namespace YuGiOh.Domain.Models
 {
     public class EntityRepository : IEntityRepository
@@ -17,7 +16,7 @@ namespace YuGiOh.Domain.Models
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<TEntity> CreateAsync<TEntity>(TEntity entity) where TEntity : class ,IEntity 
+        public async Task<TEntity> CreateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity
         {
             var result = await context.Set<TEntity>().AddAsync(entity);
             await context.SaveChangesAsync();
@@ -25,10 +24,10 @@ namespace YuGiOh.Domain.Models
         }
 
         public async Task DeleteAsync<TEntity, TKey>(TKey key)
-            where TEntity : class,IEntity
+            where TEntity : class, IEntity
             where TKey : IEquatable<TKey>
         {
-            var entityToDelete = await GetByIdAsync<TEntity,TKey>(key);
+            var entityToDelete = await GetByIdAsync<TEntity, TKey>(key);
             if (entityToDelete != null)
             {
                 context.Set<TEntity>().Remove(entityToDelete);
@@ -36,29 +35,37 @@ namespace YuGiOh.Domain.Models
             }
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class,IEntity
+        public async Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
         {
             return await context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>() where TEntity : class,IEntity
+        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>() where TEntity : class, IEntity
         {
             return await context.Set<TEntity>().ToListAsync();
         }
 
         public async Task<TEntity?> GetByIdAsync<TEntity, TKey>(TKey id)
-            where TEntity :class, IEntity
+            where TEntity : class, IEntity
             where TKey : IEquatable<TKey>
         {
-            return await context.Set<TEntity>().SingleOrDefaultAsync(e => e.GetById().Equals(id));
+            var entities = await context.Set<TEntity>().ToListAsync();
+            return entities.SingleOrDefault(e => e.GetById().Equals(id));
         }
 
-      
-        public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity :class, IEntity
+
+
+        public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity
         {
             context.Entry(entity).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return entity;
         }
+        public IQueryable<TEntity> Include<TEntity>(Expression<Func<TEntity, object>> include)
+         where TEntity : class, IEntity
+        {
+            return context.Set<TEntity>().Include(include);
+        }
+
     }
 }

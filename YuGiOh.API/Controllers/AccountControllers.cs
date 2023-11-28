@@ -19,15 +19,31 @@ namespace YuGiOh.API.Controllers
         public async Task<ActionResult> Login(LoginRequestDto loginRequest)
         {
             bool isSuccessful = await userService.LoginAsync(loginRequest);
-            return isSuccessful
-                ? Ok(new
-                {
-                    Message = "Inicio de sesión exitoso",
-                    Success = true
-
-
-                })
-                : BadRequest(new { Message = "Credenciales incorrectas", IsSuccessful = false });
+            if (isSuccessful)
+            {
+                var _user = await userService.GetUserByNickAsync(loginRequest.Nick);
+                var roles = _user.Roles?.Select(r => r.Role.Type).ToList() ?? new List<int>();
+                
+                return Ok(
+                    new
+                    {
+                        Name = _user.Name,
+                        Id = _user.Id,
+                        Nick = _user.Nick,
+                        Roles = roles,
+                        Message = "Succesful Login ",
+                        Success = true
+                    });
+            }
+            else
+            {
+                return BadRequest(
+                    new
+                    {
+                        Message = "Worng Credentials",
+                        Success = false
+                    });
+            }
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserDto registerUser)

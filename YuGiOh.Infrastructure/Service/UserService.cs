@@ -5,6 +5,7 @@ using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
 using YuGiOh.Domain.Enums;
 using YuGiOh.ApplicationServices.Service.AbstractClass;
+using Microsoft.EntityFrameworkCore;
 
 namespace YuGiOh.Infrastructure.Service;
 
@@ -35,6 +36,25 @@ public class UserService : AbstractDataServices, IUserService
         var foundUsers = await _dataRepository.FindAsync<User>(u => u.Nick == nick);
         return foundUsers.Count() != 0;
     }
+    public async Task<User> GetUserByNickAsync(string nick)
+    {
+        var foundUsers = await _dataRepository
+            .Include<User>(u => u.Roles) // Assuming Include is part of IEntityRepository
+            .Where(u => u.Nick == nick)
+            .ToListAsync();
+        return foundUsers.FirstOrDefault();
+    }
+
+    // public async Task<User> GetUserByNickAsync(string nick)
+    // {
+    //     var foundUser = await _dataRepository
+    //         .Include(u => u.PropiedadDeNavegacion) // Reemplaza PropiedadDeNavegacion con el nombre real de tu propiedad de navegación
+    //         .FirstOrDefaultAsync(u => u.Nick == nick);
+
+    //     return foundUser;
+    // }
+
+
 
     public async Task<User?> GetUserByIdAsync(int id)
     {
@@ -45,9 +65,6 @@ public class UserService : AbstractDataServices, IUserService
     public async Task<RegisterDto> RegisterUserAsync(UserDto registerDto)
     {
         var _user = _mapper.Map<User>(registerDto);
-        
-
-        //Todo: es necesario implementar un task  que me deje obtener por Nick
 
         foreach (var role in registerDto.Roles)
         {
@@ -55,7 +72,7 @@ public class UserService : AbstractDataServices, IUserService
             {
                 if (await CheckCode(registerDto.Code))
                 {
-                    
+
                     return new RegisterDto
                     {
                         Message = "Invalid admin code",
@@ -74,7 +91,7 @@ public class UserService : AbstractDataServices, IUserService
             Success = true,
         };
     }
-    // ! Por Convenio Asumiremos que Admin en el valor 0 
+
     private async Task<Role?> GetRole(int roleType)
     {
         List<Role> userRoles = (await _dataRepository.GetAllAsync<Role>()).ToList();
