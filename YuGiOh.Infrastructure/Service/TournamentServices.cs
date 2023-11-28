@@ -38,7 +38,7 @@ namespace YuGiOh.Infrastructure.Service
             return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
         }
 
-        public async Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(Guid AdminId)
+        public async Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(int AdminId)
         {
             var _Tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == AdminId);
             return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);

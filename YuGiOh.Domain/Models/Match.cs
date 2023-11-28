@@ -6,15 +6,15 @@ namespace YuGiOh.Domain.Models
     [EntityTypeConfiguration(typeof(MatchConfiguration))]
     public class Match : IEntity
     {
-        public Guid PlayerOneId { get; set; }
+        public int PlayerOneId { get; set; }
         public User PlayerOne { get; set; }
 
-        public Guid PlayerTwoId { get; set; }
+        public int PlayerTwoId { get; set; }
         public User PlayerTwo { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
 
-        public Guid TournamentId { get; set; }
+        public int TournamentId { get; set; }
         public Tournament Tournament { get; set; }
 
         public int PlayerOneResult { get; set; }

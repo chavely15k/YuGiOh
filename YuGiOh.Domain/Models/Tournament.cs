@@ -5,7 +5,7 @@ namespace YuGiOh.Domain.Models
     [EntityTypeConfiguration(typeof(TournamentConfiguration))]
     public class Tournament : IEntity
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
 

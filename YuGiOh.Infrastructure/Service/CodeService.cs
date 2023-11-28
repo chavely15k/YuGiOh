@@ -25,7 +25,7 @@ namespace YuGiOh.Infrastructure.Service {
         {
             List<Code> code = (await _dataRepository.GetAllAsync<Code>()).ToList();
             if (code.Count() == 0) {
-                await _dataRepository.CreateAsync<Code>(new Code() { Id = Guid.NewGuid(), Text = text});
+                await _dataRepository.CreateAsync<Code>(new Code() { Text = text});
             }
             else {
                 code[0].Text = text;

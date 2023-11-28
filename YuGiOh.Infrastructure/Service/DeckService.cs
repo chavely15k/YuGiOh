@@ -18,7 +18,7 @@ public class DeckService : AbstractDataServices, IDeckService
     {
     }
 
-    public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserIdAsync(Guid userId)
+    public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserIdAsync(int userId)
     {
         var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Id == userId);
         

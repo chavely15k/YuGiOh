@@ -13,7 +13,7 @@ namespace YuGiOh.ApplicationCore.DTO
 
         public DateTimeOffset StartDate { get; set; }
 
-        public Guid AdminId {get;set;}
+        public int AdminId {get;set;}
         
     }
 

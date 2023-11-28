@@ -8,7 +8,7 @@ namespace YuGiOh.Domain.Models
     [EntityTypeConfiguration(typeof(DeckConfiguration))]
     public class Deck:IEntity
     {
-        public Guid Id{ get; set; }
+        public int Id{ get; set; }
         public string Name { get; set; }
         public string Archetype { get; set; }
         public int MainDeckSize { get; set; }

@@ -20,7 +20,7 @@ namespace YuGiOh.API.Controllers
         }
 
         [HttpGet("userId/{userId}")]
-        public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserIdAsync(Guid userId)
+        public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserIdAsync(int userId)
         {
             var decks = await _deckService.GetDecksByUserIdAsync(userId);
             return Ok(decks);

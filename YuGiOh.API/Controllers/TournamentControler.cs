@@ -28,7 +28,7 @@ namespace YuGiOh.API.Controllers
         
         [HttpGet]
         [Route("userId/{userId}")]
-        public async Task<ActionResult<IEnumerable<TournamentDto>>> GetAllToutnamentsById(Guid AdminId)
+        public async Task<ActionResult<IEnumerable<TournamentDto>>> GetAllToutnamentsById(int AdminId)
         {
             var tournaments = await _TournamentService.GetAllTournamentsByAdmin(AdminId);
             return Ok(tournaments);

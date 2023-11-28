@@ -36,9 +36,9 @@ public class UserService : AbstractDataServices, IUserService
         return foundUsers.Count() != 0;
     }
 
-    public async Task<User?> GetUserByIdAsync(Guid id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
-        var foundUsers = await _dataRepository.GetByIdAsync<User, Guid>(id);
+        var foundUsers = await _dataRepository.GetByIdAsync<User, int>(id);
         return foundUsers;
     }
 
