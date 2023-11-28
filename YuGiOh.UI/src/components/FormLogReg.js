@@ -6,7 +6,7 @@ import "../styles/FormLR.css"
 
 export function Form(props) 
 {
-  const { onInputChange, onClickSubmit } = useForm(props.initialForm, props.data, props.page)
+  const { onInputChange, onClickSubmit } = useForm(props.initialForm, props.info, props.page)
 
   return (
     <form 
