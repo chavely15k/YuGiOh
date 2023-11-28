@@ -7,12 +7,12 @@ import '../styles/styles-routes/Admin.css'
 
 export function Admin(props) 
 {
-  const { list, onClickDelete } = useAdmin()
+  const { list, onClickDelete, onClickEdit } = useAdmin()
 
   return (
     <div className='admin'>
       <div className='containerHead'>
-        <h2>Admin Page</h2>
+        <h2>Hello {props.info.Nick}!</h2>
       </div>
       <div className='principalContentAdmin'>
         <TournamentList 

@@ -55,7 +55,7 @@
   list-style: none;
 }
 
-.containerElim
+.containerIcon
 {
   color: blueviolet;
   cursor: pointer;
@@ -64,7 +64,7 @@
   align-items: center;
 }
 
-.containerElim:hover
+.containerIcon:hover
 {
   color: red;
 }

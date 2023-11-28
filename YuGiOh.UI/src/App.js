@@ -9,10 +9,12 @@ import { Admin } from './routes/Admin'
 import { AddTournament } from './routes/AddTournament'
 import { EditTournament } from './routes/EditTournament'
 import { AiOutlineFileSearch } from "react-icons/ai"
+import { Rol } from './routes/Rol'
 
 //styles
 import './App.css'
 import { useState } from 'react'
+
 
 function App() 
 {
@@ -50,6 +52,10 @@ function App()
         <Route 
           path='/Login/Admin/AddTournament' 
           element={<AddTournament/>}>
+        </Route>
+        <Route
+          path='/Login/Rol'
+          element={<Rol/>}>  
         </Route>
       </Routes>
     </div>
