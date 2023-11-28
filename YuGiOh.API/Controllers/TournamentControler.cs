@@ -8,7 +8,7 @@ using YuGiOh.ApplicationServices.Service;
 namespace YuGiOh.API.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("Tournament")]
     public class TournamentControler: ControllerBase
     {
         private readonly ITournamentServices _TournamentService;
