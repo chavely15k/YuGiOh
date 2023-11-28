@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 
-export const useFetch = (object) => {
+export const useFetch = () => {
   const [data, setData] = useState({})
 
+  const infoAPI = (url, method, almac)
   useEffect(() => {
     console.log(object)
     fetch('http://localhost:5138/Account/register', {
