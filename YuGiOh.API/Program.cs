@@ -7,6 +7,7 @@ using YuGiOh.Infrastructure.Service;
 using YuGiOh.Infrastructure.Repository;
 using YuGiOh.Infrastructure.Mappings;
 using Microsoft.Extensions.DependencyInjection;
+using YuGiOh.Domain.Models;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 // using YuGiOh.Infrastructure.Seed;
@@ -42,6 +43,7 @@ builder.Services
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
     .AddScoped<IDeckService, DeckService>()
+    .AddScoped<ITournamentServices, TournamentServices>()
 //     .AddScoped<CodeController>()
      .AddScoped<CodeSeed>()
 //     .AddScoped<RoleSeed>()
