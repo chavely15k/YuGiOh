@@ -13,6 +13,19 @@ namespace YuGiOh.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Archetype",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Archetype", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Codes",
                 columns: table => new
                 {
@@ -31,7 +44,7 @@ namespace YuGiOh.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    enumValue = table.Column<int>(type: "integer", nullable: false)
+                    Type = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,15 +77,21 @@ namespace YuGiOh.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    Archetype = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     MainDeckSize = table.Column<int>(type: "integer", nullable: false),
                     SideDeckSize = table.Column<int>(type: "integer", nullable: false),
                     ExtraDeckSize = table.Column<int>(type: "integer", nullable: false),
+                    ArchetypeId = table.Column<int>(type: "integer", nullable: false),
                     PlayerId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Decks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Decks_Archetype_ArchetypeId",
+                        column: x => x.ArchetypeId,
+                        principalTable: "Archetype",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Decks_Users_PlayerId",
                         column: x => x.PlayerId,
@@ -196,6 +215,17 @@ namespace YuGiOh.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Archetype_Name",
+                table: "Archetype",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Decks_ArchetypeId",
+                table: "Decks",
+                column: "ArchetypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Decks_PlayerId",
                 table: "Decks",
                 column: "PlayerId");
@@ -254,6 +284,9 @@ namespace YuGiOh.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Archetype");
 
             migrationBuilder.DropTable(
                 name: "Users");

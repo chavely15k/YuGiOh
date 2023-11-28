@@ -69,7 +69,7 @@ public class UserService : AbstractDataServices, IUserService
     private async Task<Role?> GetRole(int roleType)
     {
         List<Role> userRoles = (await _dataRepository.GetAllAsync<Role>()).ToList();
-        Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.enumValue == roleType);
+        Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.Type == roleType);
         return matchingUserRole;
     }
     private async Task<UserRole> GetUserRoles(int roleType, User user)

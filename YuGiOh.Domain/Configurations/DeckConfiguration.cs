@@ -12,9 +12,6 @@ namespace YuGiOh.Domain.Configurations
             builder.Property(d => d.Name)
                 .IsRequired()
                 .HasMaxLength(40);
-            builder.Property(d => d.Archetype)
-                .IsRequired()
-                .HasMaxLength(40);
 
             builder.Property(d => d.MainDeckSize)
                 .IsRequired()
@@ -29,6 +26,9 @@ namespace YuGiOh.Domain.Configurations
                 .HasAnnotation("Range", new[] { 0, 15 });
 
             builder.HasOne(d => d.Player)
+                .WithMany()
+                .IsRequired();
+            builder.HasOne(d => d.Archetype)
                 .WithMany()
                 .IsRequired();
 

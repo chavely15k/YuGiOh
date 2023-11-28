@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231128051622_InitialMigration")]
+    [Migration("20231128104219_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,27 @@ namespace YuGiOh.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("YuGiOh.Domain.Models.Archetype", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Archetype");
+                });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Code", b =>
                 {
@@ -51,10 +72,8 @@ namespace YuGiOh.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Archetype")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
+                    b.Property<int>("ArchetypeId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("ExtraDeckSize")
                         .HasColumnType("integer")
@@ -77,6 +96,8 @@ namespace YuGiOh.Infrastructure.Migrations
                         .HasAnnotation("Range", new[] { 0, 15 });
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArchetypeId");
 
                     b.HasIndex("PlayerId");
 
@@ -150,7 +171,7 @@ namespace YuGiOh.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("enumValue")
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -246,11 +267,19 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Deck", b =>
                 {
+                    b.HasOne("YuGiOh.Domain.Models.Archetype", "Archetype")
+                        .WithMany()
+                        .HasForeignKey("ArchetypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("YuGiOh.Domain.Models.User", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Archetype");
 
                     b.Navigation("Player");
                 });
