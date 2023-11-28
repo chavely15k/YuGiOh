@@ -43,12 +43,14 @@ namespace YuGiOh.API.Controllers
             var result = await _deckService.DeleteDeck(deck);
             return Ok(result); 
         }
+        [HttpPut]
+        [Route("update")]
+        public async Task<ActionResult>UpdateDeck(RegisterDeckDto deckDto)
+        {
+            var result = await _deckService.UpdateDeck(deckDto);
+            return Ok(result);
+        }
 
-        // [HttpGet("userNick/{nick}")]
-        // public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserNickAsync(string nick)
-        // {
-        //     //var decks = await _deckService.GetDecksByUserNickAsync(nick);
-        //     //return Ok(decks);
-        // }
+
     }
 }

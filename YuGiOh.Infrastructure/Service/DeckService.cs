@@ -45,8 +45,15 @@ public class DeckService : AbstractDataServices, IDeckService
     public async Task<bool> DeleteDeck(int deck)
     {
         var result = await _dataRepository.DeleteAsync<Deck,int>(deck);
-        if(result != null) return true;
-        else return false; 
+        return result != null;
+        
+    }
+
+    public async Task<bool> UpdateDeck(RegisterDeckDto register)
+    {
+        var _deck = _mapper.Map<Deck>(register);
+        var result = await _dataRepository.UpdateAsync<Deck>(_deck);
+        return result != null;
     }
     // public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserNickAsync(string nick)
     // {
