@@ -43,10 +43,10 @@ export const useForm = (initialForm, info, page) => {
           }
       }
 
-      if (element == 'PhoneNumber' && formState[element] == '')
-        continue
-
       else if (element != 'repeatPassword') {
+        if (element == 'PhoneNumber' && formState[element] == '')
+          continue
+
         newFormState = {
           ...newFormState,
           [element]: formState[element]
@@ -57,28 +57,26 @@ export const useForm = (initialForm, info, page) => {
     const almac = (value) => {
       data[0] = value
     }
-    
-    infoAPI(`http://localhost:5138/Account/${page}`,'POST', almac, newFormState)
-    
+
+    infoAPI(`http://localhost:5138/Account/${page}`, 'POST', almac, newFormState)
+
     setTimeout(() => {
       const newData = data[0]
 
-      if (!newData.success) 
-      {
+      if (!newData.success) {
         alert(newData.message)
         return
       }
-  
-      if (page == 'register') 
-      {
+
+      if (page == 'register') {
         navigate('/Login')
         return
       }
-  
+
       info(newData)
       navigate(`${newData.roles.length > 1 ? '/Login/Rol' : '/Login/User'}`)
     }, 1000)
-   
+
   }
 
   return {
