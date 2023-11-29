@@ -106,7 +106,7 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Property<int>("PlayerOneId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PlayerOneResult")
@@ -141,7 +141,7 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.Property<int>("TournamentId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("DeckId")
@@ -194,7 +194,7 @@ namespace YuGiOh.Infrastructure.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
-                    b.Property<DateTimeOffset>("StartDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UserId")

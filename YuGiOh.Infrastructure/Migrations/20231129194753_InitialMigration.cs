@@ -108,7 +108,7 @@ namespace YuGiOh.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Address = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    StartDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -151,7 +151,7 @@ namespace YuGiOh.Infrastructure.Migrations
                 columns: table => new
                 {
                     PlayerOneId = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     PlayerTwoId = table.Column<int>(type: "integer", nullable: false),
                     TournamentId = table.Column<int>(type: "integer", nullable: false),
                     PlayerOneResult = table.Column<int>(type: "integer", nullable: false),
@@ -188,7 +188,7 @@ namespace YuGiOh.Infrastructure.Migrations
                     PlayerId = table.Column<int>(type: "integer", nullable: false),
                     TournamentId = table.Column<int>(type: "integer", nullable: false),
                     DeckId = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
