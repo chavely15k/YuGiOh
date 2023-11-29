@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
+using YuGiOh.Domain.Models;
 
 namespace YuGiOh.Infrastructure.Service
 {
@@ -14,9 +15,10 @@ namespace YuGiOh.Infrastructure.Service
         {
         }
 
-        public Task<RequestDto> CreateRequest(RequestDto create)
+        public Task<RequestDto> CreateRequest(RequestDto request)
         {
             throw new NotImplementedException();
+
         }
 
         public Task<bool> DeleteRequest(int Tid, int Pid)

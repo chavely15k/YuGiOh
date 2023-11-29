@@ -42,6 +42,7 @@ builder.Services
     .AddScoped<IEntityRepository, EntityRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
+    .AddScoped<IRoleService, RoleService>()
     .AddScoped<IDeckService, DeckService>()
     .AddScoped<ITournamentServices, TournamentServices>()
     .AddScoped<RoleSeed>()

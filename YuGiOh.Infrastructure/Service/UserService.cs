@@ -64,6 +64,7 @@ public class UserService : AbstractDataServices, IUserService
 
     public async Task<RegisterDto> RegisterUserAsync(UserDto registerDto)
     {
+        List<UserRole> roles = new();
         var _user = _mapper.Map<User>(registerDto);
 
         foreach (var role in registerDto.Roles)
@@ -80,9 +81,10 @@ public class UserService : AbstractDataServices, IUserService
                     };
                 }
             }
-            _user.Roles = new List<UserRole>();
-            _user.Roles.Add(await GetUserRoles(role, _user));
+
+            roles.Add(await GetUserRoles(role, _user));
         }
+        _user.Roles = roles;
         await _dataRepository.CreateAsync<User>(_user);
 
         return new RegisterDto
