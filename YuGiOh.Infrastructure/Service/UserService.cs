@@ -58,7 +58,7 @@ public class UserService : AbstractDataServices, IUserService
 
     public async Task<User?> GetUserByIdAsync(int id)
     {
-        var foundUsers = await _dataRepository.GetByIdAsync<User, int>(id);
+        var foundUsers = await _dataRepository.GetByIdAsync<User>(id);
         return foundUsers;
     }
 

@@ -30,7 +30,7 @@ public class DeckService : AbstractDataServices, IDeckService
     {
         var _deck = _mapper.Map<Deck>(register);
 
-        var _user = await _dataRepository.GetByIdAsync<User,int>(register.PalyerId);
+        var _user = await _dataRepository.GetByIdAsync<User>(register.PalyerId);
         var _Archetype = await _dataRepository.FindAsync<Archetype>(d => d.Id == register.Archetype);
         if (_user != null)
         {
@@ -43,7 +43,7 @@ public class DeckService : AbstractDataServices, IDeckService
 
     public async Task<bool> DeleteDeck(int deck)
     {
-        var result = await _dataRepository.DeleteAsync<Deck,int>(deck);
+        var result = await _dataRepository.DeleteAsync<Deck>(deck);
         return result != null;
         
     }

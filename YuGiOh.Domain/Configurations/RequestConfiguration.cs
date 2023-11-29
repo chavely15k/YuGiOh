@@ -1,27 +1,27 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using YuGiOh.Domain.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using YuGiOh.Domain.Models;
 
-namespace YuGiOh.Domain.Configurations
-{
-    public class RequestConfiguration : IEntityTypeConfiguration<Request>
+    namespace YuGiOh.Domain.Configurations
     {
-        public void Configure(EntityTypeBuilder<Request> builder)
+        public class RequestConfiguration : IEntityTypeConfiguration<Request>
         {
-            builder.HasKey(m => new { m.PlayerId, m.TournamentId});
-            
-            builder.HasOne(m => m.Player)
-                .WithMany();
+            public void Configure(EntityTypeBuilder<Request> builder)
+            {
+                builder.HasKey(m => new { m.PlayerId, m.TournamentId});
                 
+                builder.HasOne(m => m.Player)
+                    .WithMany();
+                    
 
-            builder.HasOne(m => m.Tournament)
-                .WithMany();
-                
-            builder.Property(r => r.Date).IsRequired();
-            builder.Property(r => r.Status)
-                .IsRequired()
-                .HasConversion<string>();
+                builder.HasOne(m => m.Tournament)
+                    .WithMany();
+                    
+                builder.Property(r => r.Date).IsRequired();
+                builder.Property(r => r.Status)
+                    .IsRequired()
+                    .HasConversion<string>();
 
+            }
         }
     }
-}

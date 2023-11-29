@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using YuGiOh.Domain.Configurations;
+using YuGiOh.Domain.Enums;
 namespace YuGiOh.Domain.Models
 {
     [EntityTypeConfiguration(typeof(RequestConfiguration))]
@@ -22,10 +23,5 @@ namespace YuGiOh.Domain.Models
             return new { PlayerId, TournamentId };
         }
     }
-    public enum RequestStatus
-    {
-        Pending,
-        Approved,
-        Rejected,
-    }
+    
 }
