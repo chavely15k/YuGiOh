@@ -14,14 +14,14 @@ export function Admin(props)
   const { infoAPI } = useFetch()
   
 
-  useEffect(() => infoAPI(
-    `http://localhost:5138/Tournament/userId/${props.info.id}`, 'GET', setList), [])
+  /*useEffect(() => infoAPI(
+    `http://localhost:5138/Tournament/userId/${props.info.id}`, 'GET', setList), [])*/
   
 
   return (
     <div className='admin'>
       <div className='containerHead'>
-        <h2>Hello {props.info.Nick}!</h2>
+        <h2>Hello {props.info.nick}!</h2>
       </div>
       <div className='principalContentAdmin'>
         <TournamentList 

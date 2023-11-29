@@ -43,7 +43,7 @@ function App()
         </Route>    
         <Route 
           path='/Login/Admin' 
-          element={<Admin/>}>
+          element={<Admin info={info}/>}>
         </Route>
         <Route 
           path='/Login/Admin/EditTournament' 
