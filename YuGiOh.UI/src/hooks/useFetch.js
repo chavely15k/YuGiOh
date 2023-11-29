@@ -1,6 +1,6 @@
 export const useFetch = () => {
 
-  const infoAPI = (url, method, data, object = {}) => {
+  const infoAPI = (url, method, almac, object = {}) => {
     fetch(url, {
       method: method,
       body: JSON.stringify(object),
@@ -9,7 +9,7 @@ export const useFetch = () => {
       }
     })
       .then(response => response.json())
-      .then(info => data[0] = info)
+      .then(info => almac(info))
       .catch(error => alert(`An error has occurred: ${error}`))
   }
 

@@ -51,7 +51,11 @@ export const useForm = (initialForm, info, page) => {
       }
     }
 
-    infoAPI(`http://localhost:5138/Account/${page}`,'POST', data, newFormState)
+    const almac = (value) => {
+      data[0] = value
+    }
+    
+    infoAPI(`http://localhost:5138/Account/${page}`,'POST', almac, newFormState)
     
     setTimeout(() => {
       const newData = data[0]
@@ -69,8 +73,9 @@ export const useForm = (initialForm, info, page) => {
       }
   
       info(newData)
+      console.log(newData)
   
-      navigate(`${newData.Roles.length > 1 ? '.Login/Rol' : 'Login/User'}`)
+      navigate(`${newData.roles.length > 1 ? '/Login/Rol' : '/Login/User'}`)
     }, 1000)
    
   }
