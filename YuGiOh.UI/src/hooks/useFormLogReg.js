@@ -1,5 +1,5 @@
 //dependencies
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from "./useFetch"
 
@@ -7,7 +7,7 @@ export const useForm = (initialForm, info, page) => {
   const [formState, setFormState] = useState(initialForm)
   var newFormState = {}
   const navigate = useNavigate()
-  const [data, setData] = useState({})
+  const data = [{}]
   const { infoAPI } = useFetch()
 
   const onInputChange = (e) => {
@@ -51,28 +51,28 @@ export const useForm = (initialForm, info, page) => {
       }
     }
 
-    infoAPI(`'http://localhost:5138/Account/${page}`,
-      `${page == 'register' ? 'POST' : 'GET'}`, setData, newFormState)
+    infoAPI(`http://localhost:5138/Account/${page}`,'POST', data, newFormState)
+    
+    setTimeout(() => {
+      const newData = data[0]
 
-    if(!data.success)
-    {
-      alert(data.message)
-      return
-    }
-
-    if(page == 'register')
-    {
-      navigate('/Login')
-      return
-    }
-      
-    info({
-      id: data.id,
-      Nick: data.Nick,
-      Roles: data.Roles
-    })
-
-    navigate(`${data.Roles.length > 1 ? '.Login/Rol' : 'Login/User'}`)
+      if (!newData.success) 
+      {
+        alert(newData.message)
+        return
+      }
+  
+      if (page == 'register') 
+      {
+        navigate('/Login')
+        return
+      }
+  
+      info(newData)
+  
+      navigate(`${newData.Roles.length > 1 ? '.Login/Rol' : 'Login/User'}`)
+    }, 1000)
+   
   }
 
   return {
