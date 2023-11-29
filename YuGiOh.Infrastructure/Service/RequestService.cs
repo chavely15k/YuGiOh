@@ -21,19 +21,32 @@ namespace YuGiOh.Infrastructure.Service
 
         }
 
-        public Task<bool> DeleteRequest(int Tid, int Pid)
+        public async Task<bool> DeleteRequest(int Tid, int Pid)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id)
+        public async Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id)
         {
+            //var allRequest = await _dataRepository.FindAsync<Request>(d => );
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
+        public async Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
         {
-            throw new NotImplementedException();
+            var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id);
+            DateTime now = DateTime.Now;
+            LinkedList<RequestDto> result = new();
+            foreach(var request in allRequest)
+            {
+                var tournament = await _dataRepository.GetByIdAsync<Tournament, int>(request.TournamentId);
+                if(now.CompareTo(tournament.StartDate)>0)
+                {
+                    result.AddLast(_mapper.Map<RequestDto>(request));
+                }
+            }
+            return result.OrderBy(x => x.Date).ToList();
+
         }
 
         public Task<bool> UpdateRequest(RequestDto update)
