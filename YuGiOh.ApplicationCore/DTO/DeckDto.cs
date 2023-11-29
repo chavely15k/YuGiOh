@@ -1,6 +1,6 @@
 namespace YuGiOh.ApplicationCore.DTO;
 
-public class RegisterDeckDto
+public class DeckDto
 {
     public string Name { get; set; }
     public int Archetype { get; set; }

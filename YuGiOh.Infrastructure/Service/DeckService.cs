@@ -19,14 +19,14 @@ public class DeckService : AbstractDataServices, IDeckService
     {
     }
 
-    public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserIdAsync(int userId)
+    public async Task<IEnumerable<DeckDto>> GetDecksByUserIdAsync(int userId)
     {
         var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Id == userId);
         
-        return _mapper.Map<IEnumerable<RegisterDeckDto>>(_decks);
+        return _mapper.Map<IEnumerable<DeckDto>>(_decks);
     }
 
-    public async Task<RegisterDeckDto> RegisterDeck(RegisterDeckDto register)
+    public async Task<DeckDto> RegisterDeck(DeckDto register)
     {
         var _deck = _mapper.Map<Deck>(register);
 
@@ -39,7 +39,7 @@ public class DeckService : AbstractDataServices, IDeckService
             _deck.Archetype = _Archetype.First();
             await _dataRepository.CreateAsync<Deck>(_deck);
         }
-        return _mapper.Map<RegisterDeckDto>(_deck);
+        return _mapper.Map<DeckDto>(_deck);
     }
 
     public async Task<bool> DeleteDeck(int deck)

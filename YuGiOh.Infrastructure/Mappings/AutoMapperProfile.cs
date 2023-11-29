@@ -17,11 +17,11 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.Code, opt => opt.Ignore())
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
 
-            CreateMap<RegisterDeckDto, Deck>()
+            CreateMap<DeckDto, Deck>()
                 .ForMember(dest => dest.Archetype, opt => opt.Ignore())
                 .ForMember(dest => dest.Player, opt => opt.Ignore());
    
-            CreateMap<Deck, RegisterDeckDto>()
+            CreateMap<Deck, DeckDto>()
                 .ForMember(dest => dest.Archetype, opt => opt.Ignore())
                 .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id))
                 .ForMember(dest => dest.Nick, opt => opt.MapFrom(src => src.Player.Nick));

@@ -20,7 +20,7 @@ namespace YuGiOh.API.Controllers
         }
 
         [HttpGet("userId/{userId}")]
-        public async Task<ActionResult<IEnumerable<RegisterDeckDto>>> GetDecksByUserIdAsync(int userId)
+        public async Task<ActionResult<IEnumerable<DeckDto>>> GetDecksByUserIdAsync(int userId)
         {
             var decks = await _deckService.GetDecksByUserIdAsync(userId);
             return Ok(decks);
@@ -28,7 +28,7 @@ namespace YuGiOh.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult<RegisterDeckDto>> RegisterDeck(RegisterDeckDto register)
+        public async Task<ActionResult<DeckDto>> RegisterDeck(DeckDto register)
         {
             
             var registeredDeck = await _deckService.RegisterDeck(register);
