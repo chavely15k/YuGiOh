@@ -15,7 +15,7 @@ namespace YuGiOh.API.Controllers
         {
             this.userService = userService;
         }
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<ActionResult> Login(LoginRequestDto loginRequest)
         {
             bool isSuccessful = await userService.LoginAsync(loginRequest);
