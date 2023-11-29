@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using YuGiOh.ApplicationCore.Repository;
+using YuGiOh.ApplicationServices.Service;
 using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
