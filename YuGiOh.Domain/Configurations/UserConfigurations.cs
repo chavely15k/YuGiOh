@@ -26,9 +26,6 @@ namespace YuGiOh.Domain.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(u => u.PhoneNumber)
-                .IsRequired();
-
             builder.Property(u => u.Province)
                 .IsRequired()
                 .HasMaxLength(50);
