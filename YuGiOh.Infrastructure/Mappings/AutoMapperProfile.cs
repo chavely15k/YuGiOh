@@ -29,7 +29,7 @@ namespace YuGiOh.Infrastructure.Mappings
             
             CreateMap<TournamentDto, Tournament>()
                 .ForMember(dest => dest.User, opt => opt.Ignore())
-                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => (src.StartDate + "Z")));a
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => (src.StartDate + "Z")));
 
             CreateMap<Tournament, TournamentDto>()
                 .ForMember(dest => dest.AdminId, opt => opt.MapFrom(src => src.User.Id));
