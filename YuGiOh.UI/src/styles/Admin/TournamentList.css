@@ -64,9 +64,14 @@
   align-items: center;
 }
 
-.containerIcon:hover
+.deleteIcon:hover
 {
   color: red;
+}
+
+.editIcon:hover
+{
+  color: green;
 }
 
 .buttonTournament

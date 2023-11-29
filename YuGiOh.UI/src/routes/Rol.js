@@ -1,4 +1,7 @@
-import { Button } from '../components/PrincipalPage/Button'
+//components
+import { Button } from '../components/Button'
+
+//styles
 import '../styles/styles-routes/Rol.css'
 
 export function Rol() {

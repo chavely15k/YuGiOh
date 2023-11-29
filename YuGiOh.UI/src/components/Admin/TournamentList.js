@@ -1,11 +1,15 @@
 //dependencies
-import { AiFillCloseCircle } from "react-icons/ai";
 import { NavLink } from 'react-router-dom';
+
+//components
+import { AiFillCloseCircle } from "react-icons/ai";
+import { AiTwotoneEdit } from "react-icons/ai";
 
 //styles
 import '../../styles/Admin/TournamentList.css'
 
-export function TournamentList(props) {
+export function TournamentList(props) 
+{
   return (
     <div className="containerTournaments">
       <div className="tournamentsHead">
@@ -14,25 +18,27 @@ export function TournamentList(props) {
       <ul className="containerList">
         {props.list.map(element => (
           <div className="containerLi">
-            <li 
+            <li
               key={element.id}
               id={element.id}>
-                {element.name}
+              {element.name}/{element.address}/{element.startDate}
             </li>
-            <div 
-              className="containerIcon"
-              onCLick={props.onClickEdit}>
-
-            </div>
-            <div 
-              className="containerIcon"
-              onClick={props.onClickDelete}>
-                <AiFillCloseCircle/>
+            <div className="containerIcons">
+              <div
+                className="containerIcon editIcon"
+                onCLick={props.onClickEdit}>
+                  <AiTwotoneEdit />
+              </div>
+              <div
+                className="containerIcon deleteIcon"
+                onClick={props.onClickDelete}>
+                  <AiFillCloseCircle />
+              </div>
             </div>
           </div>
         ))}
       </ul>
-      <NavLink 
+      <NavLink
         to='/Login/Admin/AddTournament'
         className='buttonTournament'>
           add tournament
