@@ -9,5 +9,4 @@ public class DeckDto
     public int SideDeckSize { get; set; }
     public int ExtraDeckSize { get; set; }
     public int PalyerId { get; set; }
-    public string Nick{get;set;}
 }

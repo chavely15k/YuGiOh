@@ -17,7 +17,6 @@ namespace YuGiOh.Infrastructure.Service
         public Task<RequestDto> CreateRequest(RequestDto create)
         {
             throw new NotImplementedException();
-
         }
 
         public Task<bool> DeleteRequest(int Id)
