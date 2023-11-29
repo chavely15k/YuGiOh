@@ -45,7 +45,7 @@ namespace YuGiOh.API.Controllers
         }
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResult>UpdateDeck(RegisterDeckDto deckDto)
+        public async Task<ActionResult>UpdateDeck(DeckDto deckDto)
         {
             var result = await _deckService.UpdateDeck(deckDto);
             return Ok(result);

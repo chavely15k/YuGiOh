@@ -49,7 +49,7 @@ public class DeckService : AbstractDataServices, IDeckService
         
     }
 
-    public async Task<bool> UpdateDeck(RegisterDeckDto register)
+    public async Task<bool> UpdateDeck(DeckDto register)
     {
         var _deck = _mapper.Map<Deck>(register);
         var result = await _dataRepository.UpdateAsync<Deck>(_deck);
