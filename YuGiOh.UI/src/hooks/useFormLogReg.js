@@ -43,6 +43,9 @@ export const useForm = (initialForm, info, page) => {
           }
       }
 
+      if (element == 'PhoneNumber' && formState[element] == '')
+        continue
+
       else if (element != 'repeatPassword') {
         newFormState = {
           ...newFormState,
