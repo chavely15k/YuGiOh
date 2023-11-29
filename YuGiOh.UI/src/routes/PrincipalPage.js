@@ -1,7 +1,5 @@
 //components
-import { Button } from '../components/PrincipalPage/Button';
-
-//dependencies
+import { Button } from '../components/Button';
 import { AiFillTrophy } from "react-icons/ai";
 
 //styles

@@ -1,4 +1,4 @@
-//dependencies
+//components
 import { Form } from '../components/FormLogReg'
 
 //styles

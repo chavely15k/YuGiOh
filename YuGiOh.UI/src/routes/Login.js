@@ -1,11 +1,8 @@
 //components
-import { useState } from 'react'
 import { Form } from '../components/FormLogReg'
-import { Rol } from './Rol'
 
 //styles
 import '../styles/styles-routes/LoginRegister.css'
-
 
 export function Login(props) 
 {

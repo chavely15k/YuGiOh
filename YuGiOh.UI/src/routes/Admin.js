@@ -1,8 +1,10 @@
 //dependencies
 import { useEffect, useState } from 'react'
-import { TournamentList } from '../components/Admin/TournamentList'
 import { useAdmin } from '../hooks/useAdmin'
 import { useFetch } from '../hooks/useFetch'
+
+//components
+import { TournamentList } from '../components/Admin/TournamentList'
 
 //styles
 import '../styles/styles-routes/Admin.css'
@@ -10,13 +12,9 @@ import '../styles/styles-routes/Admin.css'
 export function Admin(props) 
 {
   const [list, setList] = useState([])
-  const { onClickDelete } = useAdmin(setList)
+  const { onClickDelete } = useAdmin(setList, props.info.id)
   const { infoAPI } = useFetch()
-  
-
-  /*useEffect(() => infoAPI(
-    `http://localhost:5138/Tournament/userId/${props.info.id}`, 'GET', setList), [])*/
-  
+  useEffect(() => infoAPI(`http://localhost:5138/Tournament/userId/${props.info.id}`, 'GET', setList), [])
 
   return (
     <div className='admin'>

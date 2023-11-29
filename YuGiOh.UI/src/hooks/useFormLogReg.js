@@ -1,5 +1,5 @@
 //dependencies
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from "./useFetch"
 
@@ -44,6 +44,9 @@ export const useForm = (initialForm, info, page) => {
       }
 
       else if (element != 'repeatPassword') {
+        if (element == 'PhoneNumber' && formState[element] == '')
+          continue
+
         newFormState = {
           ...newFormState,
           [element]: formState[element]
@@ -54,32 +57,26 @@ export const useForm = (initialForm, info, page) => {
     const almac = (value) => {
       data[0] = value
     }
-    
-    infoAPI(`http://localhost:5138/Account/${page}`,'POST', almac, newFormState)
-    
-    setTimeout(() => {
-      console.log(newFormState)
-      const newData = data[0]
-      console.log(newData)
 
-      if (!newData.success) 
-      {
+    infoAPI(`http://localhost:5138/Account/${page}`, 'POST', almac, newFormState)
+
+    setTimeout(() => {
+      const newData = data[0]
+
+      if (!newData.success) {
         alert(newData.message)
         return
       }
-  
-      if (page == 'register') 
-      {
+
+      if (page == 'register') {
         navigate('/Login')
         return
       }
-  
+
       info(newData)
-      console.log(newData)
-  
       navigate(`${newData.roles.length > 1 ? '/Login/Rol' : '/Login/User'}`)
     }, 1000)
-   
+
   }
 
   return {

@@ -1,56 +1,35 @@
-import { useForm } from "../hooks/useFormTournament";
+//dependencies
+import { useForm } from "../hooks/useFormTournament"
+
+//styles
 import '../styles/FormEA.css'
 
 export function Form(props) {
-  const { onClickSubmit, onInputChange } = useForm(props.initialForm)
+  const { onClickSubmit, onInputChange } = useForm(props.initialForm, props.id)
 
   return (
     <form
       className="formEA"
       onSubmit={onClickSubmit}>
       <div className="containerFieldsEA">
-        <div className="row">
-          <label
-            htmlFor="nameTournament"
-            className="labelTournament labelEA">
-            Name
-          </label>
-          <input
-            className="inputEA"
-            id="nameTournament"
-            type="text"
-            name="name"
-            onChange={onInputChange}
-            placeholder="Ingress a tournament name"/>
-        </div>
-        <div className="row">
-          <label
-            htmlFor="dateTournament"
-            className="labelTournament labelEA">
-            Date
-          </label>
-          <input
-            className="inputEA"
-            id="dateTournament"
-            type="date"
-            name="date"
-            onChange={onInputChange}
-            placeholder="Ingress a tournament date"/>
-        </div>
-        <div className="row">
-          <label
-            htmlFor="addressTournament"
-            className="labelTournament labelEA">
-            Address
-          </label>
-          <input
-            className="inputEA"
-            id="addressTournament"
-            type="text"
-            name="address"
-            onChange={onInputChange}
-            placeholder="Ingress a tournament address"/>
-        </div>
+        {props.elements.map(element => (
+          <div
+            className="row"
+            key={element.id}>
+            <label
+              htmlFor={`${element.id}`}
+              className="labelEA">
+              {element.name}
+            </label>
+            <input
+              className="inputEA"
+              id={`${element.id}`}
+              type={`${element.inputType}`}
+              name={`${element.id}`}
+              placeholder={`${element.inputPlaceHolder}`}
+              onChange={onInputChange} />
+          </div>
+        ))}
       </div>
       <div className="containerButtonEA">
         <button
