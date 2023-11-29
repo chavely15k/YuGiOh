@@ -1,5 +1,5 @@
 //dependencies
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from "./useFetch"
 
@@ -58,9 +58,7 @@ export const useForm = (initialForm, info, page) => {
     infoAPI(`http://localhost:5138/Account/${page}`,'POST', almac, newFormState)
     
     setTimeout(() => {
-      console.log(newFormState)
       const newData = data[0]
-      console.log(newData)
 
       if (!newData.success) 
       {
@@ -75,8 +73,6 @@ export const useForm = (initialForm, info, page) => {
       }
   
       info(newData)
-      console.log(newData)
-  
       navigate(`${newData.roles.length > 1 ? '/Login/Rol' : '/Login/User'}`)
     }, 1000)
    

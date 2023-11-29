@@ -2,8 +2,7 @@
 import { NavLink } from 'react-router-dom';
 
 //styles
-import '../../styles/PrincipalPage/Button.css';
-
+import '../styles/Button.css';
 
 export function Button(props)
 {
