@@ -18,52 +18,56 @@ namespace YuGiOh.API.Controllers
             this.roleService = roleService;
         }
         [HttpPost("login")]
+
         public async Task<ActionResult> Login(LoginRequestDto loginRequest)
         {
-            bool isSuccessful = await userService.LoginAsync(loginRequest);
-            if (isSuccessful)
-            {
-                var _user = await userService.GetUserByNickAsync(loginRequest.Nick);
-                var rolesId = _user.Roles.Select(r => r.RoleId).ToList() ?? new List<int>();
-                var roleTasks = rolesId.Select(async r => await roleService.GetRoleByIdAsync(r));
-                var roles = await Task.WhenAll(roleTasks);
-                var roleTypes = roles.Select(r => r.Type).ToList();
+            var _user = await userService.GetUserByNickAsync(loginRequest.Nick);
 
-                return Ok(
-                    new
-                    {
-                        Name = _user.Name,
-                        Id = _user.Id,
-                        Nick = _user.Nick,
-                        Roles = roleTypes,
-                        Message = "Succesful Login ",
-                        Success = true
-                    });
-            }
-            else
+            if (_user != null)
             {
-                return BadRequest(
-                    new
-                    {
-                        Message = "Worng Credentials",
-                        Success = false
-                    });
+                var rolesId = _user.Roles?.Select(r => r.RoleId).ToList() ?? new List<int>();
+                var roleTypes = new List<int>();
+
+                foreach (var roleId in rolesId)
+                {
+                    var role = await roleService.GetRoleByIdAsync(roleId);
+                    roleTypes.Add(role.Type);
+                }
+
+                return Ok(new
+                {
+                    Name = _user.Name,
+                    Id = _user.Id,
+                    Nick = _user.Nick,
+                    Roles = roleTypes,
+                    Message = "Succesful Login ",
+                    Success = true
+                });
             }
-        }
-        [HttpPost("register")]
-        public async Task<ActionResult> Register(UserDto registerUser)
-        {
-            if (await userService.IsNickTakenAsync(registerUser.Nick))
+        
+            else
             {
                 return BadRequest(new
                 {
-                    Message = "Nick already in use.",
+                    Message = "Worng Credentials",
                     Success = false
                 });
             }
-
-            var response = await userService.RegisterUserAsync(registerUser);
-            return Ok(response);
         }
+        [HttpPost("register")]
+public async Task<ActionResult> Register(UserDto registerUser)
+{
+    if (await userService.IsNickTakenAsync(registerUser.Nick))
+    {
+        return BadRequest(new
+        {
+            Message = "Nick already in use.",
+            Success = false
+        });
+    }
+
+    var response = await userService.RegisterUserAsync(registerUser);
+    return Ok(response);
+}
     }
 }
