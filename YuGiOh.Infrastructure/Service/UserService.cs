@@ -70,7 +70,7 @@ public class UserService : AbstractDataServices, IUserService
         {
             if (role == (int)RoleType.Admin)
             {
-                if (await CheckCode(registerDto.Code))
+                if (!await CheckCode(registerDto.Code))
                 {
 
                     return new RegisterDto
