@@ -31,6 +31,13 @@ namespace YuGiOh.Infrastructure.Mappings
 
             CreateMap<Tournament, TournamentDto>()
                 .ForMember(dest => dest.AdminId, opt => opt.MapFrom(src => src.User.Id));
+            
+            CreateMap<Request, RequestDto>()
+                .ForMember(dest => dest.Status, opt => opt.Ignore());
+
+            CreateMap<RequestDto,Request>()
+                .ForMember(dest => dest.Date, opt => opt.Ignore())
+                .ForMember(dest => dest.Status, opt => opt.Ignore());
         }
     }
 }
