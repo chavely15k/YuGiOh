@@ -11,9 +11,11 @@ namespace YuGiOh.API.Controllers
     public class AccountController : ControllerBase
     {
         public readonly IUserService userService;
-        public AccountController(IUserService userService)
+        public readonly IRoleService roleService;
+        public AccountController(IUserService userService,IRoleService roleService)
         {
             this.userService = userService;
+            this.roleService = roleService;
         }
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginRequestDto loginRequest)
@@ -22,8 +24,7 @@ namespace YuGiOh.API.Controllers
             if (isSuccessful)
             {
                 var _user = await userService.GetUserByNickAsync(loginRequest.Nick);
-                var roles = _user.Roles?.Select(r => r.Role.Type).ToList() ?? new List<int>();
-                
+                var roles = _user.Roles.Select(async r => await roleService.GetRoleByIdAsync(r.RoleId) ).ToList();
                 return Ok(
                     new
                     {
