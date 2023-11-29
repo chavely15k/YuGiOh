@@ -14,7 +14,7 @@ namespace YuGiOh.Domain.Models
         public int DeckId { get; set; }
         public Deck Deck { get; set; }
 
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
         public RequestStatus Status { get; set; }
 
         public object GetById()

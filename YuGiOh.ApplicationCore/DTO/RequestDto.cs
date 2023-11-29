@@ -7,7 +7,7 @@ public class RequestDto
     public int PlayerId { get; set; }
     public int TournamentId { get; set; }
     public int DeckId { get; set; }
-    public DateTimeOffset Date { get; set; }
+    public DateTime Date { get; set; }
     public string Status { get; set; }
 
 }

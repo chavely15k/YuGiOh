@@ -12,7 +12,7 @@ namespace YuGiOh.Domain.Models
         public int PlayerTwoId { get; set; }
         public User PlayerTwo { get; set; }
 
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
 
         public int TournamentId { get; set; }
         public Tournament Tournament { get; set; }

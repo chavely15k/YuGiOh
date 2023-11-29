@@ -9,7 +9,7 @@ namespace YuGiOh.Domain.Models
         public string Name { get; set; }
         public string Address { get; set; }
 
-        public DateTimeOffset StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public User User { get; set; }
 
