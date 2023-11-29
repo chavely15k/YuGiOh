@@ -19,17 +19,22 @@ namespace YuGiOh.Infrastructure.Service
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteRequest(int Id)
+        public Task<bool> DeleteRequest(int Tid, int Pid)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<RequestDto>> GetAllRequestByAdmin()
+        public Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<RequestDto>> GetAllRequestByPlayer()
+        public Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateRequest(RequestDto update)
         {
             throw new NotImplementedException();
         }
