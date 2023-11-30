@@ -31,6 +31,8 @@ export const useForm = (initialForm, id) => {
       AdminId: id
     }
 
+    newFormState.StartDate += 'Z'
+
     const almac = (value) => {
       data[0] = value
     }
@@ -41,7 +43,7 @@ export const useForm = (initialForm, id) => {
       console.log(data[0])
     }, 2000)
     
-    //navigate('/Login/Admin')
+    navigate('/Login/Admin')
   }
 
   return {  
