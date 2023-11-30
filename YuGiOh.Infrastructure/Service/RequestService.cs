@@ -52,18 +52,16 @@ namespace YuGiOh.Infrastructure.Service
         public async Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
         {
             var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id);
-            DateTime now = DateTime.Now;
             LinkedList<RequestDto> result = new();
             foreach(var request in allRequest)
             {
                 var tournament = await _dataRepository.GetByIdAsync<Tournament>(request.TournamentId);
-                if(tournament != null && now < tournament.StartDate)
+                if(tournament != null && DateTime.Now < tournament.StartDate)
                 {
                     result.AddLast(_mapper.Map<RequestDto>(request));
                 }
             }
             return result.OrderByDescending(x => x.Date).ToList();
-
         }
 
         public async Task<bool> UpdateRequest(RequestDto request)
