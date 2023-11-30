@@ -6,14 +6,14 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { AiTwotoneEdit } from "react-icons/ai";
 
 //styles
-import '../../styles/Admin/TournamentList.css'
+import '../styles/TournamentDeckList.css'
 
-export function TournamentList(props) 
+export function List(props) 
 {
   return (
     <div className="containerTournaments">
       <div className="tournamentsHead">
-        <h3>My Tournaments</h3>
+        <h3>{props.header}</h3>
       </div>
       <ul className="containerList">
         {props.list.map(element => (
@@ -39,9 +39,9 @@ export function TournamentList(props)
         ))}
       </ul>
       <NavLink
-        to='/Login/Admin/AddTournament'
+        to={props.addPage}
         className='buttonTournament'>
-          add tournament
+          {props.nameAddPage}
       </NavLink>
     </div>
   )

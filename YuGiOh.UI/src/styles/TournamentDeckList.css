@@ -57,19 +57,23 @@
 
 .containerIcon
 {
-  color: blueviolet;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.deleteIcon:hover
+.containerIcon:hover
+{
+  color: black;
+}
+
+.deleteIcon
 {
   color: red;
 }
 
-.editIcon:hover
+.editIcon
 {
   color: green;
 }

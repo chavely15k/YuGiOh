@@ -62,6 +62,7 @@ export const useForm = (initialForm, info, page) => {
 
     setTimeout(() => {
       const newData = data[0]
+      console.log(newData)
 
       if (!newData.success) {
         alert(newData.message)

@@ -81,6 +81,7 @@
   height: 70%;
   width: 90%;
   gap: 2px;
+  overflow-y: auto;
 }
 
 .containerButtonEA

@@ -9,7 +9,7 @@
   background-color: blueviolet;
 }
 
-h1
+.h1
 {
   color: white;
   text-shadow: 1px 1px 2px white;
@@ -19,7 +19,7 @@ h1
   margin-left: 5px;
 }
 
-header
+.header
 {
   margin-bottom: 4px;
   padding-top: 5px;

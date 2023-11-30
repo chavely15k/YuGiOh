@@ -1,5 +1,5 @@
 //components
-import { Form } from "../components/FormAdmin"
+import { Form } from "../components/FormTournamentDeck"
 
 //styles
 import '../styles/styles-routes/EditAddTournament.css'
@@ -36,7 +36,8 @@ export function AddTournament(props)
           StartDate: '',
           Address: ''
         }}
-        id={props.info.id}/>
+        id={props.info.id}
+        page='addTournament'/>
     </div>
   )
 }

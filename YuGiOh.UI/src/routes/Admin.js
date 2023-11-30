@@ -4,7 +4,7 @@ import { useAdmin } from '../hooks/useAdmin'
 import { useFetch } from '../hooks/useFetch'
 
 //components
-import { TournamentList } from '../components/Admin/TournamentList'
+import { List } from '../components/TournamentDeckList'
 
 //styles
 import '../styles/styles-routes/Admin.css'
@@ -19,12 +19,15 @@ export function Admin(props)
   return (
     <div className='admin'>
       <div className='containerHead'>
-        <h2>Hello {props.info.nick}!</h2>
+        <h2>Hello {props.info.nick}</h2>
       </div>
       <div className='principalContentAdmin'>
-        <TournamentList 
+        <List 
           list={list}
-          onClickDelete={onClickDelete}/>
+          onClickDelete={onClickDelete}
+          header='My Tournaments'
+          addPage='/Login/Admin/AddTournament'
+          nameAddPage='add tournament'/>
       </div>
     </div>
   )

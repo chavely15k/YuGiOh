@@ -1,11 +1,11 @@
 //dependencies
-import { useForm } from "../hooks/useFormTournament"
+import { useForm } from "../hooks/useFormTournamentDeck"
 
 //styles
 import '../styles/FormEA.css'
 
 export function Form(props) {
-  const { onClickSubmit, onInputChange } = useForm(props.initialForm, props.id)
+  const { onClickSubmit, onInputChange } = useForm(props.initialForm, props.id, props.page)
 
   return (
     <form
