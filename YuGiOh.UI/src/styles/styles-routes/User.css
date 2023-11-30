@@ -1,0 +1,100 @@
+.containerPrincipalUser
+{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: inherit;
+}
+
+.headerUser
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 25px;
+  font-size: 28px;
+  text-shadow: 1px 1px 2px white;
+  user-select: none;
+}
+
+.infoAdmin
+{
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-evenly
+}
+
+.containerAnimations
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 88%;
+  padding-bottom: 10px;
+  width: 50%;
+}
+
+.headerCards
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 1px 1px 2px white;
+  font-size: 29px;
+  font-weight: bold;
+  user-select: none;
+}
+
+.containerCards
+{
+  height: 78%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.card
+{
+  width: 40%;
+  height: 100%;
+  border: 1px solid dimgray;
+}
+
+.setCard
+{
+  background: url('../../images/SetCard.jpg') no-repeat center center/cover;
+ 
+}
+
+.multifaker
+{
+  background: url('../../images/Multifaker.jpg') no-repeat center center/cover;
+}
+
+.colorIconHeader
+{
+  margin-left: 10px;
+  margin-top: 5px;
+  color: white;
+}
+
+.containerOptionsUser
+{
+  margin: 50px;
+  height: 70%;
+  width: 35%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 25px;
+  box-shadow: 1px 1px 5px white;
+}

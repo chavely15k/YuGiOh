@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from "./useFetch"
 
-export const useForm = (initialForm, id) => {
+export const useForm = (initialForm, id, page) => {
   const [formState, setFormState] = useState(initialForm)
   const navigate = useNavigate()
   const { infoAPI } = useFetch()
@@ -26,13 +26,33 @@ export const useForm = (initialForm, id) => {
       }
     }
 
-    const newFormState = {
-      ...formState,
-      AdminId: id
+    var newFormState = {}
+    
+    if(page == 'addTournament')
+    {
+      newFormState = {
+        ...formState,
+        AdminId: id
+      }
+  
+      newFormState.StartDate += 'Z'
     }
 
-    newFormState.StartDate += 'Z'
+    else if(page == 'addDeck')
+    {
+      newFormState = {
+        ...formState,
+        PlayerId: id
+      }
+    }
 
+    else
+    {
+      newFormState = {
+        ...formState
+      }
+    }
+   
     const almac = (value) => {
       data[0] = value
     }

@@ -1,5 +1,5 @@
 //dependencies
-import { Form } from "../components/FormAdmin"
+import { Form } from "../components/FormTournamentDeck"
 
 //styles
 import '../styles/styles-routes/EditAddTournament.css'
@@ -35,7 +35,8 @@ export function EditTournament()
           nameTournament: '',
           dateTournament: '',
           addressTournament: ''
-        }} />
+        }}
+        page='editTournament'/>
     </div>
   )
 }
