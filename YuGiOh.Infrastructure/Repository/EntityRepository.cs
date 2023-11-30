@@ -24,18 +24,21 @@ namespace YuGiOh.Domain.Models
         }
 
 
-        public async Task<TEntity> DeleteAsync<TEntity, TKey>(TKey key)
-            where TEntity : class,IEntity
-            where TKey : IEquatable<TKey>
+        public async Task<TEntity> DeleteAsync<TEntity>(object key)
+    where TEntity : class, IEntity
         {
-            var entityToDelete = await GetByIdAsync<TEntity, TKey>(key);
+            // Asumiendo que GetByIdAsync también se ajusta para trabajar con una clave de tipo object
+            var entityToDelete = await GetByIdAsync<TEntity>(key);
+
             if (entityToDelete != null)
             {
                 context.Set<TEntity>().Remove(entityToDelete);
                 await context.SaveChangesAsync();
             }
+
             return entityToDelete;
         }
+
 
         public async Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
         {
@@ -47,14 +50,19 @@ namespace YuGiOh.Domain.Models
             return await context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity?> GetByIdAsync<TEntity, TKey>(TKey id)
+       
+        public async Task<TEntity?> GetByIdAsync<TEntity>(object key)
             where TEntity : class, IEntity
-            where TKey : IEquatable<TKey>
         {
             var entities = await context.Set<TEntity>().ToListAsync();
-            return entities.SingleOrDefault(e => e.GetById().Equals(id));
-        }
 
+            if (key != null)
+            {
+                return entities.SingleOrDefault(e => e.GetById().Equals(key));
+            }
+
+            return null;
+        }
 
 
         public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity

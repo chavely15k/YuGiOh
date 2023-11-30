@@ -15,43 +15,63 @@ namespace YuGiOh.Infrastructure.Service
         {
         }
 
-        public Task<RequestDto> CreateRequest(RequestDto request)
+        public async Task<RequestDto> CreateRequest(RequestDto request)
         {
-            throw new NotImplementedException();
+            var _request = _mapper.Map<Request>(request);
+            await _dataRepository.CreateAsync<Request>(_request);
+            return _mapper.Map<RequestDto>(_request);
 
         }
 
-        public async Task<bool> DeleteRequest(int Tid, int Pid)
+        public async Task<bool> DeleteRequest(int PlayerId, int TournametId)
         {
-            throw new NotImplementedException();
+            var result = await _dataRepository.DeleteAsync<Request>(
+                new { PlayerId, TournametId });
+            return result != null;
         }
 
         public async Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id)
         {
-            //var allRequest = await _dataRepository.FindAsync<Request>(d => );
-            throw new NotImplementedException();
+            DateTime now = DateTime.Now;
+            var tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == id && d.StartDate > now );
+            List<Request> requests = new();
+            foreach(var tournamet in tournaments)
+            {
+                var req = await _dataRepository.FindAsync<Request>(d => d.TournamentId == tournamet.Id);
+                requests.Concat(req);
+            }
+            LinkedList<RequestDto> result = new();
+            foreach(var request in requests)
+            {
+                result.AddLast(_mapper.Map<RequestDto>(request));
+            }
+            return result.OrderByDescending(d => d.Date).ToList();
+
         }
 
         public async Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
         {
             var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id);
-            DateTime now = DateTime.Now;
             LinkedList<RequestDto> result = new();
             foreach(var request in allRequest)
             {
-                var tournament = await _dataRepository.GetByIdAsync<Tournament, int>(request.TournamentId);
-                if(now.CompareTo(tournament.StartDate)>0)
+                var tournament = await _dataRepository.GetByIdAsync<Tournament>(request.TournamentId);
+                if(tournament != null && DateTime.Now < tournament.StartDate)
                 {
                     result.AddLast(_mapper.Map<RequestDto>(request));
                 }
             }
-            return result.OrderBy(x => x.Date).ToList();
-
+            return result.OrderByDescending(x => x.Date).ToList();
         }
 
-        public Task<bool> UpdateRequest(RequestDto update)
+        public async Task<bool> UpdateRequest(RequestDto request)
         {
-            throw new NotImplementedException();
+            var _request = _mapper.Map<Request>(request);
+            //Todo: hay que hacer un checkeo que me valide si existe el usuario
+            //var newRequest = await _dataRepository.GetByIdAsync<Request>(_request.GetById());
+            //Todo: hay que hacer un checkeo de que el status que se manda se uno valido            
+            var result = await _dataRepository.UpdateAsync<Request>(_request);
+            return result != null;
         }
-    }
+    } 
 }

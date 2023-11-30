@@ -18,6 +18,6 @@ public class RoleService : AbstractDataServices, IRoleService
 
     public async Task<Role> GetRoleByIdAsync(int RoleId)
     {
-        return await _dataRepository.GetByIdAsync<Role,int>(RoleId);
+        return await _dataRepository.GetByIdAsync<Role>(RoleId);
     }
 }
