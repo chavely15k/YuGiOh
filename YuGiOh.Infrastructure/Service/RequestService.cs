@@ -43,7 +43,7 @@ namespace YuGiOh.Infrastructure.Service
             LinkedList<RequestDto> result = new();
             foreach(var request in allRequest)
             {
-                var tournament = await _dataRepository.GetByIdAsync<Tournament, int>(request.TournamentId);
+                var tournament = await _dataRepository.GetByIdAsync<Tournament>(request.TournamentId);
                 if(now.CompareTo(tournament.StartDate)>0)
                 {
                     result.AddLast(_mapper.Map<RequestDto>(request));
