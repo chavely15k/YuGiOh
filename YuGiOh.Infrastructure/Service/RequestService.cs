@@ -32,8 +32,21 @@ namespace YuGiOh.Infrastructure.Service
 
         public async Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id)
         {
-            //var allRequest = await _dataRepository.FindAsync<Request>(d => );
-            throw new NotImplementedException();
+            DateTime now = DateTime.Now;
+            var tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == id && d.StartDate > now );
+            List<Request> requests = new();
+            foreach(var tournamet in tournaments)
+            {
+                var req = await _dataRepository.FindAsync<Request>(d => d.TournamentId == tournamet.Id);
+                requests.Concat(req);
+            }
+            LinkedList<RequestDto> result = new();
+            foreach(var request in requests)
+            {
+                result.AddLast(_mapper.Map<RequestDto>(request));
+            }
+            return result.OrderByDescending(d => d.Date).ToList();
+
         }
 
         public async Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
@@ -44,12 +57,12 @@ namespace YuGiOh.Infrastructure.Service
             foreach(var request in allRequest)
             {
                 var tournament = await _dataRepository.GetByIdAsync<Tournament>(request.TournamentId);
-                if(now.CompareTo(tournament.StartDate)>0)
+                if(tournament != null && now < tournament.StartDate)
                 {
                     result.AddLast(_mapper.Map<RequestDto>(request));
                 }
             }
-            return result.OrderBy(x => x.Date).ToList();
+            return result.OrderByDescending(x => x.Date).ToList();
 
         }
 
