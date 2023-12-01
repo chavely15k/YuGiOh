@@ -13,7 +13,7 @@ namespace YuGiOh.Infrastructure.Mappings
         {
             CreateMap<UserDto, User>()
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
-
+                
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Code, opt => opt.Ignore())
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
@@ -40,6 +40,12 @@ namespace YuGiOh.Infrastructure.Mappings
             CreateMap<RequestDto,Request>()
                 .ForMember(dest => dest.Date, opt => opt.Ignore())
                 .ForMember(dest => dest.Status, opt => opt.Ignore());
+
+            CreateMap<ArchetypeDto,Archetype>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<Archetype,ArchetypeDto>();
+               
 
             CreateMap<MatchDto,Match>()
                 .ForMember(dest => dest.PlayerOneId, ent => ent.MapFrom(src => src.PlayerOneId))

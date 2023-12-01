@@ -11,10 +11,8 @@ public interface IDeckService
 {
     Task<DeckDto> RegisterDeck(DeckDto register);
     public  Task<IEnumerable<DeckDto>> GetDecksByUserIdAsync(int userId);
-
-
-    Task<bool> DeleteDeck(int deck);
-    Task<bool> UpdateDeck(DeckDto register);
+    Task<bool> DeleteDeck(int idDeck);
+    Task<bool> UpdateDeck(DeckDto deck);
 
     // public  Task<IEnumerable<RegisterDeckDto>> GetDecksByUserNickAsync(string nick);
 }
