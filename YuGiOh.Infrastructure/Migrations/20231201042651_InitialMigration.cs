@@ -156,7 +156,8 @@ namespace YuGiOh.Infrastructure.Migrations
                     TournamentId = table.Column<int>(type: "integer", nullable: false),
                     PlayerOneResult = table.Column<int>(type: "integer", nullable: false),
                     PlayerTwoResult = table.Column<int>(type: "integer", nullable: false),
-                    Round = table.Column<int>(type: "integer", nullable: false)
+                    Round = table.Column<int>(type: "integer", nullable: false),
+                    Group = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
