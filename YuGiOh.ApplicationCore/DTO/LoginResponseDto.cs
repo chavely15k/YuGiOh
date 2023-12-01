@@ -8,7 +8,7 @@ namespace YuGiOh.ApplicationCore.DTO;
 public class LoginResponseDto
 {
     public string Name { get; set; }
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string Nick { get; set; }
     public List<int> Roles { get; set; }
     public string Message { get; set; }
