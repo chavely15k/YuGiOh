@@ -20,6 +20,7 @@ namespace YuGiOh.Domain.Models
         public int PlayerOneResult { get; set; }
         public int PlayerTwoResult { get; set; }
         public int Round { get; set; }
+        public int Group { get; set; }
 
         public object GetById()
         {
