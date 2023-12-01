@@ -10,7 +10,7 @@ namespace YuGiOh.ApplicationServices.Service
     {
         public Task<bool> UpdateMatch(MatchDto newMatch);
 
-        public Task<IEnumerable<MatchDto>> GetMatchesByPhase(int phase);
+        public Task<IEnumerable<MatchDto>> GetMatchesByPhase(MatchByPhaseDto matchByPhaseDto);
         
         public Task<IEnumerable<MatchDto>> GetMatchesByTournament(int id);
 
