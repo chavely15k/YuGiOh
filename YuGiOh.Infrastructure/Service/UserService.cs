@@ -11,7 +11,8 @@ namespace YuGiOh.Infrastructure.Service;
 
 public class UserService : AbstractDataServices, IUserService
 {
-    public UserService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
+    private readonly IRoleService _roleService;
+    public UserService(IEntityRepository dataRepository, IMapper mapper, IRoleService _roleService) : base(dataRepository, mapper)
     {
     }
 
@@ -20,16 +21,53 @@ public class UserService : AbstractDataServices, IUserService
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(LoginRequestDto loginDto)
+    public Task DeleteAsync(LoginDto loginDto)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> LoginAsync(LoginRequestDto loginDto)
+    public async Task<LoginResponseDto> LoginAsync(LoginDto loginDto)
     {
-        var foundUser = (await _dataRepository.FindAsync<User>(u => u.Nick == loginDto.Nick)).ToList();
-        return foundUser.Count != 0 ? foundUser[0].Password == loginDto.Password : false;
+
+        var _user = await GetUserByNickAsync(loginDto.Nick);
+
+        if (_user != null && _user.Password == loginDto.Password)
+        {
+            var rolesId = _user.Roles.Select(r => r.RoleId).ToList();
+            var roleTypes = new List<int>();
+
+            foreach (var roleId in rolesId)
+            {
+                var role = await _roleService.GetRoleByIdAsync(roleId);
+                roleTypes.Add(role.Type);
+            }
+
+            return new LoginResponseDto
+            {
+                Name = _user.Name,
+                Id = _user.Id,
+                Nick = _user.Nick,
+                Roles = roleTypes,
+                Message = "Succesful Login ",
+                Success = true
+            };
+        }
+
+        else
+        {
+            return new LoginResponseDto
+            {
+                Message = "Worng Credentials",
+                Success = false
+            };
+        }
     }
+
+
+
+    
+
+
 
     public async Task<bool> IsNickTakenAsync(string nick)
     {
@@ -44,17 +82,6 @@ public class UserService : AbstractDataServices, IUserService
             .ToListAsync();
         return foundUsers.FirstOrDefault();
     }
-
-    // public async Task<User> GetUserByNickAsync(string nick)
-    // {
-    //     var foundUser = await _dataRepository
-    //         .Include(u => u.PropiedadDeNavegacion) // Reemplaza PropiedadDeNavegacion con el nombre real de tu propiedad de navegación
-    //         .FirstOrDefaultAsync(u => u.Nick == nick);
-
-    //     return foundUser;
-    // }
-
-
 
     public async Task<User?> GetUserByIdAsync(int id)
     {

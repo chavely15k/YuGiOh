@@ -37,6 +37,16 @@ builder.Services.AddDbContext<YuGiOhDbContext>(options =>
 });
 //builder.Services.AddAutoMapper(typeof(Program).Assembly,typeof(AutoMapperProfile).Assembly);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+builder.Services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+                // Configuración global para ignorar propiedades nulas durante la serialización
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
+
+
 builder.Services
 
     .AddScoped<IEntityRepository, EntityRepository>()
