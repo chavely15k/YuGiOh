@@ -5,7 +5,7 @@ import { useForm } from "../hooks/useFormTournamentDeck"
 import '../styles/FormEA.css'
 
 export function Form(props) {
-  const { onClickSubmit, onInputChange } = useForm(props.initialForm, props.id, props.page)
+  const { onClickSubmit, onInputChange } = useForm(props.initialForm, props.id, props.page, props.infoEditDeckTournament, props.archetype)
 
   return (
     <form

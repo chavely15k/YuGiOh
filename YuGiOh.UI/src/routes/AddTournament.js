@@ -2,7 +2,7 @@
 import { Form } from "../components/FormTournamentDeck"
 
 //styles
-import '../styles/styles-routes/EditAddTournament.css'
+import '../styles/styles-routes/EditAddTournamentDeck.css'
 
 export function AddTournament(props)
 {

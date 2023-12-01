@@ -1,6 +1,9 @@
+//components
 import { BsEmojiSunglassesFill } from "react-icons/bs";
-import '../styles/styles-routes/User.css'
 import { Button } from "../components/Button";
+
+//styles
+import '../styles/styles-routes/User.css'
 
 export function User(props) {
 
@@ -27,7 +30,7 @@ export function User(props) {
             Be Admin
           </Button>
           <Button
-            path='/Login'>
+            path='/Login/User/Decks'>
             Decks
           </Button>
           <Button
