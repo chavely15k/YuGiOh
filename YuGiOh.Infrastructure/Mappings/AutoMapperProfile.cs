@@ -40,6 +40,26 @@ namespace YuGiOh.Infrastructure.Mappings
             CreateMap<RequestDto,Request>()
                 .ForMember(dest => dest.Date, opt => opt.Ignore())
                 .ForMember(dest => dest.Status, opt => opt.Ignore());
+
+            CreateMap<MatchDto,Match>()
+                .ForMember(dest => dest.PlayerOneId, ent => ent.MapFrom(src => src.PlayerOneId))
+                .ForMember(dest => dest.PlayerTwoId, ent => ent.MapFrom(src => src.PlayerTwoId))
+                .ForMember(dest => dest.Date, ent => ent.MapFrom(src => src.Date))
+                .ForMember(dest => dest.TournamentId, ent => ent.MapFrom(src => src.TournamentId))
+                .ForMember(dest => dest.PlayerOneResult, ent => ent.MapFrom(src => src.PlayerOneResult))
+                .ForMember(dest => dest.PlayerTwoResult, ent => ent.MapFrom(src => src.PlayerTwoResult))
+                .ForMember(dest => dest.Round, ent => ent.MapFrom(src => src.Round))
+                .ForMember(dest => dest.Group, ent => ent.MapFrom(src => src.Group));
+
+            CreateMap<Match,MatchDto>()
+                .ForMember(dest => dest.PlayerOneId, ent => ent.MapFrom(src => src.PlayerOneId))
+                .ForMember(dest => dest.PlayerTwoId, ent => ent.MapFrom(src => src.PlayerTwoId))
+                .ForMember(dest => dest.Date, ent => ent.MapFrom(src => src.Date))
+                .ForMember(dest => dest.TournamentId, ent => ent.MapFrom(src => src.TournamentId))
+                .ForMember(dest => dest.PlayerOneResult, ent => ent.MapFrom(src => src.PlayerOneResult))
+                .ForMember(dest => dest.PlayerTwoResult, ent => ent.MapFrom(src => src.PlayerTwoResult))
+                .ForMember(dest => dest.Round, ent => ent.MapFrom(src => src.Round))
+                .ForMember(dest => dest.Group, ent => ent.MapFrom(src => src.Group));
         }
     }
 }

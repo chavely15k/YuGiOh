@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231129194753_InitialMigration")]
+    [Migration("20231201042651_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -111,6 +111,9 @@ namespace YuGiOh.Infrastructure.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Group")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PlayerOneResult")
                         .HasColumnType("integer");
