@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,29 +19,30 @@ namespace YuGiOh.Infrastructure.Service {
         }
 
 
-        public async Task<IList<Match>> InitPhase(PhaseDto phaseDto) {
-            IList<Match> matches
+        public async Task<IList<MatchDto>> InitPhase(PhaseDto phaseDto) {
+            IList<Match> matches; IList<MatchDto> result = new List<MatchDto>();
             if (phaseDto.Round == 0) matches = await GenerateClassificationMatches(phaseDto);
             else matches = await GenerateRoundMatches(phaseDto);
-            foreach (match in matches) {
-                _dataRepository.CreateAsync<Match>(match);
+            foreach (var match in matches) {
+                result.Add(_mapper.Map<MatchDto>(match));
+                await _dataRepository.CreateAsync<Match>(match);
             }
-            return matches;
+            return result;
         }
 
-        protected async Task<IList<Match>> GenerateClassificationMatches(PhaseDto grouphaseDtopPhaseDto) {
+        protected async Task<IList<Match>> GenerateClassificationMatches(PhaseDto phaseDto) {
             var players = (await _dataRepository.FindAsync<Request>(r => (r.TournamentId == phaseDto.TournamentId && r.Status == RequestStatus.Approved))).Select(r => r.PlayerId).ToList();
             List<Match> matches = new List<Match>();
 
             for (int i = 0; i < players.Count() - 1; i++) {
                 for (int j = i + 1; j < players.Count(); j++) {
-                    matches.Add( new Match()) {
+                    matches.Add( new Match() {
                         PlayerOneId = players[i],
                         PlayerTwoId = players[j],
                         TournamentId = phaseDto.TournamentId,
                         Round = 0,
                         Group = 0
-                    }
+                    });
                 }
             }
             return matches;
@@ -59,9 +59,10 @@ namespace YuGiOh.Infrastructure.Service {
                     PlayerTwoId = winners[i+1],
                     TournamentId = phaseDto.TournamentId,
                     Round = phaseDto.Round,
-                    Group = g++;
-                })
+                    Group = g++
+                });
             }
+            return result;
         }
     }
 }
