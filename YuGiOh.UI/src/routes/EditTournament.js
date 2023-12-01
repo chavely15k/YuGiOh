@@ -2,9 +2,9 @@
 import { Form } from "../components/FormTournamentDeck"
 
 //styles
-import '../styles/styles-routes/EditAddTournament.css'
+import '../styles/styles-routes/EditAddTournamentDeck.css'
 
-export function EditTournament() 
+export function EditTournament(props) 
 {
   return (
     <div className="containerEdit">
@@ -32,11 +32,13 @@ export function EditTournament()
         ]}
         nameButton='edit'
         initialForm={{
-          nameTournament: '',
-          dateTournament: '',
-          addressTournament: ''
+          Name: '',
+          StartDate: '',
+          Address: ''
         }}
-        page='editTournament'/>
+        id={props.info.id} 
+        page='editTournament'
+        infoEditDeckTournament={props.infoEditDeckTournament}/>
     </div>
   )
 }

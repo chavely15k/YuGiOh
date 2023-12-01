@@ -11,8 +11,8 @@ import '../styles/TournamentDeckList.css'
 export function List(props) 
 {
   return (
-    <div className="containerTournaments">
-      <div className="tournamentsHead">
+    <div className="containerTournamentsDecks">
+      <div className="tournamentsDecksHead">
         <h3>{props.header}</h3>
       </div>
       <ul className="containerList">
@@ -21,12 +21,12 @@ export function List(props)
             <li
               key={element.id}
               id={element.id}>
-              {element.name}/{element.address}/{element.startDate}
+              {element.name} / {element.address} / {element.startDate}
             </li>
             <div className="containerIcons">
               <div
                 className="containerIcon editIcon"
-                onCLick={props.onClickEdit}>
+                onClick={props.onClickEdit}>
                   <AiTwotoneEdit />
               </div>
               <div

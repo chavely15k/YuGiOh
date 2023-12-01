@@ -1,6 +1,6 @@
 //dependencies
-import { useEffect, useState } from 'react'
-import { useAdmin } from '../hooks/useAdmin'
+import { useAdminDeck } from '../hooks/useAdminDeck'
+import { useState, useEffect } from 'react'
 import { useFetch } from '../hooks/useFetch'
 
 //components
@@ -12,10 +12,10 @@ import '../styles/styles-routes/Admin.css'
 export function Admin(props) 
 {
   const [list, setList] = useState([])
-  const { onClickDelete } = useAdmin(setList, props.info.id)
+  const { onClickDelete, onClickEdit } = useAdminDeck(setList, props.setInfoMessage, 'admin', props.setInfoEditDeckTournament)
   const { infoAPI } = useFetch()
   useEffect(() => infoAPI(`http://localhost:5138/Tournament/userId/${props.info.id}`, 'GET', setList), [])
-
+  
   return (
     <div className='admin'>
       <div className='containerHead'>
@@ -25,9 +25,11 @@ export function Admin(props)
         <List 
           list={list}
           onClickDelete={onClickDelete}
+          onClickEdit={onClickEdit}
           header='My Tournaments'
           addPage='/Login/Admin/AddTournament'
-          nameAddPage='add tournament'/>
+          nameAddPage='add tournament'
+          page='tournaments'/>
       </div>
     </div>
   )

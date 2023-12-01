@@ -1,7 +1,7 @@
 export const useFetch = () => {
 
   const infoAPI = (url, method, almac, object) => {
-    method != 'GET'
+    method == 'POST' || method == 'PUT'
       ?
       fetch(url, {
         method: method,
@@ -14,7 +14,9 @@ export const useFetch = () => {
         .then(info => almac(info))
         .catch(error => alert(`An error has occurred: ${error}`))
       :
-      fetch(url)
+      fetch(url, {
+        method: method
+      })
         .then(response => response.json())
         .then(info => almac(info))
         .catch(error => alert(`An error has occurred: ${error}`))

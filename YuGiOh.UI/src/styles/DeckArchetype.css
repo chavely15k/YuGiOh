@@ -1,0 +1,36 @@
+.containerArchetype
+{
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 5px;
+  padding: 3px;
+}
+
+.headerArchetype
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  text-shadow: 1px 1px 2px white;
+  user-select: none;
+}
+
+.nameArchetype
+{
+  background-color: white;
+  color: blueviolet;
+  font-weight: bold;
+  font-size: 15px;
+  height: 28px;
+  width: 120%;
+  margin: 3px;
+  padding: 5px;
+  border-radius: 25px;
+  border: none;
+  user-select: none;
+}

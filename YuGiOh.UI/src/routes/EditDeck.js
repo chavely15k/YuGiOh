@@ -1,11 +1,15 @@
 //components
+import { useState } from "react"
 import { Form } from "../components/FormTournamentDeck"
+import { Archetype } from "../components/DeckArchetype"
 
 //styles
-import '../styles/styles-routes/EditAddTournament.css'
+import '../styles/styles-routes/EditAddTournamentDeck.css'
 
 export function EditDeck(props) 
 {
+  const [archetypeValue, setArchetypeValue] = useState('')
+
   return (
     <div className="containerEdit">
       <h2 className="headForm">Edit Deck</h2>
@@ -34,12 +38,6 @@ export function EditDeck(props)
             name: 'SideDeck Cards',
             inputType: 'number',
             inputPlaceHolder: 'Ingress a extradeck size'
-          },
-          {
-            id: 'Archetype',
-            name: 'Archetype',
-            inputType: 'text',
-            inputPlaceHolder: 'ingress a valid archetype'
           }
         ]}
         nameButton='edit'
@@ -47,10 +45,13 @@ export function EditDeck(props)
           Name: '',
           MainDeckSize: '',
           ExtraDeckSize: '',
-          SideDeckSize: '',
-          Archetype: ''
+          SideDeckSize: ''
         }} 
-        page='editDeck'/>
+        id={props.info.id} 
+        page='editDeck'
+        infoEditDeckTournament={props.infoEditDeckTournament}
+        archetype={archetypeValue}/>
+        <Archetype setArchetypeValue={setArchetypeValue}/>
     </div>
   )
 }
