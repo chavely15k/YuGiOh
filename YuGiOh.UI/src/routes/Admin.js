@@ -29,7 +29,7 @@ export function Admin(props)
           header='My Tournaments'
           addPage='/Login/Admin/AddTournament'
           nameAddPage='add tournament'
-          page='tournaments'/>
+          page='admin'/>
       </div>
     </div>
   )

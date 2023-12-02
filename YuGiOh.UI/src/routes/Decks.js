@@ -28,7 +28,8 @@ export function Decks(props)
           onClickEdit={onClickEdit}
           header='My Decks'
           addPage='/Login/User/Decks/AddDeck'
-          nameAddPage='add deck'/>
+          nameAddPage='add deck'
+          page='decks'/>
       </div>
     </div>
   )

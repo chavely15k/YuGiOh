@@ -1,24 +1,11 @@
+import { useState } from 'react'
 import { useArchetype } from '../hooks/useArchetype'
 import '../styles/DeckArchetype.css'
 
 export function Archetype(props) 
 {
-  const list = [
-    {
-      id: 1, 
-      name: 'Altergeist'
-    }, 
-    {
-      id: 2,
-      name: 'Swordsoul'
-    },
-    {
-      id: 3,
-      name: 'Dark Magician'
-    }
-  ]
-
-  const { onSelect } = useArchetype(props.setArchetypeValue)
+  const [list, setList] = useState([])
+  const { onSelect } = useArchetype(props.setArchetypeValue, setList)
   
   return (
     <div className="containerArchetype">
