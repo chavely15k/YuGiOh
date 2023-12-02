@@ -1,7 +1,7 @@
 //components
 import { useState } from "react"
 import { Form } from "../components/FormTournamentDeck"
-import { Archetype } from "../components/DeckArchetype"
+import { Archetype } from "../components/Archetype"
 
 //styles
 import '../styles/styles-routes/EditAddTournamentDeck.css'

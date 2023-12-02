@@ -54,12 +54,12 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             PlayerId: id,
-            ArchetypeId: archetype
+            Archetype: archetype
           }
 
           if (archetype != '')
           {
-            infoAPI('http://localhost:5138/Deck/create', 'POST', almac, newFormState) 
+            infoAPI('http://localhost:5138/api/Deck/register', 'POST', almac, newFormState) 
 
             setTimeout(() => {
               navigate('/Login/User/Decks')
@@ -94,7 +94,7 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
             ...formState,
             PlayerId: id,
             id: idDeckTournament,
-            ArchetypeId: archetype
+            Archetype: archetype
           }
 
           if(archetype != '')
