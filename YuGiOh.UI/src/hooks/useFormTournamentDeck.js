@@ -59,7 +59,7 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
 
           if (archetype != '')
           {
-            infoAPI('http://localhost:5138/api/Deck/register', 'POST', almac, newFormState) 
+            infoAPI('http://localhost:5138/Deck/register', 'POST', almac, newFormState) 
 
             setTimeout(() => {
               navigate('/Login/User/Decks')

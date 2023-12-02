@@ -15,10 +15,11 @@ import { User } from './routes/User'
 import { AddDeck } from './routes/AddDeck'
 import { EditDeck } from './routes/EditDeck'
 import { Decks } from './routes/Decks'
+import { Message } from './routes/Message'
+import { RequestsSettings } from './routes/RequestSettings'
 
 //styles
 import './App.css'
-import { Message } from './routes/Message'
 
 function App() {
   const [info, setInfo] = useState({})
@@ -95,6 +96,13 @@ function App() {
         <Route
           path='/Message'
           element={<Message infoMessage={infoMessage} />}>
+        </Route>
+        <Route
+          path='/Login/User/RequestsSettings'
+          element={
+            <RequestsSettings
+              info={info}
+              setInfoMessage={setInfoMessage}/>}>
         </Route>
         <Route
           path='/*'

@@ -108,3 +108,21 @@
   background-color: black;
   color: yellow;
 }
+
+.actionRequest
+{
+  color: green;
+  cursor: pointer;
+}
+
+.actionRequest:hover
+{
+  color: fuchsia;
+}
+
+.containerActionRequest
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
