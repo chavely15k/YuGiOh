@@ -24,17 +24,18 @@ public class ArchetypeService : AbstractDataServices, IArchetypeService
         return true;
     }
 
-    public Task<bool> DeleteDeck(int idArchetype)
+    public Task<bool> DeleteArchetype(int idArchetype)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ArchetypeDto>> GetAllAsync()
+    public async Task<IEnumerable<ArchetypeDto>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var archetypes = await _dataRepository.GetAllAsync<Archetype>();
+        return _mapper.Map<IEnumerable<ArchetypeDto>>(archetypes);
     }
 
-    public Task<bool> UpdateDeck(ArchetypeDto archetype)
+    public Task<bool> UpdateArchetype(ArchetypeDto archetype)
     {
         throw new NotImplementedException();
     }

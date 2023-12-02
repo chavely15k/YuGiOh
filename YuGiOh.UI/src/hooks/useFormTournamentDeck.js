@@ -77,6 +77,8 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
             id: idDeckTournament
           }
 
+          newFormState.StartDate += 'Z'
+
           infoAPI('http://localhost:5138/Tournament/update', 'PUT', almac, newFormState)
 
           setTimeout(() => {

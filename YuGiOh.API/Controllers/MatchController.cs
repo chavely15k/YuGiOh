@@ -28,7 +28,7 @@ namespace YuGiOh.API.Controllers
 
         [HttpGet]
         [Route("getMatchesByPhase")]
-        public async Task<ActionResult<MatchDto>> RegisterDeck(MatchByPhaseDto matchByPhaseDto)
+        public async Task<ActionResult<MatchDto>> GetMatchesByPhase(MatchByPhaseDto matchByPhaseDto)
         {
             var matches = await _matchService.GetMatchesByPhase(matchByPhaseDto);
             return Ok(matches);
@@ -36,7 +36,7 @@ namespace YuGiOh.API.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResult>UpdateDeck(MatchDto matchDto)
+        public async Task<ActionResult>UpdateMatch(MatchDto matchDto)
         {
             var match = await _matchService.UpdateMatch(matchDto);
             return Ok(match);

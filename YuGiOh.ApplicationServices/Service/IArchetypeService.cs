@@ -10,7 +10,7 @@ public interface IArchetypeService
 {
     public Task<IEnumerable<ArchetypeDto>> GetAllAsync();
     public Task<bool> CreateArchetype(ArchetypeDto archetype);
-    Task<bool> DeleteDeck(int idArchetype);
-    Task<bool> UpdateDeck(ArchetypeDto archetype);
+    Task<bool> DeleteArchetype(int idArchetype);
+    Task<bool> UpdateArchetype(ArchetypeDto archetype);
 
 }
