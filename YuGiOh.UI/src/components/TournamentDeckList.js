@@ -22,7 +22,7 @@ export function List(props) {
                 <li
                   key={element.id}
                   id={element.id}>
-                  {element.name} / {element.address} / {element.startDate}
+                    {element.name} || {element.address} || {element.startDate}
                 </li>
                 <div className="containerIcons">
                   <div
@@ -44,7 +44,7 @@ export function List(props) {
               <li
                 key={element.id}
                 id={element.id}>
-                {element.name} / MD: {element.mainDeckSize} / ED: {element.extraDeckSize} / SD: {element.sideDeckSize} / {element.archetype}
+                {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetype}
               </li>
               <div className="containerIcons">
                 <div
