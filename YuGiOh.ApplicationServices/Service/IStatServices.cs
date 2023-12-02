@@ -26,6 +26,7 @@ namespace YuGiOh.ApplicationServices.Service
         public Task<string> MostWinnerProvince(DateTime init, DateTime end);
 
         public Task<IEnumerable<ArchetypeDto>> MostUsedArchetypeInRound(int TournamentId, int Round);
+        public Task<IEnumerable<ArchetypeDto>> MostUsedArchetypeInTournament();
 
     }
 }

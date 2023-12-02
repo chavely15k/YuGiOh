@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Query;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
-using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
 
