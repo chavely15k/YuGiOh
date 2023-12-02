@@ -8,11 +8,11 @@ using YuGiOh.ApplicationServices.Service;
 namespace YuGiOh.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class DeckController : ControllerBase
     {
         private readonly IDeckService _deckService;
-        
+
 
         public DeckController(IDeckService deckService)
         {
@@ -22,15 +22,15 @@ namespace YuGiOh.API.Controllers
         [HttpGet("userId/{userId}")]
         public async Task<ActionResult<IEnumerable<DeckDto>>> GetDecksByUserIdAsync(int userId)
         {
-            var decks = await _deckService.GetDecksByUserIdAsync(userId);
+            var decks = await _deckService.GetAllDecksByUserIdAsync(userId);
             return Ok(decks);
         }
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult<DeckDto>> RegisterDeck(DeckDto register)
+        public async Task<ActionResult> RegisterDeck(DeckDto register)
         {
-            
+
             var registeredDeck = await _deckService.RegisterDeck(register);
             return Ok(registeredDeck);
 
@@ -41,11 +41,11 @@ namespace YuGiOh.API.Controllers
         public async Task<ActionResult> DeleteDeck(int id)
         {
             var result = await _deckService.DeleteDeck(id);
-            return Ok(result); 
+            return Ok(result);
         }
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResult>UpdateDeck(DeckDto deckDto)
+        public async Task<ActionResult> UpdateDeck(DeckDto deckDto)
         {
             var result = await _deckService.UpdateDeck(deckDto);
             return Ok(result);

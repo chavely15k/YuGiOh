@@ -19,44 +19,52 @@ public class DeckService : AbstractDataServices, IDeckService
     {
     }
 
-    public async Task<IEnumerable<DeckDto>> GetDecksByUserIdAsync(int userId)
+    public async Task<IEnumerable<DeckDto>> GetAllDecksByUserIdAsync(int userId)
     {
         var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Id == userId);
-        
         return _mapper.Map<IEnumerable<DeckDto>>(_decks);
     }
-
-    public async Task<DeckDto> RegisterDeck(DeckDto register)
+    public async Task<ResponseDeckDto> RegisterDeck(DeckDto register)
     {
-        var _deck = _mapper.Map<Deck>(register);
-
-        var _user = await _dataRepository.GetByIdAsync<User>(register.PalyerId);
-        var _Archetype = await _dataRepository.FindAsync<Archetype>(d => d.Id == register.Archetype);
-        if (_user != null)
+        var deck = _mapper.Map<Deck>(register);
+        var user = await _dataRepository.GetByIdAsync<User>(register.PalyerId);
+        var archetype = await _dataRepository.GetByIdAsync<Archetype>(register.ArchetypeId);
+        if (user != null && archetype != null)
         {
-            _deck.Player = _user;
-            _deck.Archetype = _Archetype.First();
-            await _dataRepository.CreateAsync<Deck>(_deck);
-        }
-        return _mapper.Map<DeckDto>(_deck);
-    }
+            deck.Player = user;
+            deck.Archetype = archetype;
+            await _dataRepository.CreateAsync<Deck>(deck);
 
+            return new ResponseDeckDto
+            {
+                Id = deck.Id,
+                Name = deck.Name,
+                ArchetypeId = archetype.Id,
+                ArchetypeName = archetype.Name,
+                PlayerName = user.Name,
+                PlayerId = user.Id,
+                Message = "Deck added successfully",
+                Success = true
+            };
+
+        }
+        return new ResponseDeckDto
+        {
+            Message = "Unable to add deck. The provided IDs are not valid",
+            Success = false
+        };
+    }
     public async Task<bool> DeleteDeck(int deck)
     {
         var result = await _dataRepository.DeleteAsync<Deck>(deck);
         return result != null;
-        
-    }
 
+    }
     public async Task<bool> UpdateDeck(DeckDto register)
     {
         var _deck = _mapper.Map<Deck>(register);
         var result = await _dataRepository.UpdateAsync<Deck>(_deck);
         return result != null;
     }
-    // public async Task<IEnumerable<RegisterDeckDto>> GetDecksByUserNickAsync(string nick)
-    // {
-    //     var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Nick == nick);
-    //     return _mapper.Map<IEnumerable<RegisterDeckDto>>(_decks);
-    // }
+
 }
