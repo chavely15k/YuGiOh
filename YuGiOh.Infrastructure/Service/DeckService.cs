@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
@@ -15,8 +16,13 @@ public class DeckService : AbstractDataServices, IDeckService
 
     public async Task<IEnumerable<DeckDto>> GetAllDecksByUserIdAsync(int userId)
     {
-        var _decks = await _dataRepository.FindAsync<Deck>(d => d.Player.Id == userId);
-        return _mapper.Map<IEnumerable<DeckDto>>(_decks);
+
+        var foundDecks = await _dataRepository
+      .Include<Deck>(d => d.Archetype, d => d.Player)
+      .Where(d => d.Player.Id == userId)
+      .ToListAsync();
+
+        return _mapper.Map<IEnumerable<DeckDto>>(foundDecks);
     }
     public async Task<ResponseDeckDto> RegisterDeck(DeckDto register)
     {

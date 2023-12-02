@@ -14,7 +14,6 @@ public class RoleService : AbstractDataServices, IRoleService
     public RoleService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
     {
     }
-
     public async Task<Role> GetRoleByIdAsync(int RoleId)
     {
         return await _dataRepository.GetByIdAsync<Role>(RoleId);

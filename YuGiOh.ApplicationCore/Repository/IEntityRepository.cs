@@ -19,6 +19,7 @@ public interface IEntityRepository
     Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate)
         where TEntity : class, IEntity;
 
-    IQueryable<TEntity> Include<TEntity>(Expression<Func<TEntity, object>> include)
+    IQueryable<TEntity> Include<TEntity>(params Expression<Func<TEntity, object>>[] includes)
         where TEntity : class, IEntity;
+
 }

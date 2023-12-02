@@ -171,7 +171,6 @@ public class UserService : AbstractDataServices, IUserService
     {
         throw new NotImplementedException();
     }
-
     public Task<RegisterDto> UpdateUser(UserDto register)
     {
         throw new NotImplementedException();
