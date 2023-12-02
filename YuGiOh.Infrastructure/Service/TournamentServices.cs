@@ -9,7 +9,6 @@ using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Enums;
-using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
 
