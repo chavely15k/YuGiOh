@@ -1,6 +1,6 @@
 //components
 import { useState } from "react"
-import { Archetype } from "../components/DeckArchetype"
+import { Archetype } from "../components/Archetype"
 import { Form } from "../components/FormTournamentDeck"
 
 //styles
@@ -50,7 +50,10 @@ export function AddDeck(props)
         id={props.info.id} 
         page='addDeck'
         archetype={archetypeValue}/>
-        <Archetype setArchetypeValue={setArchetypeValue}/>
+        <Archetype 
+          setArchetypeValue={setArchetypeValue}
+          url='http://localhost:5138/Archetype/get'
+          name='Archetype'/>
     </div>
   )
 }

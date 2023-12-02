@@ -42,7 +42,7 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.Status, opt => opt.Ignore());
 
             CreateMap<ArchetypeDto,Archetype>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForMember(dest => dest.Id , opt => opt.Ignore());
 
             CreateMap<Archetype,ArchetypeDto>();
                

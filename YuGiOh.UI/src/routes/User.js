@@ -34,7 +34,7 @@ export function User(props) {
             Decks
           </Button>
           <Button
-            path='/Login'>
+            path='/Login/User/RequestsSettings'>
             Tournaments
           </Button>
         </div>

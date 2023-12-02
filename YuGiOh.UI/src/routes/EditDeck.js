@@ -1,7 +1,7 @@
 //components
 import { useState } from "react"
 import { Form } from "../components/FormTournamentDeck"
-import { Archetype } from "../components/DeckArchetype"
+import { Archetype } from "../components/Archetype"
 
 //styles
 import '../styles/styles-routes/EditAddTournamentDeck.css'
@@ -51,7 +51,10 @@ export function EditDeck(props)
         page='editDeck'
         infoEditDeckTournament={props.infoEditDeckTournament}
         archetype={archetypeValue}/>
-        <Archetype setArchetypeValue={setArchetypeValue}/>
+        <Archetype 
+          setArchetypeValue={setArchetypeValue}
+          url='http://localhost:5138/Archetype/get'
+          name='Archetype'/>
     </div>
   )
 }
