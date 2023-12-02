@@ -16,18 +16,11 @@ public class UserService : AbstractDataServices, IUserService
     {
         _roleService = roleService;
     }
-
-    public Task AddRoleAsync(AddRoleDto addRoleDto)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task DeleteAsync(LoginDto loginDto)
     {
         throw new NotImplementedException();
     }
-
-    public async Task<LoginResponseDto> LoginAsync(LoginDto loginDto)
+    public async Task<ResponseUserDto> LoginAsync(LoginDto loginDto)
     {
 
         var _user = await GetUserByNickAsync(loginDto.Nick);
@@ -43,7 +36,7 @@ public class UserService : AbstractDataServices, IUserService
                 roleTypes.Add(role.Type);
             }
 
-            return new LoginResponseDto
+            return new ResponseUserDto
             {
                 Name = _user.Name,
                 Id = _user.Id,
@@ -56,7 +49,7 @@ public class UserService : AbstractDataServices, IUserService
 
         else
         {
-            return new LoginResponseDto
+            return new ResponseUserDto
             {
                 Id = null,
                 Message = "Worng Credentials",
@@ -64,13 +57,6 @@ public class UserService : AbstractDataServices, IUserService
             };
         }
     }
-
-
-
-    
-
-
-
     public async Task<bool> IsNickTakenAsync(string nick)
     {
         var foundUsers = await _dataRepository.FindAsync<User>(u => u.Nick == nick);
@@ -84,14 +70,12 @@ public class UserService : AbstractDataServices, IUserService
             .ToListAsync();
         return foundUsers.FirstOrDefault();
     }
-
     public async Task<User?> GetUserByIdAsync(int id)
     {
         var foundUsers = await _dataRepository.GetByIdAsync<User>(id);
         return foundUsers;
     }
-
-    public async Task<RegisterDto> RegisterUserAsync(UserDto registerDto)
+    public async Task<ResponseUserDto> RegisterUserAsync(UserDto registerDto)
     {
         List<UserRole> roles = new();
         var _user = _mapper.Map<User>(registerDto);
@@ -103,8 +87,9 @@ public class UserService : AbstractDataServices, IUserService
                 if (!await CheckCode(registerDto.Code))
                 {
 
-                    return new RegisterDto
+                    return new ResponseUserDto
                     {
+                        Id = null,
                         Message = "Invalid admin code",
                         Success = false
                     };
@@ -116,31 +101,80 @@ public class UserService : AbstractDataServices, IUserService
         _user.Roles = roles;
         await _dataRepository.CreateAsync<User>(_user);
 
-        return new RegisterDto
+        return new ResponseUserDto
         {
+            Id = null,
             Message = "Succesful Register",
-            Success = true,
+            Success = true
         };
     }
-
     private async Task<Role?> GetRole(int roleType)
     {
         List<Role> userRoles = (await _dataRepository.GetAllAsync<Role>()).ToList();
         Role? matchingUserRole = userRoles.FirstOrDefault(ur => ur.Type == roleType);
         return matchingUserRole;
     }
-    private async Task<UserRole> GetUserRoles(int roleType, User user)
+    private async Task<UserRole?> GetUserRoles(int roleType, User user)
     {
-        //Todo : Debe haber una comprobacion de si role no existe
         var role = await GetRole(roleType);
-        UserRole userRole = new(user.Id, role.Id);
-        return userRole;
+        return role != null ? new(user.Id, role.Id) : null;
     }
-    //Todo: Hay que hacer el admin y el check
-    protected async Task<bool> CheckCode(string code)
+    private async Task<bool> CheckCode(string code)
     {
         var textResult = await _dataRepository.FindAsync<Code>(c => c.Text == code);
         return textResult.Count() != 0;
     }
+    public async Task<ResponseUserDto> AddRoleAsync(RoleAssignDto roleAssign)
+    {
+        var user = await _dataRepository.GetByIdAsync<User>(roleAssign.Id);
+        if (user != null)
+        {
+            List<UserRole> roles = new();
+            foreach (var role in roleAssign.Roles)
+            {
+                if (role == (int)RoleType.Admin)
+                {
+                    if (!await CheckCode(roleAssign.Code))
+                    {
 
+                        return new ResponseUserDto
+                        {
+                            Id = null,
+                            Message = "Invalid admin code",
+                            Success = false
+                        };
+                    }
+                }
+                roles.Add(await GetUserRoles(role, user));
+            }
+            user.Roles = roles;
+            await _dataRepository.UpdateAsync<User>(user);
+            List<int> roleType = user.Roles.Select(r => r.Role.Type).ToList();
+            return new ResponseUserDto
+            {
+                Name = user.Name,
+                Id = user.Id,
+                Nick = user.Nick,
+                Roles = roleType,
+                Message = "Role assigned successfully",
+                Success = true
+            };
+
+        }
+        return new ResponseUserDto
+        {
+            Id = null,
+            Message = "Invalid User Id",
+            Success = false
+        };
+    }
+    public Task DeleteAsync(int userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<RegisterDto> UpdateUser(UserDto register)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace YuGiOh.ApplicationCore.DTO;
 
-public class LoginResponseDto
+public class ResponseUserDto
 {
     public string Name { get; set; }
     public int? Id { get; set; }
