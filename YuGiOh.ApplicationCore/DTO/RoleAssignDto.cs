@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace YuGiOh.ApplicationCore.DTO;
 
-public class AddRoleDto
+public class RoleAssignDto
 {
-    public string Nick { get; set; }
+    public int Id { get; set; }
     public List<int> Roles { get; set; }
+    public string Code { get; set;} = String.Empty;
 
-    //TODO: Creo que deberia haber algo aqui que me permita chequear que el que anade el rol sea alguien con el poder;
 }

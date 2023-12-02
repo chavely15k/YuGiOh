@@ -9,8 +9,8 @@ namespace YuGiOh.ApplicationServices.Service;
 
 public interface IDeckService
 {
-    Task<DeckDto> RegisterDeck(DeckDto register);
-    public  Task<IEnumerable<DeckDto>> GetDecksByUserIdAsync(int userId);
+    Task<ResponseDeckDto> RegisterDeck(DeckDto register);
+    public  Task<IEnumerable<DeckDto>> GetAllDecksByUserIdAsync(int userId);
     Task<bool> DeleteDeck(int idDeck);
     Task<bool> UpdateDeck(DeckDto deck);
 

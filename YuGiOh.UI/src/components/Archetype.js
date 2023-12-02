@@ -1,5 +1,8 @@
+//dependencies
 import { useState } from 'react'
 import { useArchetype } from '../hooks/useArchetype'
+
+//styles
 import '../styles/DeckArchetype.css'
 
 export function Archetype(props) 

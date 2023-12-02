@@ -23,7 +23,7 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.Player, opt => opt.Ignore());
    
             CreateMap<Deck, DeckDto>()
-                .ForMember(dest => dest.Archetype, opt => opt.Ignore())
+                .ForMember(dest => dest.ArchetypeId, opt => opt.MapFrom(src => src.Archetype.Id))
                 .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id));
                 
             
