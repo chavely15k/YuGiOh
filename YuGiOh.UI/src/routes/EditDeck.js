@@ -51,7 +51,10 @@ export function EditDeck(props)
         page='editDeck'
         infoEditDeckTournament={props.infoEditDeckTournament}
         archetype={archetypeValue}/>
-        <Archetype setArchetypeValue={setArchetypeValue}/>
+        <Archetype 
+          setArchetypeValue={setArchetypeValue}
+          url='http://localhost:5138/Archetype/get'
+          name='Archetype'/>
     </div>
   )
 }

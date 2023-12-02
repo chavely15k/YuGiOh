@@ -1,18 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using YuGiOh.ApplicationCore.Repository;
 
-namespace YuGiOh.ApplicationServices.Service.AbstractClass;
-public abstract class AbstractDataServices
+namespace YuGiOh.ApplicationServices.Service
 {
-    protected readonly IMapper _mapper;
-    protected readonly IEntityRepository _dataRepository;
-    public AbstractDataServices(IEntityRepository dataRepository, IMapper mapper)
+    public abstract class AbstractDataServices : AbstractDataRepository
     {
-        _mapper = mapper;
-        _dataRepository = dataRepository;
+        protected readonly IMapper _mapper;
+        public AbstractDataServices(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository)
+        {
+            _mapper = mapper;
+        }
     }
 }

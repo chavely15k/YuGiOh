@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Query;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
-using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
 
@@ -27,7 +21,7 @@ public class DeckService : AbstractDataServices, IDeckService
     public async Task<ResponseDeckDto> RegisterDeck(DeckDto register)
     {
         var deck = _mapper.Map<Deck>(register);
-        var user = await _dataRepository.GetByIdAsync<User>(register.PalyerId);
+        var user = await _dataRepository.GetByIdAsync<User>(register.PlayerId);
         var archetype = await _dataRepository.GetByIdAsync<Archetype>(register.ArchetypeId);
         if (user != null && archetype != null)
         {

@@ -1,0 +1,38 @@
+.principalContainerRequests
+{
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tournamentsRequestsHead
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 15px;
+  font-size: 23px;
+  text-shadow: 1px 1px 2px white;
+  user-select: none;
+}
+
+.containerTournamentsRequests
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 63%;
+  width: 100%;
+}
+
+.containerArchetype
+{
+  width: 40%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+

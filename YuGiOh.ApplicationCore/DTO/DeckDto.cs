@@ -8,6 +8,6 @@ public class DeckDto
     public int MainDeckSize { get; set; }
     public int SideDeckSize { get; set; }
     public int ExtraDeckSize { get; set; }
-    public int PalyerId { get; set; }
+    public int PlayerId { get; set; }
     
 }

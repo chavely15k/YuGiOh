@@ -17,34 +17,12 @@ export function List(props) {
       <ul className="containerList">
         {props.page == 'admin'
           ?
-            props.list.map(element => (
-              <div className="containerLi">
-                <li
-                  key={element.id}
-                  id={element.id}>
-                    {element.name} || {element.address} || {element.startDate}
-                </li>
-                <div className="containerIcons">
-                  <div
-                    className="containerIcon editIcon"
-                    onClick={props.onClickEdit}>
-                    <AiTwotoneEdit />
-                  </div>
-                  <div
-                    className="containerIcon deleteIcon"
-                    onClick={props.onClickDelete}>
-                    <AiFillCloseCircle />
-                  </div>
-                </div>
-              </div>
-          ))
-          :
           props.list.map(element => (
             <div className="containerLi">
               <li
                 key={element.id}
                 id={element.id}>
-                {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetype}
+                {element.name} || {element.address} || {element.startDate}
               </li>
               <div className="containerIcons">
                 <div
@@ -59,7 +37,47 @@ export function List(props) {
                 </div>
               </div>
             </div>
-          ))}    
+          ))
+          : props.page == 'decks'
+            ?
+            props.list.map(element => (
+              <div className="containerLi">
+                <li
+                  key={element.id}
+                  id={element.id}>
+                  {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetype}
+                </li>
+                <div className="containerIcons">
+                  <div
+                    className="containerIcon editIcon"
+                    onClick={props.onClickEdit}>
+                    <AiTwotoneEdit />
+                  </div>
+                  <div
+                    className="containerIcon deleteIcon"
+                    onClick={props.onClickDelete}>
+                    <AiFillCloseCircle />
+                  </div>
+                </div>
+              </div>  
+              ))
+            :
+            props.list.map(element => (
+              <div className="containerLi">
+                <li
+                  key={element.id}
+                  id={element.id}>
+                  {element.name} || {element.address} || {element.startDate}
+                </li>
+                <div className="containerActionRequest">
+                  <p 
+                    onClick={props.onClickChange} 
+                    className='actionRequest'>
+                      send
+                  </p>   
+                </div>
+              </div>
+            ))}  
       </ul>
       <NavLink
         to={props.addPage}

@@ -24,7 +24,7 @@ namespace YuGiOh.Infrastructure.Mappings
    
             CreateMap<Deck, DeckDto>()
                 .ForMember(dest => dest.ArchetypeId, opt => opt.MapFrom(src => src.Archetype.Id))
-                .ForMember(dest => dest.PalyerId, opt => opt.MapFrom(src => src.Player.Id));
+                .ForMember(dest => dest.PlayerId, opt => opt.MapFrom(src => src.Player.Id));
                 
             
             CreateMap<TournamentDto, Tournament>()
@@ -42,7 +42,7 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.Status, opt => opt.Ignore());
 
             CreateMap<ArchetypeDto,Archetype>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForMember(dest => dest.Id , opt => opt.Ignore());
 
             CreateMap<Archetype,ArchetypeDto>();
                
