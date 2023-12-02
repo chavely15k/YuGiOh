@@ -49,12 +49,12 @@ namespace YuGiOh.Infrastructure.Service
 
         public async Task<IEnumerable<TournamentDto>> AvailableTournamentsAsync(int id)
         {
-            var _tournaments = await _dataRepository.FindAsync<Tournament>(d => d.Id == id && d.StartDate.ToUniversalTime() > DateTime.Now.ToUniversalTime());
+            var _tournaments = await _dataRepository.FindAsync<Tournament>(d => d.StartDate.ToUniversalTime() > DateTime.Now.ToUniversalTime());
             var _request = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status != RequestStatus.Rejected);
             LinkedList<TournamentDto> result = new();
             foreach(var tournament in _tournaments)
-            {
-                if(_request.Select(d => d.TournamentId == tournament.Id).Count() == 0)
+            {   
+                if(_request.Where(d => d.TournamentId == tournament.Id).Count()== 0)
                 {
                     result.AddLast(_mapper.Map<TournamentDto>(tournament));
                 }
