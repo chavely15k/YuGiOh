@@ -18,6 +18,13 @@ namespace YuGiOh.API.Controllers
         {
             _TournamentService = services;
         }
+        [HttpGet]
+        [Route("available")]
+        public async Task<ActionResult<IEnumerable<TournamentDto>>> AvailableTournaments(int id)
+        {
+            var available = await _TournamentService.AvailableTournamentsAsync(id);
+            return Ok(available);
+        }
 
         [HttpGet]
         [Route("All")]
