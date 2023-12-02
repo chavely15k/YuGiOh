@@ -55,8 +55,10 @@ builder.Services
     .AddScoped<IRoleService, RoleService>()
     .AddScoped<IDeckService, DeckService>()
     .AddScoped<ITournamentServices, TournamentServices>()
+    .AddScoped<IArchetypeService, ArchetypeService>()
     .AddScoped<RoleSeed>()
-    .AddScoped<CodeSeed>();
+    .AddScoped<CodeSeed>()
+    .AddScoped<ArchetypeDbBootstrap>();
 //.AddScoped<CodeController>()
 
 
@@ -90,4 +92,5 @@ static async void InitializeData(WebApplication app, IServiceProvider servicePro
 {
     await serviceProvider.GetService<CodeSeed>()!.SetInitialCodeAsync();
     await serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
+    await serviceProvider.GetService<ArchetypeDbBootstrap>()!.insertArchetypes();
 }
