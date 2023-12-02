@@ -8,6 +8,7 @@ using Npgsql.Replication;
 using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
+using YuGiOh.Domain.Enums;
 using YuGiOh.ApplicationServices.Service.AbstractClass;
 using YuGiOh.Domain.Models;
 
@@ -44,6 +45,21 @@ namespace YuGiOh.Infrastructure.Service
         {
             var _Tournaments = await _dataRepository.GetAllAsync<Tournament>();
             return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
+        }
+
+        public async Task<IEnumerable<TournamentDto>> AvailableTournamentsAsync(int id)
+        {
+            var _tournaments = await _dataRepository.FindAsync<Tournament>(d => d.Id == id && d.StartDate.ToUniversalTime() > DateTime.Now.ToUniversalTime());
+            var _request = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status == RequestStatus.Approved);
+            LinkedList<TournamentDto> result = new();
+            foreach(var tournament in _tournaments)
+            {
+                if(_request.Select(d => d.TournamentId == tournament.Id).Count() == 0)
+                {
+                    result.AddLast(_mapper.Map<TournamentDto>(tournament));
+                }
+            }
+            return result;
         }
 
         public async Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(int AdminId)
