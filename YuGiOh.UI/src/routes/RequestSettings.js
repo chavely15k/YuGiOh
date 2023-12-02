@@ -3,19 +3,23 @@ import { Archetype } from "../components/Archetype"
 import { useFetch } from "../hooks/useFetch"
 import { List } from "../components/TournamentDeckList"
 import '../styles/styles-routes/RequestsSettings.css'
+import { useNavigate } from 'react-router-dom'
 
 export function RequestsSettings(props) {
   const [archetypeValue, setArchetypeValue] = useState(0)
   const { infoAPI } = useFetch()
   const [data, setData] = useState({})
   const [list, setList] = useState([])
-  useEffect(() => infoAPI('http://localhost:5138/Tournament/All', 'GET', setList), [])
+  useEffect(() => infoAPI(`http://localhost:5138/Tournament/available/${props.info.id}`, 'GET', setList), [])
+  const navigate = useNavigate()
 
   const onClickChange = (e) => {
     var bodyRequest = {
       PlayerId: props.info.id,
       DeckId: archetypeValue,
-      TournamentId: e.target.parentNode.parentNode.firstChild.id
+      TournamentId: e.target.parentNode.parentNode.firstChild.id,
+      StartDate: '',
+      Status: ''
     }
 
     if (archetypeValue == '')
@@ -25,8 +29,10 @@ export function RequestsSettings(props) {
 
     props.setInfoMessage({
       header: 'Request sent succesfuly',
-      path: '/Login/User/RequestSettings'
+      path: '/Login/User/RequestsSettings'
     })
+
+    navigate('/Message')
   }
 
   return (
