@@ -9,7 +9,7 @@ using YuGiOh.Domain.Models;
 
 namespace YuGiOh.Infrastructure.Service
 {
-    public class RequestService : AbstractDataService, IRequestService
+    public class RequestService : AbstractDataServices, IRequestService
     {
         public RequestService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
         {
