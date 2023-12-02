@@ -26,16 +26,16 @@ export function User(props) {
         </aside>
         <div className="containerOptionsUser">
           <Button
-            path='/Login'>
-            Be Admin
+            path='/Login/User/RequestsSettings'>
+            Manage Requests
           </Button>
           <Button
             path='/Login/User/Decks'>
             Decks
           </Button>
           <Button
-            path='/Login/User/RequestsSettings'>
-            Tournaments
+            path='/'>
+            My Tournaments
           </Button>
         </div>
       </div>

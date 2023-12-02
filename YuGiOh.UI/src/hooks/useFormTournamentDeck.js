@@ -54,7 +54,7 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             PlayerId: id,
-            Archetype: archetype
+            ArchetypeId: archetype
           }
 
           if (archetype != '')
@@ -94,7 +94,7 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
             ...formState,
             PlayerId: id,
             id: idDeckTournament,
-            Archetype: archetype
+            ArchetypeId: archetype
           }
 
           if(archetype != '')

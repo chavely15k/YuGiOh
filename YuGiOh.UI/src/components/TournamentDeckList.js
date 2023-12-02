@@ -45,7 +45,7 @@ export function List(props) {
                 <li
                   key={element.id}
                   id={element.id}>
-                  {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetype}
+                  {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetypeId}
                 </li>
                 <div className="containerIcons">
                   <div
