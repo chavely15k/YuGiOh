@@ -17,6 +17,7 @@ import { EditDeck } from './routes/EditDeck'
 import { Decks } from './routes/Decks'
 import { Message } from './routes/Message'
 import { RequestsSettings } from './routes/RequestSettings'
+import { UserTournaments } from './routes/UserTournaments'
 
 //styles
 import './App.css'
@@ -103,6 +104,10 @@ function App() {
             <RequestsSettings
               info={info}
               setInfoMessage={setInfoMessage}/>}>
+        </Route>
+        <Route
+          path='/Login/User/UserTournaments'
+          element={<UserTournaments info={info}/>}>
         </Route>
         <Route
           path='/*'
