@@ -71,7 +71,7 @@ export function List(props) {
                 </li>
                 <div className="containerActionRequest">
                   <p 
-                    onClick={props.onClickChange} 
+                    onClick={props.onClickSend} 
                     className='actionRequest'>
                       send
                   </p>   

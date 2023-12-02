@@ -1,40 +1,19 @@
-import { useEffect, useState } from "react"
+//dependencies
+import { useRequest } from "../hooks/useRequest"
+import { useState } from "react"
+
+///components
 import { Archetype } from "../components/Archetype"
-import { useFetch } from "../hooks/useFetch"
 import { List } from "../components/TournamentDeckList"
+
+//styles
 import '../styles/styles-routes/RequestsSettings.css'
-import { useNavigate } from 'react-router-dom'
 
 export function RequestsSettings(props) {
   const [archetypeValue, setArchetypeValue] = useState(0)
-  const { infoAPI } = useFetch()
-  const [data, setData] = useState({})
   const [list, setList] = useState([])
-  useEffect(() => infoAPI(`http://localhost:5138/Tournament/available/${props.info.id}`, 'GET', setList), [])
-  const navigate = useNavigate()
-
-  const onClickChange = (e) => {
-    var bodyRequest = {
-      PlayerId: props.info.id,
-      DeckId: archetypeValue,
-      TournamentId: e.target.parentNode.parentNode.firstChild.id,
-      StartDate: '',
-      Status: ''
-    }
-
-    if (archetypeValue == '')
-      return
-
-    infoAPI('http://localhost:5138/api/Request/make', 'POST', setData, bodyRequest)
-
-    props.setInfoMessage({
-      header: 'Request sent succesfuly',
-      path: '/Login/User/RequestsSettings'
-    })
-
-    navigate('/Message')
-  }
-
+  const { onClickSend } = useRequest(props.info.id, setList, props.setInfoMessage, archetypeValue)
+  
   return (
     <div className="principalContainerRequests">
       <div className="tournamentsRequestsHead">
@@ -47,7 +26,7 @@ export function RequestsSettings(props) {
           addPage='/Login/User/Decks/RequestSettings/Requests'
           nameAddPage='requests'
           page='requestsUser'
-          onClickChange={onClickChange} />
+          onClickSend={onClickSend}/>
       </div>
       <div className="containerArchetype">
         <Archetype

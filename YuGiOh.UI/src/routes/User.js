@@ -5,8 +5,8 @@ import { Button } from "../components/Button";
 //styles
 import '../styles/styles-routes/User.css'
 
-export function User(props) {
-
+export function User(props) 
+{
   return (
     <div
       className="containerPrincipalUser">
@@ -27,15 +27,15 @@ export function User(props) {
         <div className="containerOptionsUser">
           <Button
             path='/Login/User/RequestsSettings'>
-            Manage Requests
+              Manage Requests
           </Button>
           <Button
             path='/Login/User/Decks'>
-            Decks
+              Decks
           </Button>
           <Button
-            path='/'>
-            My Tournaments
+            path='/Login/User/UserTournaments'>
+              My Tournaments
           </Button>
         </div>
       </div>
