@@ -12,8 +12,9 @@ namespace YuGiOh.Infrastructure.Service;
 public class UserService : AbstractDataServices, IUserService
 {
     private readonly IRoleService _roleService;
-    public UserService(IEntityRepository dataRepository, IMapper mapper, IRoleService _roleService) : base(dataRepository, mapper)
+    public UserService(IEntityRepository dataRepository, IMapper mapper, IRoleService roleService) : base(dataRepository, mapper)
     {
+        _roleService = roleService;
     }
 
     public Task AddRoleAsync(AddRoleDto addRoleDto)
@@ -57,6 +58,7 @@ public class UserService : AbstractDataServices, IUserService
         {
             return new LoginResponseDto
             {
+                Id = null,
                 Message = "Worng Credentials",
                 Success = false
             };

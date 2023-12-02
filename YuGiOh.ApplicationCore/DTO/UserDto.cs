@@ -10,7 +10,7 @@ namespace YuGiOh.ApplicationCore.DTO {
         public string Address { get; set; }
         public int PhoneNumber { get; set; }
         public List<int> Roles { get; set; }
-        public string Code { get; set; }
+        public string Code { get; set; } = String.Empty;
     }
 }
 

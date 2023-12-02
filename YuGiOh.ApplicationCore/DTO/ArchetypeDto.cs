@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace YuGiOh.ApplicationCore.DTO
 {
-    public class ArchetypeDTO
+    public class ArchetypeDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
