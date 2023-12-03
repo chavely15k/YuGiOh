@@ -38,7 +38,7 @@ namespace YuGiOh.Infrastructure.Service
             List<Request> requests = new();
             foreach(var tournamet in tournaments)
             {
-                var req = await _dataRepository.FindAsync<Request>(d => d.TournamentId == tournamet.Id);
+                var req = await _dataRepository.FindAsync<Request>(d => d.TournamentId == tournamet.Id && d.Status == RequestStatus.Pending);
                 requests = requests.Concat(req).ToList();
             }
             var result = _mapper.Map<IEnumerable<ResponseRequestDto>>(requests.OrderByDescending(d => d.Date).ToList());
