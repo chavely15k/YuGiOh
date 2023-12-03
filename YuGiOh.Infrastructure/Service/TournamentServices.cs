@@ -60,11 +60,18 @@ namespace YuGiOh.Infrastructure.Service
             }
             return result;
         }
-
-        public async Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(int AdminId)
+        //TODO: Crear nuevo DTO para max con los jugadores inscritos en el torneo
+        public async Task<IEnumerable<ResponseTournamentDto>> GetAllTournamentsByAdmin(int AdminId)
         {
             var _Tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == AdminId);
-            return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
+            var result = _mapper.Map<IEnumerable<ResponseTournamentDto>>(_Tournaments);
+            foreach(var tournament in result)
+            {
+                int signedPlayers = (await _dataRepository.FindAsync<Request>(d => d.TournamentId == tournament.Id && d.Status == RequestStatus.Approved)).Count();
+                tournament.SignedPlayers = signedPlayers;
+            }
+            return result;
+
         }
         public async Task<bool> UpdateTournament(TournamentDto tournament)
         {
