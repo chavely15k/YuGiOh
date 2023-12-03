@@ -86,7 +86,8 @@ namespace YuGiOh.Infrastructure.Service
             LinkedList<TournamentDto> result = new();
             foreach(var request in aceptedRequests)
             {
-                result.AddLast(_mapper.Map<TournamentDto>(await _dataRepository.FindAsync<Tournament>(d => d.Id == request.TournamentId)));
+                var temp = await _dataRepository.FindAsync<Tournament>(d => d.Id == request.TournamentId);
+                result.AddLast(_mapper.Map<TournamentDto>(temp.First()));
             }
             return result;
         }

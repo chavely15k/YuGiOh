@@ -51,6 +51,7 @@ namespace YuGiOh.Infrastructure.Service {
         }
         protected async Task<IList<Match>> GenerateRoundMatches(PhaseDto phaseDto) {
             var matches = (await _dataRepository.FindAsync<Match>(m => m.TournamentId == phaseDto.TournamentId && m.Round == phaseDto.Round - 1)).ToList();
+            if (matches.Count()*Math.Pow(2, phaseDto.Round-2) != phaseDto.Base) return new List<Match>();
             matches.Sort((x, y) => x.Group - y.Group);
             int g = matches[matches.Count()-1].Group + 1;
             var winners = matches.Select(m => (m.PlayerOneResult > m.PlayerTwoResult ? m.PlayerOneId : m.PlayerTwoId)).ToList();
@@ -97,5 +98,6 @@ namespace YuGiOh.Infrastructure.Service {
 
             return result;
         }
+
     }
 }
