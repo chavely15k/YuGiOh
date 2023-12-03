@@ -27,7 +27,7 @@ namespace YuGiOh.Infrastructure.Service
         public async Task<bool> DeleteRequest(int PlayerId, int TournametId)
         {
             var result = await _dataRepository.DeleteAsync<Request>(
-                new { PlayerId, TournametId });
+                new {PlayerId,TournametId});
             return result != null;
         }
 
