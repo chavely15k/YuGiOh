@@ -1,10 +1,19 @@
+//dependencies
+import { useEffect } from 'react'
+
 //components
 import { Button } from '../components/Button'
 
 //styles
 import '../styles/styles-routes/Rol.css'
 
-export function Rol() {
+export function Rol(props) 
+{
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/Login')
+  }, [])
+
   return (
     <div className='containerPrincipalRol'>
       <form className="containerFormRol">

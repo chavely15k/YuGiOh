@@ -1,3 +1,6 @@
+//dependencies
+import { useEffect } from 'react'
+
 //components
 import { Form } from '../components/FormLogReg'
 
@@ -6,6 +9,11 @@ import '../styles/styles-routes/LoginRegister.css'
 
 export function Register(props) 
 {
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/')
+  }, [])
+
   return (
     <div className="principalContainer">
       <h2 className='head'>Welcome to Yu-Gi-Oh Tournaments</h2>

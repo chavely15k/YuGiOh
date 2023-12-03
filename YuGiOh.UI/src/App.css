@@ -50,3 +50,27 @@
   background-color: black;
   color: yellow;
 }
+
+.backButton
+{
+  position: absolute;
+  color: blueviolet;
+  margin: 5px 10px;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  user-select: none;
+  background-color: white;
+  box-shadow: 1px 1px 3px white;
+}
+
+.backButton:hover
+{
+  background-color: black;
+  color: yellow;
+  box-shadow: 1px 1px 3px black;
+}
+
+a{color: white}

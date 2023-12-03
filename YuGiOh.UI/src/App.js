@@ -1,6 +1,7 @@
 //dependencies
 import { Route, Routes } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 //components
 import { PrincipalPage } from './routes/PrincipalPage'
@@ -26,15 +27,40 @@ function App() {
   const [info, setInfo] = useState({})
   const [infoMessage, setInfoMessage] = useState({})
   const [infoEditDeckTournament, setInfoEditDeckTournament] = useState(0)
+  const [renderBack, setRenderBack] = useState(false)
+  const [pathBack, setPathBack] = useState('/')
+  const back = '< back'
+  const navigate = useNavigate()
+  var secretURL = 'https://www.pornhub.com/view_video.php?viewkey=652ec89113e78'
+
+  const handleBack = (path) => {
+    if (path == '/') {
+      setRenderBack(false)
+      navigate(path)
+      return
+    }
+
+    navigate(path)
+  }
 
   return (
     <div className='App'>
       <header className='header'>
-        <h1 className='h1'>Yu-Gi-Oh Tournaments</h1>
+        <h1
+          className='h1'
+          onClick={() => { handleBack('/') }}>
+          Yu-Gi-Oh Tournaments
+        </h1>
         <div className='logoStats'>
-          <AiOutlineFileSearch size={60} />
+          <AiOutlineFileSearch size={60}/>
         </div>
       </header>
+      {renderBack &&
+        <p
+          className='backButton'
+          onClick={() => handleBack(pathBack)}>
+          {back}
+        </p>}
       <Routes>
         <Route
           path='/'
@@ -42,11 +68,19 @@ function App() {
         </Route>
         <Route
           path='/Login'
-          element={<Login info={setInfo} />}>
+          element={
+            <Login
+              info={setInfo}
+              setPathBack={setPathBack}
+              setRenderBack={setRenderBack} />}>
         </Route>
         <Route
           path='/Register'
-          element={<Register info={setInfo} />}>
+          element={
+            <Register
+              info={setInfo}
+              setPathBack={setPathBack}
+              setRenderBack={setRenderBack} />}>
         </Route>
         <Route
           path='/Login/Admin'
@@ -54,60 +88,92 @@ function App() {
             <Admin
               info={info}
               setInfoMessage={setInfoMessage}
-              setInfoEditDeckTournament={setInfoEditDeckTournament}/>}>
+              setInfoEditDeckTournament={setInfoEditDeckTournament} 
+              setRenderBack={setRenderBack}
+              setPathBack={setPathBack}/>}>
         </Route>
         <Route
           path='/Login/Admin/EditTournament'
           element={
-            <EditTournament   
+            <EditTournament
               infoEditDeckTournament={infoEditDeckTournament}
-              info={info}/>}>
+              info={info}
+              setPathBack={setPathBack}
+              setRenderBack={setRenderBack} />}>
         </Route>
         <Route
           path='/Login/Admin/AddTournament'
-          element={<AddTournament info={info} />}>
+          element={
+            <AddTournament
+              info={info}
+              setPathBack={setPathBack}
+              setRenderBack={setRenderBack} />}>
         </Route>
         <Route
           path='/Login/Rol'
-          element={<Rol />}>
+          element={
+            <Rol 
+              setPathBack={setPathBack} 
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/Login/User'
-          element={<User info={info} />}>
+          element={
+            <User 
+              info={info} 
+              setPathBack={setPathBack} 
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/Login/User/Decks/AddDeck'
-          element={<AddDeck info={info} />}>
+          element={
+            <AddDeck 
+            info={info} 
+            setPathBack={setPathBack} 
+            setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/Login/User/Decks/EditDeck'
           element={
-            <EditDeck 
+            <EditDeck
               infoEditDeckTournament={infoEditDeckTournament}
-              info={info}/>}>
+              info={info} 
+              setPathBack={setPathBack} 
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/login/User/Decks'
           element={
-            <Decks 
-              info={info} 
+            <Decks
+              info={info}
               setInfoMessage={setInfoMessage}
-              setInfoEditDeckTournament={setInfoEditDeckTournament}/>}>
+              setInfoEditDeckTournament={setInfoEditDeckTournament} 
+              setPathBack={setPathBack} 
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/Message'
-          element={<Message infoMessage={infoMessage} />}>
+          element={
+            <Message 
+              infoMessage={infoMessage} 
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/Login/User/RequestsSettings'
           element={
             <RequestsSettings
               info={info}
-              setInfoMessage={setInfoMessage}/>}>
+              setInfoMessage={setInfoMessage} 
+              setPathBack={setPathBack} 
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/Login/User/UserTournaments'
-          element={<UserTournaments info={info}/>}>
+          element={
+            <UserTournaments 
+            info={info} 
+            setPathBack={setPathBack} 
+            setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/*'

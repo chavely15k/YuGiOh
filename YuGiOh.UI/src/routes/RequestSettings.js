@@ -1,6 +1,7 @@
 //dependencies
 import { useRequest } from "../hooks/useRequest"
 import { useState } from "react"
+import { useEffect } from "react"
 
 ///components
 import { Archetype } from "../components/Archetype"
@@ -13,7 +14,12 @@ export function RequestsSettings(props) {
   const [archetypeValue, setArchetypeValue] = useState(0)
   const [list, setList] = useState([])
   const { onClickSend } = useRequest(props.info.id, setList, props.setInfoMessage, archetypeValue)
-  
+
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/Login/User')
+  }, [])
+
   return (
     <div className="principalContainerRequests">
       <div className="tournamentsRequestsHead">

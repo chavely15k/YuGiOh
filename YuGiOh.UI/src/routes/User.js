@@ -1,3 +1,6 @@
+//dependencies
+import { useEffect } from "react";
+
 //components
 import { BsEmojiSunglassesFill } from "react-icons/bs";
 import { Button } from "../components/Button";
@@ -7,6 +10,11 @@ import '../styles/styles-routes/User.css'
 
 export function User(props) 
 {
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/Login')
+  } , [])
+
   return (
     <div
       className="containerPrincipalUser">
