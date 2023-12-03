@@ -90,9 +90,9 @@ export function List(props) {
                 props.list.map(element => (
                   <div className="containerLi">
                     <li
-                      key={element.id}
-                      id={element.id}>
-                      Name: {element.name}
+                      key={element.tournamentId}
+                      id={element.tournamentId}>
+                        {element.tournamentName}
                     </li>
                     <div className='containerActionRequest'>
                       <p

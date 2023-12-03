@@ -27,7 +27,7 @@ export function RequestsUser(props)
       <List
           list={list}
           header='Sent Requests'
-          addPage='/Login/User'
+          addPage='/Login/User/RequestsSettings'
           nameAddPage='back'
           page='userRequests'
           onClickCancel={onClickCancel}/>

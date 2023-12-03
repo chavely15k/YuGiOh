@@ -29,7 +29,7 @@ export function RequestsSettings(props)
         <List
           list={list}
           header='Available Tournaments'
-          addPage='/Login/User/Decks/RequestSettings/Requests'
+          addPage='/Login/User/RequestsSettings/RequestsUser'
           nameAddPage='requests'
           page='posibleRequestsUser'
           onClickSend={onClickSend}/>
