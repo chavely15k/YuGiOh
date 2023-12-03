@@ -14,15 +14,14 @@ public class DeckService : AbstractDataServices, IDeckService
     {
     }
 
-    public async Task<IEnumerable<DeckDto>> GetAllDecksByUserIdAsync(int userId)
+    public async Task<IEnumerable<ResponseDeckDto>> GetAllDecksByUserIdAsync(int userId)
     {
 
         var foundDecks = await _dataRepository
       .Include<Deck>(d => d.Archetype, d => d.Player)
       .Where(d => d.Player.Id == userId)
       .ToListAsync();
-
-        return _mapper.Map<IEnumerable<DeckDto>>(foundDecks);
+        return _mapper.Map<IEnumerable<ResponseDeckDto>>(foundDecks);
     }
     public async Task<ResponseDeckDto> RegisterDeck(DeckDto register)
     {
