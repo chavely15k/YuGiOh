@@ -10,7 +10,7 @@ namespace YuGiOh.ApplicationServices.Service
     {
         public Task<TournamentDto> CreateTournament(TournamentDto create);
         public  Task<IEnumerable<TournamentDto>> GetAllTournaments();
-        public  Task<IEnumerable<TournamentDto>> GetAllTournamentsByAdmin(int AdminId);
+        public  Task<IEnumerable<ResponseTournamentDto>> GetAllTournamentsByAdmin(int AdminId);
         public Task<IEnumerable<TournamentDto>> AvailableTournamentsAsync(int id);
         public Task<bool> UpdateTournament(TournamentDto tournament);
         public Task<bool> DeleteTournament(int Id);

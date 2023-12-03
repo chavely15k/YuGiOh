@@ -34,17 +34,26 @@ public class DeckService : AbstractDataServices, IDeckService
             deck.Archetype = archetype;
             await _dataRepository.CreateAsync<Deck>(deck);
 
-            return new ResponseDeckDto
-            {
-                Id = deck.Id,
-                Name = deck.Name,
-                ArchetypeId = archetype.Id,
-                ArchetypeName = archetype.Name,
-                PlayerName = user.Name,
-                PlayerId = user.Id,
-                Message = "Deck added successfully",
-                Success = true
-            };
+            if(deck.ExtraDeckSize > 60 || deck.ExtraDeckSize < 40 || deck.ExtraDeckSize > 15 
+                || deck.ExtraDeckSize < 0 || deck.SideDeckSize > 15 || deck.SideDeckSize < 0)
+                {
+                    return new ResponseDeckDto
+                    {
+                        Message = "Main deck size most be no more than 60 and no less than 40 cards, and the extra and side decks can't have more than 15",
+                        Success = false
+                    };
+                }
+                else return new ResponseDeckDto
+                    {
+                        Id = deck.Id,
+                        Name = deck.Name,
+                        ArchetypeId = archetype.Id,
+                        ArchetypeName = archetype.Name,
+                        PlayerName = user.Name,
+                        PlayerId = user.Id,
+                        Message = "Deck added successfully",
+                        Success = true
+                    };
 
         }
         return new ResponseDeckDto

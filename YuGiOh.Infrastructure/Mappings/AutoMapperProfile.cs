@@ -26,13 +26,17 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.ArchetypeId, opt => opt.MapFrom(src => src.Archetype.Id))
                 .ForMember(dest => dest.PlayerId, opt => opt.MapFrom(src => src.Player.Id))
                 .ForMember(dest => dest.ArchetypeName, opt => opt.MapFrom(src => src.Archetype.Name));
-                
+
             CreateMap<TournamentDto, Tournament>()
                 .ForMember(dest => dest.User, opt => opt.Ignore());
                 //.ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => (src.StartDate + "Z")));
 
             CreateMap<Tournament, TournamentDto>()
                 .ForMember(dest => dest.AdminId, opt => opt.MapFrom(src => src.User.Id));
+            
+            CreateMap<Tournament, ResponseTournamentDto>()
+                .ForMember(dest => dest.AdminId, opt => opt.MapFrom(src => src.User.Id))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.Date.ToString()));
             
             CreateMap<Request, RequestDto>()
                 .ForMember(dest => dest.Status, opt => opt.Ignore());
