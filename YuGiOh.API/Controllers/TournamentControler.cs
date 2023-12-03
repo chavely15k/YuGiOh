@@ -63,5 +63,12 @@ namespace YuGiOh.API.Controllers
             var result = await _TournamentService.UpdateTournament(tournament);
             return Ok(result);
         }
+        [HttpGet]
+        [Route("signed/{id}")]
+        public async Task<ActionResult<IEnumerable<TournamentDto>>> GetSignedUpTournament(int id)
+        {
+            var tournaments = await _TournamentService.SignedUpTournaments(id);
+            return Ok(tournaments);
+        }
     }
 }

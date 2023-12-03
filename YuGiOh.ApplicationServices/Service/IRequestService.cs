@@ -9,8 +9,8 @@ namespace YuGiOh.ApplicationServices.Service;
 public interface IRequestService
 {
     public Task<RequestDto> CreateRequest(RequestDto create);
-    public Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id);
-    public Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id);
+    public Task<IEnumerable<ResponseRequestDto>> GetAllRequestByAdmin(int id);
+    public Task<IEnumerable<ResponseRequestDto>> GetAllRequestByPlayer(int id);
 
     public Task<bool> UpdateRequest(RequestDto update);
 

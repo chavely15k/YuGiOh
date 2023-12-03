@@ -1,3 +1,4 @@
+using System.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using YuGiOh.Domain.Models;
 using YuGiOh.Domain.Enums;
 
 namespace YuGiOh.Infrastructure.Service {
+    //TODO: probar todas las funciones de este servicio
     public class TournamentMatchService : AbstractDataServices, ITournamentMatchService {
         public TournamentMatchService(IEntityRepository dataRepository, IMapper mapper) 
             : base(dataRepository, mapper)
@@ -21,6 +23,7 @@ namespace YuGiOh.Infrastructure.Service {
         public async Task<IList<MatchDto>> InitPhase(PhaseDto phaseDto) {
             IList<Match> matches; IList<MatchDto> result = new List<MatchDto>();
             if (phaseDto.Round == 0) matches = await GenerateClassificationMatches(phaseDto);
+            else if (phaseDto.Round == 1) matches = await GenerateFirstRound(phaseDto);
             else matches = await GenerateRoundMatches(phaseDto);
             foreach (var match in matches) {
                 result.Add(_mapper.Map<MatchDto>(match));
@@ -61,6 +64,37 @@ namespace YuGiOh.Infrastructure.Service {
                     Group = g++
                 });
             }
+            return result;
+        }
+        protected async Task<IList<Match>> GenerateFirstRound(PhaseDto phaseDto) {
+            var matches = await _dataRepository.FindAsync<Match>(m => 
+                m.TournamentId == phaseDto.TournamentId);
+
+            var playersWithMoreVictories = (await _dataRepository.GetAllAsync<User>())
+                .Select(p => new
+                {
+                    Player = p,
+                    Victories = matches
+                        .Where(m => (m.PlayerOneId == p.Id && m.PlayerOneResult == 2)
+                                            || (m.PlayerTwoId == p.Id && m.PlayerTwoResult == 2))
+                        .Sum(m => 2)
+                })
+                .OrderByDescending(p => p.Victories)
+                .Take(phaseDto.Base)
+                .Select(p => p.Player)
+                .ToList();
+            List<Match> result = new List<Match>();
+
+            for (int i = 0; i < playersWithMoreVictories.Count()/2; i++) {
+                result.Add(new Match() {
+                    PlayerOneId = playersWithMoreVictories[i].Id,
+                    PlayerTwoId = playersWithMoreVictories[playersWithMoreVictories.Count()-i-1].Id,
+                    TournamentId = phaseDto.TournamentId,
+                    Round = 1,
+                    Group = i
+                });
+            }
+
             return result;
         }
     }

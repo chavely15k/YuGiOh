@@ -6,6 +6,7 @@ using AutoMapper;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
+using YuGiOh.ApplicationCore.DTO;
 
 namespace YuGiOh.Infrastructure.Service
 {
@@ -29,7 +30,7 @@ namespace YuGiOh.Infrastructure.Service
             return result != null;
         }
 
-        public async Task<IEnumerable<RequestDto>> GetAllRequestByAdmin(int id)
+        public async Task<IEnumerable<ResponseRequestDto>> GetAllRequestByAdmin(int id)
         {
             DateTime now = DateTime.Now;
             var tournaments = await _dataRepository.FindAsync<Tournament>(d => d.User.Id == id && d.StartDate.ToUniversalTime() > now.ToUniversalTime() );
@@ -39,19 +40,28 @@ namespace YuGiOh.Infrastructure.Service
                 var req = await _dataRepository.FindAsync<Request>(d => d.TournamentId == tournamet.Id);
                 requests = requests.Concat(req).ToList();
             }
-            return _mapper.Map<IEnumerable<RequestDto>>(requests.OrderByDescending(d => d.Date).ToList());
+            var result = _mapper.Map<IEnumerable<ResponseRequestDto>>(requests.OrderByDescending(d => d.Date).ToList());
+            foreach(var res in result)
+            {
+                res.PlayerName = (await _dataRepository.GetByIdAsync<User>(res.PlayerId)).Name;
+                res.TournamentName = (await _dataRepository.GetByIdAsync<Tournament>(res.TournamentId)).Name;
+            }
+            return result;
         }
 
-        public async Task<IEnumerable<RequestDto>> GetAllRequestByPlayer(int id)
+        public async Task<IEnumerable<ResponseRequestDto>> GetAllRequestByPlayer(int id)
         {
             var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id);
-            LinkedList<RequestDto> result = new();
+            LinkedList<ResponseRequestDto> result = new();
             foreach(var request in allRequest)
             {
                 var tournament = await _dataRepository.GetByIdAsync<Tournament>(request.TournamentId);
                 if(tournament != null && DateTime.Now.ToUniversalTime() < tournament.StartDate.ToUniversalTime())
                 {
-                    result.AddLast(_mapper.Map<RequestDto>(request));
+                    var temp = _mapper.Map<ResponseRequestDto>(request);
+                    temp.PlayerName = (await _dataRepository.GetByIdAsync<User>(temp.PlayerId)).Name;
+                    temp.TournamentName = (await _dataRepository.GetByIdAsync<Tournament>(temp.TournamentId)).Name;
+                    result.AddLast(temp);
                 }
             }
             return result.OrderByDescending(x => x.Date).ToList();
