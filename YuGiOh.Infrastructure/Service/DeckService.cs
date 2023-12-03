@@ -62,6 +62,8 @@ public class DeckService : AbstractDataServices, IDeckService
     public async Task<bool> UpdateDeck(DeckDto register)
     {
         var _deck = _mapper.Map<Deck>(register);
+        var archetype = await _dataRepository.GetByIdAsync<Archetype>(register.ArchetypeId);
+        _deck.Archetype = archetype;
         var result = await _dataRepository.UpdateAsync<Deck>(_deck);
         return result != null;
     }
