@@ -30,7 +30,10 @@ namespace YuGiOh.API.Controllers
 
         [HttpGet]
         [Route("CreateRound")]
-        public async Task<ActionResult<>>
+        public async Task<ActionResult> CreateRound(IList<MatchDto> matchDtos) {
+            await _matchService.CreateRound(matchDtos);
+            return Ok();
+        }
 
     }
 }
