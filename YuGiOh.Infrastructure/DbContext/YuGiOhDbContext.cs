@@ -10,6 +10,7 @@ namespace YuGiOh.Infrastructure
         {
         }
         public DbSet<Deck> Decks { get; set; }
+        public DbSet<Archetype> Archetypes { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Role> Roles { get; set; }
