@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Numerics;
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,31 @@ namespace YuGiOh.Infrastructure.Service {
         }
 
 
-        public async Task<IList<MatchDto>> InitPhase(PhaseDto phaseDto) {
-            IList<Match> matches; IList<MatchDto> result = new List<MatchDto>();
-            if (phaseDto.Round == 0) matches = await GenerateClassificationMatches(phaseDto);
-            else if (phaseDto.Round == 1) matches = await GenerateFirstRound(phaseDto);
+        public async Task<IList<MatchResultDto>> InitPhase(PhaseDto phaseDto) {
+            IList<Match> matches; IList<MatchResultDto> result = new List<MatchResultDto>();
+            var data = (await _dataRepository.FindAsync<Match>(m => m.TournamentId == phaseDto.TournamentId)).ToList();
+            
+            int x;
+            if (data.Count() == 0) x = 0;
+            else if (data.Where(m => m.Round > 0).Count() == 0) x = 1;
+            else {
+                data.ToList().Sort((x, y) => y.Round - x.Round);
+                x = data[0].Round+1;
+            }
+            phaseDto.Round = x;
+            if (x == 0) matches = await GenerateClassificationMatches(phaseDto);
+            else if (x == 1) matches = await GenerateFirstRound(phaseDto);
             else matches = await GenerateRoundMatches(phaseDto);
             foreach (var match in matches) {
-                result.Add(_mapper.Map<MatchDto>(match));
-                await _dataRepository.CreateAsync<Match>(match);
+                result.Add(_mapper.Map<MatchResultDto>(match));
             }
             return result;
+        }
+
+        public async Task CreateRound(IList<MatchDto> matchDtos) {
+            foreach (var match in matchDtos) {
+                await _dataRepository.CreateAsync<Match>(_mapper.Map<Match>(match));
+            }
         }
 
         protected async Task<IList<Match>> GenerateClassificationMatches(PhaseDto phaseDto) {
@@ -51,6 +67,7 @@ namespace YuGiOh.Infrastructure.Service {
         }
         protected async Task<IList<Match>> GenerateRoundMatches(PhaseDto phaseDto) {
             var matches = (await _dataRepository.FindAsync<Match>(m => m.TournamentId == phaseDto.TournamentId && m.Round == phaseDto.Round - 1)).ToList();
+            if (matches.Count()*Math.Pow(2, phaseDto.Round-2) != phaseDto.Base) return new List<Match>();
             matches.Sort((x, y) => x.Group - y.Group);
             int g = matches[matches.Count()-1].Group + 1;
             var winners = matches.Select(m => (m.PlayerOneResult > m.PlayerTwoResult ? m.PlayerOneId : m.PlayerTwoId)).ToList();
@@ -97,5 +114,6 @@ namespace YuGiOh.Infrastructure.Service {
 
             return result;
         }
+
     }
 }

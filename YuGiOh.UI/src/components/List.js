@@ -1,10 +1,18 @@
 //dependencies
 import { NavLink } from 'react-router-dom';
+import { useUniqueId } from '../hooks/useUniqueId';
+import { useEffect } from 'react';
 
 //styles
 import '../styles/List.css'
+import { useState } from 'react';
 
-export function List(props) {
+export function List(props) 
+{
+  const { uniqueId } = useUniqueId()
+  const [buttonRequestsAdmin, setButtonRequestsAdmin] = useState(false)
+  useEffect(() => props.page == 'admin' ? setButtonRequestsAdmin(true) : setButtonRequestsAdmin(false), [])
+
   return (
     <div className="containerTournamentsDecks">
       <div className="tournamentsDecksHead">
@@ -86,29 +94,59 @@ export function List(props) {
                     </li>
                   </div>
                 ))
-                :
-                props.list.map(element => (
-                  <div className="containerLi">
-                    <li
-                      key={element.tournamentId}
-                      id={element.tournamentId}>
+                : props.page == 'userRequests'
+                  ?
+                  props.list.map(element => (
+                    <div className="containerLi">
+                      <li
+                        key={element.tournamentId}
+                        id={element.tournamentId}>
                         {element.tournamentName}
-                    </li>
-                    <div className='containerActionRequest'>
-                      <p
-                        className='actionRequest actionRequestCancel'
-                        onClick={props.onClickCancel}>
+                      </li>
+                      <div className='containerActionRequest'>
+                        <p
+                          className='actionRequest actionRequestCancel'
+                          onClick={props.onClickCancel}>
                           cancel
-                      </p>
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                  :
+                  props.list.map(element => (
+                    <div className="containerLi">
+                      <li
+                        key={uniqueId}
+                        id={`${element.tournamentId} ${element.deckId}`}>
+                        Tournament: {element.tournamentName} || User: {element.playerName}
+                      </li>
+                      <div className='containerIcons'>
+                        <p
+                          className='containerIcon editIcon'
+                          onClick={props.onClickAccept}>
+                          ok
+                        </p>
+                        <p
+                          className='containerIcon deleteIcon'
+                          onClick={props.onClickDeny}>
+                          x
+                        </p>
+                      </div>
+                    </div>))}
       </ul>
-      <NavLink
-        to={props.addPage}
-        className='buttonTournament'>
-        {props.nameAddPage}
-      </NavLink>
+      <div className='containerButtonsList'>
+        <NavLink
+          to={props.addPage}
+          className='buttonTournament'>
+          {props.nameAddPage}
+        </NavLink>
+        {buttonRequestsAdmin &&
+          <NavLink
+            to='/Login/Admin/RequestsAdmin'
+            className='buttonTournament'>
+              requests
+          </NavLink>}
+      </div>
     </div>
   )
 }

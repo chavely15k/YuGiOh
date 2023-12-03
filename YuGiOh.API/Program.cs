@@ -55,6 +55,8 @@ builder.Services
     .AddScoped<IDeckService, DeckService>()
     .AddScoped<IRequestService, RequestService>()
     .AddScoped<ITournamentServices, TournamentServices>()
+    .AddScoped<ITournamentMatchService, TournamentMatchService>()
+    .AddScoped<IMatchService, MatchService>()
     .AddScoped<IArchetypeService, ArchetypeService>()
     .AddScoped<IStatServices, StatService>()
     .AddScoped<RoleSeed>()

@@ -77,9 +77,9 @@
 {
   display: flex;
   flex-direction: column;
-  height: 67%;
+  height: 65%;
   width: 90%;
-  gap: 2px;
+  gap: 1px;
   overflow-y: auto;
 }
 

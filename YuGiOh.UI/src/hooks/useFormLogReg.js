@@ -11,7 +11,7 @@ export const useForm = (initialForm, info, page) => {
   const { infoAPI } = useFetch()
 
   const onInputChange = (e) => {
-    formState[e.target.id] = e.target.value
+    formState[e.target.id] = e.target.value.trim()
     setFormState(formState)
   }
 

@@ -28,8 +28,8 @@ export function User(props)
             <div className="colorIconHeader">{<BsEmojiSunglassesFill/>}</div>
           </div>
           <div className="containerCards">
-            <div className="setCard card"></div>
-            <div className="multifaker card"></div>
+            <figure className="setCard card"></figure>
+            <figure className="multifaker card"></figure>
           </div>
         </aside>
         <div className="containerOptionsUser">
