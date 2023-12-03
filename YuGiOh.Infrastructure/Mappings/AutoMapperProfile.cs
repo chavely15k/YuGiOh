@@ -38,6 +38,10 @@ namespace YuGiOh.Infrastructure.Mappings
                 .ForMember(dest => dest.AdminId, opt => opt.MapFrom(src => src.User.Id))
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.Date.ToString()));
             
+            CreateMap<Request, ResponseRequestDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.Date.ToString()));
+            
             CreateMap<Request, RequestDto>()
                 .ForMember(dest => dest.Status, opt => opt.Ignore());
 
