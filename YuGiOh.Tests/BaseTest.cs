@@ -10,6 +10,7 @@ using YuGiOh.Domain.Models;
 using YuGiOh.Infrastructure.Service;
 using YuGiOh.Infrastructure.Repository;
 using YuGiOh.ApplicationServices.Seed;
+using Newtonsoft.Json;
 
 namespace YuGiOh.Tests;
 
@@ -67,14 +68,14 @@ public abstract class BaseTest
             //     .Where(c => c.BaseType == typeof(ControllerBase) || c.BaseType == typeof(Controller))
             //     .ToList().ForEach(t => services.AddScoped(t));
     }
-    [Fact]
-    public void Test1()
-    {
-        // Assert
-        Assert.True(true);
-    }
     public void Dispose()
     {
         Container.GetService<YuGiOhDbContext>().Database.EnsureDeleted();
+    }
+    protected async Task<string> GetData(string name) {
+        return await File.ReadAllTextAsync($"Data/{name}.json");
+    }
+    protected Dictionary<string, T> GetDeserializedData<T>(string data) {
+        return JsonConvert.DeserializeObject<Dictionary<string, T>>(data);
     }
 }
