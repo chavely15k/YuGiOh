@@ -27,5 +27,10 @@ namespace YuGiOh.API.Controllers
             var matches = await _matchService.InitPhase(phaseDto);
             return Ok(matches);
         }
+
+        [HttpGet]
+        [Route("CreateRound")]
+        public async Task<ActionResult<>>
+
     }
 }

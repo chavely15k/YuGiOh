@@ -27,9 +27,14 @@ namespace YuGiOh.Infrastructure.Service {
             else matches = await GenerateRoundMatches(phaseDto);
             foreach (var match in matches) {
                 result.Add(_mapper.Map<MatchDto>(match));
-                await _dataRepository.CreateAsync<Match>(match);
             }
             return result;
+        }
+
+        public async Task CreateRound(IList<MatchDto> matchDtos) {
+            foreach (var match in matchDtos) {
+                await _dataRepository.CreateAsync<Match>(_mapper.Map<Match>(match));
+            }
         }
 
         protected async Task<IList<Match>> GenerateClassificationMatches(PhaseDto phaseDto) {
