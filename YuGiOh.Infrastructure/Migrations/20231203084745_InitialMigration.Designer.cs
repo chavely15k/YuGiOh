@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231201042651_InitialMigration")]
+    [Migration("20231203084745_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -43,7 +43,7 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Archetype");
+                    b.ToTable("Archetypes");
                 });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Code", b =>
