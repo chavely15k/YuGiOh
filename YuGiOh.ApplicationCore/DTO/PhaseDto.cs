@@ -12,5 +12,6 @@ namespace YuGiOh.ApplicationCore.DTO
         public int TournamentId { get; set; }
         public int Round {get;set;}
         public int Group { get; set; }
+        public int Base { get; set; }
     }
 }
