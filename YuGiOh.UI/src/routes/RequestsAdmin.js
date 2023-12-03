@@ -30,7 +30,7 @@ export function RequestsAdmin(props)
           nameAddPage='back'
           page='adminRequests'
           onClickAccept={onClickAccept}
-          onClickDenie={onClickDeny} />
+          onClickDeny={onClickDeny} />
       </div>
     </div>
   )
