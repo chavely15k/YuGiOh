@@ -7,6 +7,7 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
 using YuGiOh.ApplicationCore.DTO;
+using YuGiOh.Domain.Enums;
 
 namespace YuGiOh.Infrastructure.Service
 {
@@ -70,6 +71,14 @@ namespace YuGiOh.Infrastructure.Service
         public async Task<bool> UpdateRequest(RequestDto request)
         {
             var _request = _mapper.Map<Request>(request);
+            switch(request.Status)
+            {
+                case "Approved": _request.Status = RequestStatus.Approved; 
+                break;
+                case "Rejected": _request.Status = RequestStatus.Rejected;
+                break;
+                default: break;   
+            }
             //Todo: hay que hacer un checkeo que me valide si existe el usuario
             //var newRequest = await _dataRepository.GetByIdAsync<Request>(_request.GetById());
             //Todo: hay que hacer un checkeo de que el status que se manda se uno valido            
