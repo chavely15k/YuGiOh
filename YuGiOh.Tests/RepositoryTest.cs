@@ -14,6 +14,7 @@ namespace YuGiOh.Tests {
         public RepositoryTest() {
             Context = Container.GetRequiredService<YuGiOhDbContext>();
             userService = Container.GetRequiredService<IUserService>();
+            
         }
         [Fact]
         public async Task DeleteUserCascadeTestAsync() {
