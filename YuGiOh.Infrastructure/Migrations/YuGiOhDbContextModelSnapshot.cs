@@ -40,7 +40,7 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Archetype");
+                    b.ToTable("Archetypes");
                 });
 
             modelBuilder.Entity("YuGiOh.Domain.Models.Code", b =>

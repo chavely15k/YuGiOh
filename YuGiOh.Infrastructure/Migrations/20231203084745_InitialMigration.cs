@@ -13,7 +13,7 @@ namespace YuGiOh.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Archetype",
+                name: "Archetypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -22,7 +22,7 @@ namespace YuGiOh.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Archetype", x => x.Id);
+                    table.PrimaryKey("PK_Archetypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,9 +87,9 @@ namespace YuGiOh.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Decks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Decks_Archetype_ArchetypeId",
+                        name: "FK_Decks_Archetypes_ArchetypeId",
                         column: x => x.ArchetypeId,
-                        principalTable: "Archetype",
+                        principalTable: "Archetypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -216,8 +216,8 @@ namespace YuGiOh.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Archetype_Name",
-                table: "Archetype",
+                name: "IX_Archetypes_Name",
+                table: "Archetypes",
                 column: "Name",
                 unique: true);
 
@@ -287,7 +287,7 @@ namespace YuGiOh.Infrastructure.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Archetype");
+                name: "Archetypes");
 
             migrationBuilder.DropTable(
                 name: "Users");
