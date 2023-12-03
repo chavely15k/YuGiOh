@@ -1,7 +1,12 @@
+//dependencies
 import { useEffect, useState } from "react"
 import { useFetch } from "../hooks/useFetch"
-import { List } from "../components/List";
 import { useRequest } from "../hooks/useRequest";
+
+//components
+import { List } from "../components/List";
+
+//styles
 import '../styles/styles-routes/RequestsUser.css'
 
 export function RequestsUser(props)

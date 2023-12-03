@@ -1,8 +1,8 @@
 //dependencies
 import { useEffect } from "react"
+import { useState } from "react"
 
 //components
-import { useState } from "react"
 import { Archetype } from "../components/Archetype"
 import { Form } from "../components/FormTournamentDeck"
 

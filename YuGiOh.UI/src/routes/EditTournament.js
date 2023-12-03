@@ -1,6 +1,8 @@
 //dependencies
-import { Form } from "../components/FormTournamentDeck"
 import { useEffect } from "react"
+
+//components
+import { Form } from "../components/FormTournamentDeck"
 
 //styles
 import '../styles/styles-routes/EditAddTournamentDeck.css'

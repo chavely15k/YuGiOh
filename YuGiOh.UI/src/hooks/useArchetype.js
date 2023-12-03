@@ -1,3 +1,4 @@
+//dependencies
 import { useEffect } from "react"
 import { useFetch } from "./useFetch"
 
