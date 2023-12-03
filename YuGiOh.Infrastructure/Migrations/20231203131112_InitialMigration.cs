@@ -80,8 +80,8 @@ namespace YuGiOh.Infrastructure.Migrations
                     MainDeckSize = table.Column<int>(type: "integer", nullable: false),
                     SideDeckSize = table.Column<int>(type: "integer", nullable: false),
                     ExtraDeckSize = table.Column<int>(type: "integer", nullable: false),
-                    ArchetypeId = table.Column<int>(type: "integer", nullable: false),
-                    PlayerId = table.Column<int>(type: "integer", nullable: false)
+                    PlayerId = table.Column<int>(type: "integer", nullable: false),
+                    ArchetypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,13 +91,13 @@ namespace YuGiOh.Infrastructure.Migrations
                         column: x => x.ArchetypeId,
                         principalTable: "Archetypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Decks_Users_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +119,7 @@ namespace YuGiOh.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

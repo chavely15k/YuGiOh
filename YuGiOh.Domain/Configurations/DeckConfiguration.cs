@@ -8,7 +8,7 @@ namespace YuGiOh.Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<Deck> builder)
         {
-            
+
             builder.Property(d => d.Name)
                 .IsRequired()
                 .HasMaxLength(40);
@@ -25,14 +25,16 @@ namespace YuGiOh.Domain.Configurations
                 .IsRequired()
                 .HasAnnotation("Range", new[] { 0, 15 });
 
-            builder.HasOne(d => d.Player)
-                .WithMany()
-                .IsRequired();
-            builder.HasOne(d => d.Archetype)
-                .WithMany()
-                .IsRequired();
 
-          
+            builder.HasOne(deck => deck.Archetype)
+                .WithMany()
+                .HasForeignKey(deck => deck.ArchetypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(deck => deck.Player)
+                .WithMany(user => user.Decks)
+                .HasForeignKey(deck => deck.PlayerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 

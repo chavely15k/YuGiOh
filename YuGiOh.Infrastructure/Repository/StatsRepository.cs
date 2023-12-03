@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using YuGiOh.ApplicationCore.Repository;
+using YuGiOh.Domain.Interfaces;
 using YuGiOh.Domain.Models;
 
 namespace YuGiOh.Infrastructure.Repository
 {
-    public class StatsRepository : IStatsRepository
+    public class StatsRepository :IStatsRepository
     {
         protected readonly YuGiOhDbContext _dbContext;
 
@@ -18,89 +15,123 @@ namespace YuGiOh.Infrastructure.Repository
         }
 
         // Método para obtener la frecuencia del arquetipo campeón en un intervalo de tiempo
-        public async Task<int> GetChampionArchetypeFrequency(IRangeTime rangeTime)
+        public async Task<IEnumerable<(Archetype Archetype, int Frequency)>> GetChampionArchetypeFrequency(IRangeTime rangeTime)
         {
-            throw new NotImplementedException();
-            //TODO:NotImplemented
-        }
+            var champions = await GetAllChampionsInTimeRange(rangeTime);
 
+            return champions
+                .SelectMany(champion => _dbContext.Decks
+                    .Where(deck => deck.PlayerId == champion.Id)
+                    .Include(deck => deck.Archetype))
+                .GroupBy(deck => deck.Archetype)
+                .OrderByDescending(group => group.Count())
+                .Select(group => (group.Key, group.Count()));
+        }
+        // Método para obtener todos los campeones en un intervalo de tiempo
+        public async Task<IEnumerable<User>> GetAllChampionsInTimeRange(IRangeTime rangeTime)
+        {
+            var tournamentsId = await _dbContext.Tournaments
+                .Where(tournament => rangeTime.IsWithinRange(tournament.StartDate))
+                .Select(tournament => tournament.Id)
+                .ToListAsync();
+
+            var champions = new List<User>();
+
+            foreach (var tournamentId in tournamentsId)
+            {
+                var champion = await GetTournamentChampion(tournamentId);
+                if (champion != null)
+                {
+                    champions.Add(champion);
+                }
+            }
+            return champions;
+        }
         // Método para obtener la ubicación con más campeones en un intervalo de tiempo
-        public async Task<string> GetLocationWithMostChampions(IRangeTime rangeTime)
+       public async Task<string> GetLocationWithMostChampions(IRangeTime rangeTime)
         {
-            throw new NotImplementedException();
-            //TODO:NotImplemented
-        }
+            var champions = await GetAllChampionsInTimeRange(rangeTime);
+            var locationWithMostChampions = champions
+                .GroupBy(champion => new { champion.Province, champion.Township })
+                .Select(group => new
+                {
+                    Location = $"{group.Key.Province}, {group.Key.Township}",
+                    Count = group.Count()
+                })
+                .OrderByDescending(group => group.Count)
+                .FirstOrDefault();
 
+            return locationWithMostChampions?.Location ?? "No champions found";
+        }
         // Método para obtener los arquetipos más populares entre los jugadores
         public async Task<IEnumerable<Archetype>> GetMostPopularArchetypes(int n)
         {
-            var popularArchetypes = await _dbContext.Archetypes
+            return await _dbContext.Archetypes
                 .OrderByDescending(archetype =>
                     _dbContext.Users.Count(user =>
-                        _dbContext.Decks.Any(deck => deck.Archetype.Id == archetype.Id && deck.Player.Id == user.Id)))
+                        _dbContext.Decks.Any(deck => deck.ArchetypeId == archetype.Id && deck.PlayerId == user.Id)))
                 .Take(n)
                 .ToListAsync();
-
-            return popularArchetypes;
         }
         // Método para obtener la provincia/municipio donde es más popular un arquetipo dado
         public async Task<string> GetMostPopularLocationForArchetype(int ArchetypeId)
         {
-            var mostPopularProvince = await _dbContext.Users
-                .Where(user => _dbContext.Decks.Any(deck => deck.Archetype.Id == ArchetypeId && deck.Player.Id == user.Id))
+            return await _dbContext.Users
+                .Where(user => _dbContext.Decks.Any(deck => deck.ArchetypeId == ArchetypeId && deck.PlayerId == user.Id))
                 .GroupBy(user => user.Province)
                 .OrderByDescending(group => group.Count())
                 .Select(group => group.Key)
                 .FirstOrDefaultAsync() ?? "No se encontró ninguna provincia";
-            return mostPopularProvince;
+
         }
         // Método para obtener el arquetipo más utilizado en un torneo específico
-        public async Task<string> GetMostUsedArchetypeInTournament(int idTournament)
+        public async Task<Archetype?> GetMostUsedArchetypeInTournament(int tournamentId)
         {
-            var mostUsedArchetype = await _dbContext.Matches
-                .Where(match => match.TournamentId == idTournament)
+            return await _dbContext.Matches
+                .Where(match => match.TournamentId == tournamentId)
                 .SelectMany(match => _dbContext.Decks
-                    .Where(deck => deck.Player.Id == match.PlayerOne.Id || deck.Player.Id == match.PlayerTwo.Id)
+                    .Where(deck => deck.PlayerId == match.PlayerOneId || deck.PlayerId == match.PlayerTwoId)
+                    .Include(deck => deck.Archetype)
                     .Select(deck => deck.Archetype))
                 .GroupBy(archetype => archetype)
                 .OrderByDescending(group => group.Count())
-                .Select(group => group.Key.Name)
+                .Select(group => group.Key)
                 .FirstOrDefaultAsync();
-
-            return mostUsedArchetype;
         }
         // Método para obtener los arquetipos más utilizados en una ronda específica de un torneo
         public async Task<IEnumerable<Archetype>> GetMostUsedArchetypesInRound(int TournamentId, int Round)
         {
-            var mostUsedArchetypes = await _dbContext.Matches
+            return await _dbContext.Matches
                 .Where(match => match.TournamentId == TournamentId && match.Round == Round)
-                .SelectMany(match => new[] { match.PlayerOne, match.PlayerTwo })
-                .SelectMany(player => _dbContext.Decks
-                    .Where(deck => deck.Player.Id == player.Id))
+                .SelectMany(match => new[] { match.PlayerOneId, match.PlayerTwoId })
+                .SelectMany(playerId => _dbContext.Decks
+                    .Where(deck => deck.PlayerId == playerId))
+                    .Include(deck => deck.Archetype)
                 .GroupBy(deck => deck.Archetype)
                 .OrderByDescending(group => group.Count())
                 .Select(group => group.Key)
                 .ToListAsync();
-
-            return mostUsedArchetypes;
         }
         // Método para obtener los jugadores con más decks en su poder (ordenados de mayor a menor)
         public async Task<IEnumerable<User>> GetPlayersWithMostDecks(int n)
         {
             return await _dbContext.Users
                 .OrderByDescending(user => _dbContext.Decks
-                    .Count(deck => deck.Player.Id == user.Id))
+                    .Count(deck => deck.PlayerId == user.Id))
                 .Take(n)
                 .ToListAsync();
         }
         // Método para obtener el jugador con más victorias en un intervalo de tiempo
         public async Task<IEnumerable<User>> GetPlayersWithMostVictories(int n, IRangeTime rangeTime)
         {
-            var baseQuery = _dbContext.Matches
-                .Where(match => rangeTime.IsWithinRange(match.Date));
+            var baseQuery = await _dbContext.Matches
+                .Where(match => rangeTime.IsWithinRange(match.Date))
+                .Include(match => match.PlayerOne)
+                .Include(match => match.PlayerTwo)
+                .ToListAsync();
 
-            return await baseQuery
-                .Where(match => match.PlayerOneResult > match.PlayerTwoResult)
+            return
+                baseQuery.Where(match => match.PlayerOneResult > match.PlayerTwoResult)
                 .Select(match => match.PlayerOne)
                 .Concat(baseQuery
                     .Where(match => match.PlayerTwoResult > match.PlayerOneResult)
@@ -108,13 +139,14 @@ namespace YuGiOh.Infrastructure.Repository
                 .GroupBy(player => player.Id)
                 .OrderByDescending(group => group.Count())
                 .Take(n)
-                .Select(group => group.First())
-                .ToListAsync();
+                .Select(group => group.First());
         }
         // Método para obtener los arquetipos más utilizados por al menos un jugador en los torneos
         public async Task<IEnumerable<Archetype>> GetTopArchetypesUsedByAtLeastOnePlay(int n)
         {
             return await _dbContext.Requests
+                .Include(request => request.Tournament)
+                .Include(request => request.Deck)
                 .Where(request => request.Tournament.StartDate < DateTime.Now)
                 .Select(request => request.Deck)
                 .GroupBy(deck => deck.Archetype)
@@ -126,15 +158,23 @@ namespace YuGiOh.Infrastructure.Repository
         // Método para obtener al campeón de un torneo específico
         public async Task<User?> GetTournamentChampion(int idTournament)
         {
-            //TODO: Falta Filtrar por Round
-            return await _dbContext.Matches
+
+            var semiAndFinalGroup = await _dbContext.Matches
+                .Include(match => match.PlayerOne)
+                .Include(match => match.PlayerTwo)
                 .Where(match => match.TournamentId == idTournament)
-                .SelectMany(match => new[]{
-                    new { Player = match.PlayerOne, Result = match.PlayerOneResult },
-                    new { Player = match.PlayerTwo, Result = match.PlayerTwoResult }})
-                .OrderByDescending(tuple => tuple.Result)
-                .Select(tuple => tuple.Player)
-                .FirstOrDefaultAsync();
+                .GroupBy(match => match.Round)
+                .OrderByDescending(match => match.First().Round)
+                .Take(2)
+                .ToListAsync();
+
+            var semifinal = semiAndFinalGroup.LastOrDefault();
+            var final = semiAndFinalGroup.FirstOrDefault();
+            var numberOfMatchesInSemifinal = semifinal?.Count() ?? 0;
+
+            return numberOfMatchesInSemifinal == 2 ?
+                final.First().PlayerOneResult > final.First().PlayerTwoResult ?
+                final.First().PlayerOne : final.First().PlayerTwo : null;
 
         }
     }
