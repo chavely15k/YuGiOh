@@ -15,7 +15,6 @@ export function UserTournaments(props)
 
   useEffect(() => {
     props.setRenderBack(false)
-    props.setPathBack('/Login/User')
     infoAPI(`http://localhost:5138/Tournament/signed/${props.info.id}`, 'GET', setList)
   }, [])
   

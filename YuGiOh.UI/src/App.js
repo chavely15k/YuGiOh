@@ -23,6 +23,7 @@ import { UserTournaments } from './routes/UserTournaments'
 //styles
 import './App.css'
 import { RequestsUser } from './routes/RequestsUser'
+import { RequestsAdmin } from './routes/RequestsAdmin'
 
 function App() {
   const [info, setInfo] = useState({})
@@ -174,7 +175,6 @@ function App() {
           element={
             <UserTournaments 
             info={info} 
-            setPathBack={setPathBack} 
             setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
@@ -183,8 +183,15 @@ function App() {
             <RequestsUser 
               info={info}
               setInfoMessage={setInfoMessage}
-              setPathBack={setPathBack}
               setRenderBack={setRenderBack}/>}>
+        </Route>
+        <Route
+          path='/Login/Admin/RequestsAdmin'
+          element={
+            <RequestsAdmin
+            info={info}
+            setInfoMessage={setInfoMessage}
+            setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/*'
