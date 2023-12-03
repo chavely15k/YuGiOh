@@ -17,7 +17,6 @@ export function RequestsUser(props)
 
   useEffect(() => {
     props.setRenderBack(false)
-    props.setPathBack('/Login/User/RequestsSettings')
     infoAPI(`http://localhost:5138/api/Request/playerId/${props.info.id}`, 'GET', setList)
   }, [])
   
