@@ -16,7 +16,7 @@ namespace YuGiOh.ApplicationCore.Repository
 
         public Task<User> GetTournamentChampion(int idTournament);
 
-        public Task<User> GetPlayersWithMostVictories(int n,IRangeTime rangeTime);
+        public Task<IEnumerable<User>> GetPlayersWithMostVictories(int n,IRangeTime rangeTime);
 
         public Task<string> GetMostUsedArchetypeInTournament(int idTournament);
 
