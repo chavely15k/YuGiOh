@@ -1,0 +1,17 @@
+.userTournaments
+{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userTournamentsList
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  width: 80%;
+  margin-bottom: 40px;
+}

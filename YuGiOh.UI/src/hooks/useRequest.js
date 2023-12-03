@@ -2,7 +2,7 @@
 import { useEffect } from "react"
 import { useFetch } from "./useFetch"
 import { useNavigate } from 'react-router-dom'
-
+import { useState } from "react"
 
 export const useRequest = (id, setList, setInfoMessage, archetypeValue) => {
   const { infoAPI } = useFetch()

@@ -1,11 +1,17 @@
 //dependencies
 import { Form } from "../components/FormTournamentDeck"
+import { useEffect } from "react"
 
 //styles
 import '../styles/styles-routes/EditAddTournamentDeck.css'
 
 export function EditTournament(props) 
 {
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/Login/Admin')
+  }, [])
+
   return (
     <div className="containerEdit">
       <h2 className="headForm">Edit Tournament</h2>

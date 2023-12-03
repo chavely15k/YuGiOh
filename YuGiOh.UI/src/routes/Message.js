@@ -1,3 +1,6 @@
+//dependencies
+import { useEffect } from "react"
+
 //components
 import { Button } from "../components/Button"
 
@@ -6,6 +9,8 @@ import '../styles/styles-routes/Message.css'
 
 export function Message(props) 
 {
+  useEffect(() => props.setRenderBack(false), [])
+
   return (
     <div className='containerPrincipalMessage'>
       <div className="containerOptionsMessage">

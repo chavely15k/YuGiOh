@@ -45,7 +45,7 @@ export function List(props) {
                 <li
                   key={element.id}
                   id={element.id}>
-                  {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetypeId}
+                  {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetypeName}
                 </li>
                 <div className="containerIcons">
                   <div
@@ -59,25 +59,36 @@ export function List(props) {
                     <AiFillCloseCircle />
                   </div>
                 </div>
-              </div>  
-              ))
-            :
-            props.list.map(element => (
-              <div className="containerLi">
-                <li
-                  key={element.id}
-                  id={element.id}>
-                  {element.name} || {element.address} || {element.startDate}
-                </li>
-                <div className="containerActionRequest">
-                  <p 
-                    onClick={props.onClickSend} 
-                    className='actionRequest'>
-                      send
-                  </p>   
-                </div>
               </div>
-            ))}  
+            ))
+            : props.page == 'requestsUser'
+              ?
+              props.list.map(element => (
+                <div className="containerLi">
+                  <li
+                    key={element.id}
+                    id={element.id}>
+                    {element.name} || {element.address} || {element.startDate}
+                  </li>
+                  <div className="containerActionRequest">
+                    <p
+                      onClick={props.onClickSend}
+                      className='actionRequest'>
+                      send
+                    </p>
+                  </div>
+                </div>
+              ))
+              :
+              props.list.map(element => (
+                <div className="containerLi">
+                  <li
+                    key={element.id}
+                    id={element.id}>
+                    {element.name} || {element.address} || {element.startDate}
+                  </li>
+                </div>
+              ))}
       </ul>
       <NavLink
         to={props.addPage}

@@ -14,7 +14,12 @@ export function Decks(props)
   const [list, setList] = useState([])
   const { onClickDelete, onClickEdit } = useAdminDeck(setList, props.setInfoMessage, 'decks', props.setInfoEditDeckTournament)
   const { infoAPI } = useFetch()
-  useEffect(() => infoAPI(`http://localhost:5138/Deck/userId/${props.info.id}`, 'GET', setList), [])
+  
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/Login/User')
+    infoAPI(`http://localhost:5138/Deck/userId/${props.info.id}`, 'GET', setList) 
+  }, [])
   
   return (
     <div className='user'>

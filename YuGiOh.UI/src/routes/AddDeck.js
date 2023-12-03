@@ -1,3 +1,6 @@
+//dependencies
+import { useEffect } from "react"
+
 //components
 import { useState } from "react"
 import { Archetype } from "../components/Archetype"
@@ -9,6 +12,11 @@ import '../styles/styles-routes/EditAddTournamentDeck.css'
 export function AddDeck(props) 
 {
   const [archetypeValue, setArchetypeValue] = useState(0)
+
+  useEffect(() => {
+    props.setRenderBack(true)
+    props.setPathBack('/Login/User/Decks')
+  }, [])
 
   return (
     <div className="containerEdit">
