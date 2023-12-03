@@ -9,17 +9,17 @@ namespace YuGiOh.Domain.Models
 {
     public class EntityRepository : IEntityRepository
     {
-        protected readonly YuGiOhDbContext context;
+        protected readonly YuGiOhDbContext _dbContext;
 
-        public EntityRepository(YuGiOhDbContext context)
+        public EntityRepository(YuGiOhDbContext dbContext)
         {
-            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         public async Task<TEntity> CreateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity
         {
-            var result = await context.Set<TEntity>().AddAsync(entity);
-            await context.SaveChangesAsync();
+            var result = await _dbContext.Set<TEntity>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
             return result.Entity;
         }
 
@@ -32,8 +32,8 @@ namespace YuGiOh.Domain.Models
 
             if (entityToDelete != null)
             {
-                context.Set<TEntity>().Remove(entityToDelete);
-                await context.SaveChangesAsync();
+                _dbContext.Set<TEntity>().Remove(entityToDelete);
+                await _dbContext.SaveChangesAsync();
             }
 
             return entityToDelete;
@@ -42,19 +42,19 @@ namespace YuGiOh.Domain.Models
 
         public async Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
         {
-            return await context.Set<TEntity>().Where(predicate).ToListAsync();
+            return await _dbContext.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>() where TEntity : class, IEntity
         {
-            return await context.Set<TEntity>().ToListAsync();
+            return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
-       
+
         public async Task<TEntity?> GetByIdAsync<TEntity>(object key)
             where TEntity : class, IEntity
         {
-            var entities = await context.Set<TEntity>().ToListAsync();
+            var entities = await _dbContext.Set<TEntity>().ToListAsync();
 
             if (key != null)
             {
@@ -69,15 +69,23 @@ namespace YuGiOh.Domain.Models
 
         public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity
         {
-            context.Entry(entity).State = EntityState.Modified;
-            await context.SaveChangesAsync();
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
             return entity;
         }
-        public IQueryable<TEntity> Include<TEntity>(Expression<Func<TEntity, object>> include)
-         where TEntity : class, IEntity
+        public IQueryable<TEntity> Include<TEntity>(params Expression<Func<TEntity, object>>[] includes)
+            where TEntity : class, IEntity
         {
-            return context.Set<TEntity>().Include(include);
+            var query = _dbContext.Set<TEntity>().AsQueryable();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return query;
         }
+
 
     }
 }

@@ -20,7 +20,6 @@ namespace YuGiOh.Infrastructure.Service
             var _request = _mapper.Map<Request>(request);
             await _dataRepository.CreateAsync<Request>(_request);
             return _mapper.Map<RequestDto>(_request);
-
         }
 
         public async Task<bool> DeleteRequest(int PlayerId, int TournametId)
