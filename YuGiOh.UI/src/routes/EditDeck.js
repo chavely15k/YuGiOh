@@ -37,13 +37,13 @@ export function EditDeck(props)
           },
           {
             id: 'ExtraDeckSize',
-            name: 'ExtraDeck Cards',
+            name: 'ExtraDeck Cards (opcional)',
             inputType: 'number',
             inputPlaceHolder: 'Ingress a extradeck size'
           },
           {
             id: 'SideDeckSize',
-            name: 'SideDeck Cards',
+            name: 'SideDeck Cards (opcional)',
             inputType: 'number',
             inputPlaceHolder: 'Ingress a extradeck size'
           }

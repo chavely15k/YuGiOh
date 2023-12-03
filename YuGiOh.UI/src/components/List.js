@@ -24,7 +24,7 @@ export function List(props)
           props.list.map(element => (
             <div className="containerLi">
               <li
-                key={element.id}
+                key={uniqueId}
                 id={element.id}>
                 Name: {element.name} || {element.address} || {element.startDate} || Users: {element.signedPlayers}
               </li>
@@ -47,7 +47,7 @@ export function List(props)
             props.list.map(element => (
               <div className="containerLi">
                 <li
-                  key={element.id}
+                  key={uniqueId}
                   id={element.id}>
                   Name: {element.name} || Main: {element.mainDeckSize} || Extra: {element.extraDeckSize} || Side Deck: {element.sideDeckSize} || {element.archetypeName}
                 </li>
@@ -70,7 +70,7 @@ export function List(props)
               props.list.map(element => (
                 <div className="containerLi">
                   <li
-                    key={element.id}
+                    key={uniqueId}
                     id={element.id}>
                     Name: {element.name} || {element.address} || {element.startDate}
                   </li>
@@ -99,7 +99,7 @@ export function List(props)
                   props.list.map(element => (
                     <div className="containerLi">
                       <li
-                        key={element.tournamentId}
+                        key={uniqueId}
                         id={element.tournamentId}>
                         {element.tournamentName}
                       </li>
@@ -117,7 +117,7 @@ export function List(props)
                     <div className="containerLi">
                       <li
                         key={uniqueId}
-                        id={`${element.tournamentId} ${element.deckId}`}>
+                        id={`${element.tournamentId} ${element.deckId} ${element.playerId}`}>
                         Tournament: {element.tournamentName} || User: {element.playerName}
                       </li>
                       <div className='containerIcons'>

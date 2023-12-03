@@ -75,7 +75,7 @@ export const useForm = (initialForm, info, page) => {
 
       info(newData)
       navigate(`${newData.roles.length > 1 ? '/Login/Rol' : '/Login/User'}`)
-    }, 1000)
+    }, 1500)
 
   }
 

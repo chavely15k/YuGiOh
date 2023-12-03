@@ -46,13 +46,14 @@ export const useRequest = (id, setList, setInfoMessage) => {
 
   const onClickAccept = (e) => {
     var bodyRequest = {
-      PlayerId: id,
+      PlayerId: e.target.parentNode.parentNode.firstChild.id.split(' ')[2],
       TournamentId: e.target.parentNode.parentNode.firstChild.id.split(' ')[0],
       DeckId: e.target.parentNode.parentNode.firstChild.id.split(' ')[1],
       Status: 'Approved',
       StartDate: ''
     }
 
+    console.log(bodyRequest)
     infoAPI('http://localhost:5138/api/Request/update', 'PUT', setList, bodyRequest)
 
     setInfoMessage({
@@ -65,7 +66,7 @@ export const useRequest = (id, setList, setInfoMessage) => {
 
   const onClickDeny = (e) => {
     var bodyRequest = {
-      PlayerId: id,
+      PlayerId: e.target.parentNode.parentNode.firstChild.id.split(' ')[2],
       TournamentId: e.target.parentNode.parentNode.firstChild.id.split(' ')[0],
       DeckId: e.target.parentNode.parentNode.firstChild.id.split(' ')[1],
       Status: 'Rejected',

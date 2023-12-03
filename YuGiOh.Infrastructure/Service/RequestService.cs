@@ -44,7 +44,7 @@ namespace YuGiOh.Infrastructure.Service
             var result = _mapper.Map<IEnumerable<ResponseRequestDto>>(requests.OrderByDescending(d => d.Date).ToList());
             foreach(var res in result)
             {
-                res.PlayerName = (await _dataRepository.GetByIdAsync<User>(res.PlayerId)).Name;
+                res.PlayerName = (await _dataRepository.GetByIdAsync<User>(res.PlayerId)).Nick;
                 res.TournamentName = (await _dataRepository.GetByIdAsync<Tournament>(res.TournamentId)).Name;
             }
             return result;
@@ -52,7 +52,7 @@ namespace YuGiOh.Infrastructure.Service
 
         public async Task<IEnumerable<ResponseRequestDto>> GetAllRequestByPlayer(int id)
         {
-            var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id);
+            var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status == RequestStatus.Pending);
             LinkedList<ResponseRequestDto> result = new();
             foreach(var request in allRequest)
             {
@@ -60,7 +60,7 @@ namespace YuGiOh.Infrastructure.Service
                 if(tournament != null && DateTime.Now.ToUniversalTime() < tournament.StartDate.ToUniversalTime())
                 {
                     var temp = _mapper.Map<ResponseRequestDto>(request);
-                    temp.PlayerName = (await _dataRepository.GetByIdAsync<User>(temp.PlayerId)).Name;
+                    temp.PlayerName = (await _dataRepository.GetByIdAsync<User>(temp.PlayerId)).Nick;
                     temp.TournamentName = (await _dataRepository.GetByIdAsync<Tournament>(temp.TournamentId)).Name;
                     result.AddLast(temp);
                 }
