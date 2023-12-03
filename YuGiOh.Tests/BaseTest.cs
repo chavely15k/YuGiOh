@@ -4,8 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration.Json;
+using YuGiOh.ApplicationCore.Repository;
+using YuGiOh.ApplicationServices.Service;
+using YuGiOh.Domain.Models;
+using YuGiOh.Infrastructure.Service;
+using YuGiOh.Infrastructure.Repository;
+using YuGiOh.ApplicationServices.Seed;
 
 namespace YuGiOh.Tests;
 
@@ -19,19 +23,41 @@ public abstract class BaseTest
 
     public ServiceProvider Container =>
         services.BuildServiceProvider();
-    public BaseTest() { 
+    public BaseTest() {
             services = new ServiceCollection();
 
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("./appsettings.json")
                 .Build();
-            
+
             services.AddTransient(c => Configuration);
 
             services.AddDbContext<YuGiOhDbContext>(opt =>
                 opt.UseInMemoryDatabase("testing", InMemoryDatabaseRoot), ServiceLifetime.Transient);
 
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services
+                .AddScoped<IEntityRepository, EntityRepository>()
+                .AddScoped<ICodeService, CodeService>()
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<IRoleService, RoleService>()
+                .AddScoped<IDeckService, DeckService>()
+                .AddScoped<IRequestService, RequestService>()
+                .AddScoped<ITournamentServices, TournamentServices>()
+                .AddScoped<IArchetypeService, ArchetypeService>()
+                .AddScoped<RoleSeed>()
+                .AddScoped<CodeSeed>()
+                .AddScoped<ArchetypeDbBootstrap>();
+
+            // services.AddControllers()
+            //     .AddNewtonsoftJson(options =>
+            //     {
+            //         // Configuración global para ignorar propiedades nulas durante la serialización
+            //         options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            //     });
 
             // services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -40,14 +66,15 @@ public abstract class BaseTest
             // typeof(Startup).Assembly.GetExportedTypes()
             //     .Where(c => c.BaseType == typeof(ControllerBase) || c.BaseType == typeof(Controller))
             //     .ToList().ForEach(t => services.AddScoped(t));
-
-            var writeCtx = Container.GetRequiredService<YuGiOhDbContext>();
-            //SeedData.EnsureDbSeeded(writeCtx);
     }
     [Fact]
     public void Test1()
     {
         // Assert
         Assert.True(true);
+    }
+    public void Dispose()
+    {
+        Container.GetService<YuGiOhDbContext>().Database.EnsureDeleted();
     }
 }
