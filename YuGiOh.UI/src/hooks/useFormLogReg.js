@@ -61,7 +61,6 @@ export const useForm = (initialForm, info, page) => {
     infoAPI(`http://localhost:5138/Account/${page}`, 'POST', almac, newFormState)
 
     setTimeout(() => {
-      console.log(newFormState)
       const newData = data[0]
 
       if (!newData.success) {

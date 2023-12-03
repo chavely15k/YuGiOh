@@ -3,22 +3,22 @@ import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 
 //components
-import { List } from "../components/TournamentDeckList";
+import { List } from "../components/List";
 
 //styles
 import '../styles/styles-routes/UserTournaments.css'
 
 export function UserTournaments(props)
 {
-  useEffect(() => {
-    props.setRenderBack(false)
-    props.setPathBack('/')
-  }, [])
-
   const [list, setList] = useState([])
   const { infoAPI } = useFetch()
-  //useEffect(() => infoAPI('url', 'GET', setList))
 
+  useEffect(() => {
+    props.setRenderBack(false)
+    props.setPathBack('/Login/User')
+    infoAPI(`http://localhost:5138/Tournament/signed/${props.info.id}`, 'GET', setList)
+  }, [])
+  
   return (
     <div className="userTournaments">
       <div className="userTournamentsList">
@@ -27,7 +27,7 @@ export function UserTournaments(props)
           header='Signed Up Tournaments'
           addPage='/Login/User'
           nameAddPage='back'
-          page='userTournament'/>
+          page='userTournaments'/>
       </div>
     </div>
   )

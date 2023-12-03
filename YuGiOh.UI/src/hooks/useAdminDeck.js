@@ -10,10 +10,10 @@ export const useAdminDeck = (setList, setInfoMessage, page, setInfoEditDeckTourn
     setTimeout(() => {
       page == 'admin'
         ?
-        infoAPI(`http://localhost:5138/Tournament/delete/${parseInt(e.target.parentNode.parentNode.parentNode.parentNode.firstChild.id)}`,
+        infoAPI(`http://localhost:5138/Tournament/delete/${parseInt(e.target.parentNode.parentNode.firstChild.id)}`,
           'DELETE', setList)
         :
-        infoAPI(`http://localhost:5138/Deck/delete/${parseInt(e.target.parentNode.parentNode.parentNode.parentNode.firstChild.id)}`,
+        infoAPI(`http://localhost:5138/Deck/delete/${parseInt(e.target.parentNode.parentNode.firstChild.id)}`,
           'DELETE', setList)
 
       setInfoMessage({
@@ -27,7 +27,7 @@ export const useAdminDeck = (setList, setInfoMessage, page, setInfoEditDeckTourn
   }
 
   const onClickEdit = (e) => {
-    setInfoEditDeckTournament(parseInt(e.target.parentNode.parentNode.parentNode.firstChild.id))
+    setInfoEditDeckTournament(parseInt(e.target.parentNode.parentNode.firstChild.id))
 
     page == 'admin'
       ? navigate('/Login/Admin/EditTournament')

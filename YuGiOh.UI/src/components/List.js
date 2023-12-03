@@ -1,12 +1,8 @@
 //dependencies
 import { NavLink } from 'react-router-dom';
 
-//components
-import { AiFillCloseCircle } from "react-icons/ai";
-import { AiTwotoneEdit } from "react-icons/ai";
-
 //styles
-import '../styles/TournamentDeckList.css'
+import '../styles/List.css'
 
 export function List(props) {
   return (
@@ -22,18 +18,18 @@ export function List(props) {
               <li
                 key={element.id}
                 id={element.id}>
-                {element.name} || {element.address} || {element.startDate}
+                Name: {element.name} || {element.address} || {element.startDate} || Users: {element.signedPlayers}
               </li>
               <div className="containerIcons">
                 <div
                   className="containerIcon editIcon"
                   onClick={props.onClickEdit}>
-                  <AiTwotoneEdit />
+                  e
                 </div>
                 <div
                   className="containerIcon deleteIcon"
                   onClick={props.onClickDelete}>
-                  <AiFillCloseCircle />
+                  x
                 </div>
               </div>
             </div>
@@ -45,50 +41,68 @@ export function List(props) {
                 <li
                   key={element.id}
                   id={element.id}>
-                  {element.name} || MD: {element.mainDeckSize} || ED: {element.extraDeckSize} || SD: {element.sideDeckSize} || {element.archetypeName}
+                  Name: {element.name} || Main: {element.mainDeckSize} || Extra: {element.extraDeckSize} || Side Deck: {element.sideDeckSize} || {element.archetypeName}
                 </li>
                 <div className="containerIcons">
                   <div
                     className="containerIcon editIcon"
                     onClick={props.onClickEdit}>
-                    <AiTwotoneEdit />
+                    e
                   </div>
                   <div
                     className="containerIcon deleteIcon"
                     onClick={props.onClickDelete}>
-                    <AiFillCloseCircle />
+                    x
                   </div>
                 </div>
               </div>
             ))
-            : props.page == 'requestsUser'
+            : props.page == 'posibleRequestsUser'
               ?
               props.list.map(element => (
                 <div className="containerLi">
                   <li
                     key={element.id}
                     id={element.id}>
-                    {element.name} || {element.address} || {element.startDate}
+                    Name: {element.name} || {element.address} || {element.startDate}
                   </li>
                   <div className="containerActionRequest">
                     <p
                       onClick={props.onClickSend}
-                      className='actionRequest'>
+                      className='actionRequest actionRequestSend'>
                       send
                     </p>
                   </div>
                 </div>
               ))
-              :
-              props.list.map(element => (
-                <div className="containerLi">
-                  <li
-                    key={element.id}
-                    id={element.id}>
-                    {element.name} || {element.address} || {element.startDate}
-                  </li>
-                </div>
-              ))}
+              : props.page == 'userTournaments'
+                ?
+                props.list.map(element => (
+                  <div className="containerLi">
+                    <li
+                      key={element.id}
+                      id={element.id}>
+                      Name: {element.name} || {element.address} || {element.startDate}
+                    </li>
+                  </div>
+                ))
+                :
+                props.list.map(element => (
+                  <div className="containerLi">
+                    <li
+                      key={element.id}
+                      id={element.id}>
+                      Name: {element.name}
+                    </li>
+                    <div className='containerActionRequest'>
+                      <p
+                        className='actionRequest actionRequestCancel'
+                        onClick={props.onClickCancel}>
+                          cancel
+                      </p>
+                    </div>
+                  </div>
+                ))}
       </ul>
       <NavLink
         to={props.addPage}

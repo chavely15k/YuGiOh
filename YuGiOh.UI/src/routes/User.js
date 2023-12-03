@@ -12,7 +12,7 @@ export function User(props)
 {
   useEffect(() => {
     props.setRenderBack(true)
-    props.setPathBack('/Login')
+    props.setPathBack(`${props.info.roles.length > 1 ? '/Login/Rol' : '/Login'}`)
   } , [])
 
   return (
@@ -25,7 +25,7 @@ export function User(props)
         <aside className="containerAnimations">
           <div className="headerCards">
             Welcome to our site
-            <p className="colorIconHeader">{<BsEmojiSunglassesFill/>}</p>
+            <div className="colorIconHeader">{<BsEmojiSunglassesFill/>}</div>
           </div>
           <div className="containerCards">
             <div className="setCard card"></div>

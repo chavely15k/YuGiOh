@@ -4,7 +4,7 @@ import { useAdminDeck } from "../hooks/useAdminDeck"
 import { useFetch } from "../hooks/useFetch"
 
 //components
-import { List } from "../components/TournamentDeckList"
+import { List } from "../components/List"
 
 //styles
 import '../styles/styles-routes/Decks.css'
@@ -14,7 +14,7 @@ export function Decks(props)
   const [list, setList] = useState([])
   const { onClickDelete, onClickEdit } = useAdminDeck(setList, props.setInfoMessage, 'decks', props.setInfoEditDeckTournament)
   const { infoAPI } = useFetch()
-  
+
   useEffect(() => {
     props.setRenderBack(true)
     props.setPathBack('/Login/User')

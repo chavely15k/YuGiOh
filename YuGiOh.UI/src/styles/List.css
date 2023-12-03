@@ -67,23 +67,31 @@
 
 .containerIcon
 {
-  margin: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 5px;
+  margin: 0px 2px;
   cursor: pointer;
+  border-radius: 25px
 }
 
 .containerIcon:hover
 {
-  color: fuchsia;
+  background-color: black;
+  color: yellow;
 }
 
 .deleteIcon
 {
-  color: red;
+  background-color: red;
+  color: white;
 }
 
 .editIcon
 {
-  color: green;
+  background-color: green;
+  color: white;
 }
 
 .buttonTournament
@@ -109,20 +117,36 @@
   color: yellow;
 }
 
-.actionRequest
-{
-  color: green;
-  cursor: pointer;
-}
-
-.actionRequest:hover
-{
-  color: fuchsia;
-}
-
 .containerActionRequest
 {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.actionRequest
+{
+  padding: 1px 5px;
+  color: white;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.actionRequest:hover
+{
+  background-color: black;
+  color: yellow;
+}
+
+.actionRequestSend
+{
+  background-color: green;
+}
+
+.actionRequestCancel
+{
+  background-color: red;
+}
+
+
+

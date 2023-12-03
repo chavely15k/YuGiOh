@@ -5,15 +5,15 @@ import { useEffect } from "react"
 
 ///components
 import { Archetype } from "../components/Archetype"
-import { List } from "../components/TournamentDeckList"
+import { List } from "../components/List"
 
 //styles
 import '../styles/styles-routes/RequestsSettings.css'
 
-export function RequestsSettings(props) {
-  const [archetypeValue, setArchetypeValue] = useState(0)
+export function RequestsSettings(props) 
+{
   const [list, setList] = useState([])
-  const { onClickSend } = useRequest(props.info.id, setList, props.setInfoMessage, archetypeValue)
+  const { onClickSend, setArchetypeValue } = useRequest(props.info.id, setList, props.setInfoMessage)
 
   useEffect(() => {
     props.setRenderBack(true)
@@ -31,7 +31,7 @@ export function RequestsSettings(props) {
           header='Available Tournaments'
           addPage='/Login/User/Decks/RequestSettings/Requests'
           nameAddPage='requests'
-          page='requestsUser'
+          page='posibleRequestsUser'
           onClickSend={onClickSend}/>
       </div>
       <div className="containerArchetype">

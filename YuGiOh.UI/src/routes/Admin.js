@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useFetch } from '../hooks/useFetch'
 
 //components
-import { List } from '../components/TournamentDeckList'
+import { List } from '../components/List'
 
 //styles
 import '../styles/styles-routes/Admin.css'
@@ -14,7 +14,7 @@ export function Admin(props)
   const [list, setList] = useState([])
   const { onClickDelete, onClickEdit } = useAdminDeck(setList, props.setInfoMessage, 'admin', props.setInfoEditDeckTournament)
   const { infoAPI } = useFetch()
-  
+
   useEffect(() => {
     props.setRenderBack(true)
     props.setPathBack('/Login/Rol')

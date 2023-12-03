@@ -22,6 +22,7 @@ import { UserTournaments } from './routes/UserTournaments'
 
 //styles
 import './App.css'
+import { RequestsUser } from './routes/RequestsUser'
 
 function App() {
   const [info, setInfo] = useState({})
@@ -33,8 +34,9 @@ function App() {
   const navigate = useNavigate()
   var secretURL = 'https://www.pornhub.com/view_video.php?viewkey=652ec89113e78'
 
-  const handleBack = (path) => {
-    if (path == '/') {
+  const handleBack = (path) => {  
+    if (path == '/') 
+    {
       setRenderBack(false)
       navigate(path)
       return
@@ -174,6 +176,15 @@ function App() {
             info={info} 
             setPathBack={setPathBack} 
             setRenderBack={setRenderBack}/>}>
+        </Route>
+        <Route
+          path='/Login/User/RequestsSettings/RequestsUser'
+          element={
+            <RequestsUser 
+              info={info}
+              setInfoMessage={setInfoMessage}
+              setPathBack={setPathBack}
+              setRenderBack={setRenderBack}/>}>
         </Route>
         <Route
           path='/*'

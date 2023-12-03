@@ -54,7 +54,8 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             PlayerId: id,
-            ArchetypeId: archetype
+            ArchetypeId: archetype,
+            ArchetypeName: ''
           }
 
           if (archetype != '')
@@ -94,11 +95,13 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
             ...formState,
             PlayerId: id,
             id: idDeckTournament,
-            ArchetypeId: archetype
+            ArchetypeId: archetype,
+            ArchetypeName: ''
           }
 
           if(archetype != '')
           {
+            console.log(newFormState)
             infoAPI('http://localhost:5138/Deck/update', 'PUT', almac, newFormState)
 
             setTimeout(() => {
