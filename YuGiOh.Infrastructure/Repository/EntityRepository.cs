@@ -5,7 +5,7 @@ using YuGiOh.ApplicationCore.DTO;
 using YuGiOh.Domain.Models;
 using YuGiOh.Infrastructure;
 
-namespace YuGiOh.Domain.Models
+namespace YuGiOh.Infrastructure.Repository
 {
     public class EntityRepository : IEntityRepository
     {

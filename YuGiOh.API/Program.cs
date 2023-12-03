@@ -7,6 +7,7 @@ using YuGiOh.Infrastructure.Service;
 using YuGiOh.Infrastructure.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 using YuGiOh.Domain.Models;
+using YuGiOh.Infrastructure.Repository;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 // using YuGiOh.Infrastructure.Seed;
