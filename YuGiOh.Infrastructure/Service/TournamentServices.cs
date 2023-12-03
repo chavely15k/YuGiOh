@@ -80,5 +80,15 @@ namespace YuGiOh.Infrastructure.Service
             return result != null;
         }
 
+        public async Task<IEnumerable<TournamentDto>> SignedUpTournaments(int id)
+        {
+            var aceptedRequests = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status == RequestStatus.Approved);
+            LinkedList<TournamentDto> result = new();
+            foreach(var request in aceptedRequests)
+            {
+                result.AddLast(_mapper.Map<TournamentDto>(await _dataRepository.FindAsync<Tournament>(d => d.Id == request.TournamentId)));
+            }
+            return result;
+        }
     }
 }
