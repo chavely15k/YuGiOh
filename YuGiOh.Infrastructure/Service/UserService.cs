@@ -167,9 +167,9 @@ public class UserService : AbstractDataServices, IUserService
             Success = false
         };
     }
-    public Task DeleteAsync(int userId)
+    public async Task DeleteAsync(int userId)
     {
-        throw new NotImplementedException();
+        await _dataRepository.DeleteAsync<User>(userId);
     }
     public Task<RegisterDto> UpdateUser(UserDto register)
     {

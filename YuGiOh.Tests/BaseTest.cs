@@ -53,6 +53,7 @@ public abstract class BaseTest
                 .AddScoped<CodeSeed>()
                 .AddScoped<ArchetypeDbBootstrap>();
 
+            InitializeDataAsync(Container);
             // services.AddControllers()
             //     .AddNewtonsoftJson(options =>
             //     {
@@ -71,6 +72,12 @@ public abstract class BaseTest
     public void Dispose()
     {
         Container.GetService<YuGiOhDbContext>().Database.EnsureDeleted();
+    }
+    public void InitializeDataAsync(IServiceProvider serviceProvider)
+    {
+        serviceProvider.GetService<CodeSeed>()!.SetInitialCodeAsync();
+        serviceProvider.GetService<RoleSeed>()!.SetInitialRoleAsync();
+        serviceProvider.GetService<ArchetypeDbBootstrap>()!.insertArchetypes();
     }
     protected async Task<string> GetData(string name) {
         return await File.ReadAllTextAsync($"Data/{name}.json");
