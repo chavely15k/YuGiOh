@@ -22,12 +22,12 @@ namespace YuGiOh.Infrastructure.Service {
         }
 
         public async Task<IEnumerable<MatchDto>> GetMatchesByPhase(MatchByPhaseDto matchByPhaseDto) {
-            var matches = _dataRepository.FindAsync<Match>(m => (m.Round == matchByPhaseDto.Round && m.TournamentId == matchByPhaseDto.TournamentId));
+            var matches = await _dataRepository.FindAsync<Match>(m => (m.Round == matchByPhaseDto.Round && m.TournamentId == matchByPhaseDto.TournamentId));
             return _mapper.Map<IEnumerable<MatchDto>>(matches);
         }
         
         public async Task<IEnumerable<MatchDto>> GetMatchesByTournament(int id) {
-            var matches = _dataRepository.FindAsync<Match>(m => (m.TournamentId == id));
+            var matches = await _dataRepository.FindAsync<Match>(m => (m.TournamentId == id));
             return _mapper.Map<IEnumerable<MatchDto>>(matches);
         }
         public async Task<MatchResultDto> CreateMatch(MatchDto newMatch) 

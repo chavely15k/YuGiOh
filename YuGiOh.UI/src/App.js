@@ -35,7 +35,6 @@ function App() {
   const back = '< back'
   const navigate = useNavigate()
   const [tournament, setTournament] = useState({})
-  var secretURL = 'https://www.pornhub.com/view_video.php?viewkey=652ec89113e78'
 
   const handleBack = (path) => {  
     if (path == '/') 

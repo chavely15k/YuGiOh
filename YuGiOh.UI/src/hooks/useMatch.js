@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { useFetch } from "./useFetch"
 
-export const useMatch = (initialForm) => {
+export const useMatch = (initialForm, playerOneId, playerTwoId, group, round, tournament, setOnSend) => {
   const [formMatch, setFormMatch] = useState(initialForm)
-  const { infoApi } = useFetch()
+  const { infoAPI } = useFetch()
+  const [data, setData] = useState({})
   
   const onInputChange = (e) => {
     formMatch[e.target.id] = e.target.value
@@ -21,6 +22,20 @@ export const useMatch = (initialForm) => {
         return
       }
     }
+
+    var bodyRequest = {
+      ...formMatch,
+      PlayerOneId: playerOneId,
+      PlayerTwoId: playerTwoId,
+      Group: group,
+      Round: round,
+      TournamentId: tournament
+    }
+
+    bodyRequest.Date += 'Z'
+
+    infoAPI('http://localhost:5138/api/Match/create', 'POST', setData, bodyRequest)
+    setOnSend(false)
   }
 
   return {

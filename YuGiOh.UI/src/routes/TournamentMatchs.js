@@ -14,7 +14,7 @@ export function Tournament(props) {
     {
       TournamentId: props.tournament.id,
       Base: 4
-    })}, [props.pot])
+    })}, [])
 
   return (
     <div className="containerTournamentMatchs">
@@ -27,7 +27,8 @@ export function Tournament(props) {
           page='tournamentMatchs'
           header='Matchs'
           addPage='/Login/Admin/TournamentMatchs'
-          nameAddPage='Next Phase' />
+          nameAddPage='Next Phase'
+          tournament={props.tournament.id}/>
       </div>
     </div>
   )

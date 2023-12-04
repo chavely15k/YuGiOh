@@ -150,7 +150,12 @@ export function List(props) {
                           id={uniqueId}>
                           <Form
                             playerOneNick={element.playerOneNick}
-                            playerTwoNick={element.playerTwoNick} />
+                            playerTwoNick={element.playerTwoNick} 
+                            playerOneId={element.playerOneId}
+                            playerTwoId={element.playerTwoId} 
+                            group={element.group}
+                            round={element.round}
+                            tournamentId={element.tournamentId}/>
                         </li>
                       </div>
                     ))}
