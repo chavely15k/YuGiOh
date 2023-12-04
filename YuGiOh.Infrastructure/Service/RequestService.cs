@@ -52,7 +52,7 @@ namespace YuGiOh.Infrastructure.Service
 
         public async Task<IEnumerable<ResponseRequestDto>> GetAllRequestByPlayer(int id)
         {
-            var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id);
+            var allRequest = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status == RequestStatus.Pending);
             LinkedList<ResponseRequestDto> result = new();
             foreach(var request in allRequest)
             {
