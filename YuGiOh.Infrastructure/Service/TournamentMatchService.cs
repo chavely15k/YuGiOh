@@ -11,6 +11,7 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
 using YuGiOh.Domain.Enums;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 
 namespace YuGiOh.Infrastructure.Service {
     //TODO: probar todas las funciones de este servicio
@@ -37,7 +38,10 @@ namespace YuGiOh.Infrastructure.Service {
             else if (x == 1) matches = await GenerateFirstRound(phaseDto);
             else matches = await GenerateRoundMatches(phaseDto);
             foreach (var match in matches) {
-                result.Add(_mapper.Map<MatchResultDto>(match));
+                var temp = _mapper.Map<MatchResultDto>(match);
+                temp.PlayerOneNick = (await _dataRepository.GetByIdAsync<User>(temp.PlayerOneId)).Nick;
+                temp.PlayerTwoNick = (await _dataRepository.GetByIdAsync<User>(temp.PlayerTwoId)).Nick;
+                result.Add(temp);
             }
             return result;
         }
