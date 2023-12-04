@@ -32,9 +32,8 @@ public class DeckService : AbstractDataServices, IDeckService
         {
             deck.Player = user;
             deck.Archetype = archetype;
-            await _dataRepository.CreateAsync<Deck>(deck);
 
-            if(register.ExtraDeckSize > 60 || register.ExtraDeckSize < 40 || register.ExtraDeckSize > 15 
+            if(register.MainDeckSize > 60 || register.MainDeckSize < 40 || register.ExtraDeckSize > 15 
                 || register.ExtraDeckSize < 0 || register.SideDeckSize > 15 || register.SideDeckSize < 0)
                 {
                     return new ResponseDeckDto
@@ -43,17 +42,19 @@ public class DeckService : AbstractDataServices, IDeckService
                         Success = false
                     };
                 }
-                else return new ResponseDeckDto
-                    {
-                        Id = deck.Id,
-                        Name = deck.Name,
-                        ArchetypeId = archetype.Id,
-                        ArchetypeName = archetype.Name,
-                        PlayerName = user.Name,
-                        PlayerId = user.Id,
-                        Message = "Deck added successfully",
-                        Success = true
-                    };
+                
+            await _dataRepository.CreateAsync<Deck>(deck);
+            return new ResponseDeckDto
+                {
+                    Id = deck.Id,
+                    Name = deck.Name,
+                    ArchetypeId = archetype.Id,
+                    ArchetypeName = archetype.Name,
+                    PlayerName = user.Name,
+                    PlayerId = user.Id,
+                    Message = "Deck added successfully",
+                    Success = true
+                };
 
         }
         return new ResponseDeckDto
