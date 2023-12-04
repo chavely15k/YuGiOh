@@ -39,5 +39,13 @@ namespace YuGiOh.API.Controllers
             var response = await userService.RegisterUserAsync(registerUser);
             return Ok(response);
         }
+
+        [HttpPut]
+        [Route("BeAdmin")]
+        public async Task<ActionResult<bool>> BeAdmin(RoleAssignDto assaign)
+        {
+            var result = await userService.AddRoleAsync(assaign);
+            return Ok(result.Success);
+        }
     }
 }
