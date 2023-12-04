@@ -40,22 +40,22 @@ namespace YuGiOh.Infrastructure.Service
             else return false;
         }
 
-        public async Task<IEnumerable<TournamentDto>> GetAllTournaments()
+        public async Task<IEnumerable<ResponseTournamentDto>> GetAllTournaments()
         {
             var _Tournaments = await _dataRepository.GetAllAsync<Tournament>();
-            return _mapper.Map<IEnumerable<TournamentDto>>(_Tournaments);
+            return _mapper.Map<IEnumerable<ResponseTournamentDto>>(_Tournaments);
         }
 
-        public async Task<IEnumerable<TournamentDto>> AvailableTournamentsAsync(int id)
+        public async Task<IEnumerable<ResponseTournamentDto>> AvailableTournamentsAsync(int id)
         {
             var _tournaments = await _dataRepository.FindAsync<Tournament>(d => d.StartDate.ToUniversalTime() > DateTime.Now.ToUniversalTime());
             var _request = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status != RequestStatus.Rejected);
-            LinkedList<TournamentDto> result = new();
+            LinkedList<ResponseTournamentDto> result = new();
             foreach(var tournament in _tournaments)
             {   
                 if(_request.Where(d => d.TournamentId == tournament.Id).Count()== 0)
                 {
-                    result.AddLast(_mapper.Map<TournamentDto>(tournament));
+                    result.AddLast(_mapper.Map<ResponseTournamentDto>(tournament));
                 }
             }
             return result;
@@ -80,14 +80,14 @@ namespace YuGiOh.Infrastructure.Service
             return result != null;
         }
 
-        public async Task<IEnumerable<TournamentDto>> SignedUpTournaments(int id)
+        public async Task<IEnumerable<ResponseTournamentDto>> SignedUpTournaments(int id)
         {
             var aceptedRequests = await _dataRepository.FindAsync<Request>(d => d.PlayerId == id && d.Status == RequestStatus.Approved);
-            LinkedList<TournamentDto> result = new();
+            LinkedList<ResponseTournamentDto> result = new();
             foreach(var request in aceptedRequests)
             {
                 var temp = await _dataRepository.FindAsync<Tournament>(d => d.Id == request.TournamentId);
-                result.AddLast(_mapper.Map<TournamentDto>(temp.First()));
+                result.AddLast(_mapper.Map<ResponseTournamentDto>(temp.First()));
             }
             return result;
         }
