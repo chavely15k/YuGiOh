@@ -4,9 +4,6 @@ using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.Infrastructure;
 using YuGiOh.ApplicationServices.Seed;
 using YuGiOh.Infrastructure.Service;
-using YuGiOh.Infrastructure.Mappings;
-using Microsoft.Extensions.DependencyInjection;
-using YuGiOh.Domain.Models;
 using YuGiOh.Infrastructure.Repository;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -51,6 +48,7 @@ builder.Services.AddControllers()
 builder.Services
 
     .AddScoped<IEntityRepository, EntityRepository>()
+    .AddScoped<IStatsRepository,StatsRepository>()
     .AddScoped<ICodeService, CodeService>()
     .AddScoped<IUserService, UserService>()
     .AddScoped<IRoleService, RoleService>()
@@ -60,9 +58,12 @@ builder.Services
     .AddScoped<ITournamentMatchService, TournamentMatchService>()
     .AddScoped<IMatchService, MatchService>()
     .AddScoped<IArchetypeService, ArchetypeService>()
+    .AddScoped<IStatServices, StatService>()
     .AddScoped<RoleSeed>()
     .AddScoped<CodeSeed>()
     .AddScoped<ArchetypeDbBootstrap>();
+
+    
 //.AddScoped<CodeController>()
 
 

@@ -14,14 +14,14 @@ namespace YuGiOh.Domain.Configurations
             builder.Property(u => u.Nick)
                 .IsRequired()
                 .HasMaxLength(30);
-                
+
             builder.HasIndex(u => u.Nick)
                 .IsUnique();
 
             builder.Property(u => u.Password)
                 .IsRequired()
                 .HasMaxLength(16);
-                
+
             builder.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100);
@@ -37,6 +37,11 @@ namespace YuGiOh.Domain.Configurations
             builder.Property(u => u.Address)
                 .IsRequired()
                 .HasMaxLength(200);
+            
+            builder.HasMany(user => user.Decks)
+                .WithOne(deck => deck.Player)
+                .HasForeignKey(deck => deck.PlayerId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(u => u.Roles)
                 .WithOne(ur => ur.User)

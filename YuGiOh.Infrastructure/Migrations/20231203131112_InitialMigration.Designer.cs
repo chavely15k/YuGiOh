@@ -12,7 +12,7 @@ using YuGiOh.Infrastructure;
 namespace YuGiOh.Infrastructure.Migrations
 {
     [DbContext(typeof(YuGiOhDbContext))]
-    [Migration("20231203084745_InitialMigration")]
+    [Migration("20231203131112_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -273,13 +273,13 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.HasOne("YuGiOh.Domain.Models.Archetype", "Archetype")
                         .WithMany()
                         .HasForeignKey("ArchetypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("YuGiOh.Domain.Models.User", "Player")
-                        .WithMany()
+                        .WithMany("Decks")
                         .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Archetype");
@@ -346,7 +346,7 @@ namespace YuGiOh.Infrastructure.Migrations
                     b.HasOne("YuGiOh.Domain.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -373,6 +373,8 @@ namespace YuGiOh.Infrastructure.Migrations
 
             modelBuilder.Entity("YuGiOh.Domain.Models.User", b =>
                 {
+                    b.Navigation("Decks");
+
                     b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618

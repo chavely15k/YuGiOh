@@ -1,32 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+
 using YuGiOh.ApplicationCore.DTO;
-using YuGiOh.Domain.Models;
+using YuGiOh.Domain.Interfaces;
+
 
 namespace YuGiOh.ApplicationServices.Service
 {
     public interface IStatServices
     {
-        public Task<IEnumerable<UserDto>> TopDeckOwners(int n);
-        public Task<IEnumerable<UserDto>> MostPopularArchetypes();
+        // Método para obtener la frecuencia del arquetipo campeón en un intervalo de tiempo
+        public Task<IEnumerable<(string ArchetypeName, int Frequency)>> GetChampionArchetypeFrequency(IRangeTime rangeTime);
+        // Método para obtener todos los campeones en un intervalo de tiempo
+        public Task<IEnumerable<UserDto>> GetAllChampionsInTimeRange(IRangeTime rangeTime);
+        // Método para obtener la ubicación con más campeones en un intervalo de tiempo
+        public Task<string> GetLocationWithMostChampions(IRangeTime rangeTime);
+        // Método para obtener los arquetipos más populares entre los jugadores
+        public Task<IEnumerable<string>> GetMostPopularArchetypes(int n);
+        // Método para obtener la provincia/municipio donde es más popular un arquetipo dado
+        public Task<string> GetMostPopularLocationForArchetype(int ArchetypeId);
+        // Método para obtener el arquetipo más utilizado en un torneo específico
+        public Task<string?> GetMostUsedArchetypeInTournament(int tournamentId);
+        // Método para obtener los arquetipos más utilizados en una ronda específica de un torneo
+        public Task<IEnumerable<string>> GetMostUsedArchetypesInRound(int TournamentId, int Round);
 
-        public Task<string> ProvinceByArchetype(int id);
+        // Método para obtener los jugadores con más decks en su poder (ordenados de mayor a menor)
+        public Task<IEnumerable<UserDto>> GetPlayersWithMostDecks(int n);
 
-        public Task<UserDto> TournamentWinner(int id);
+        // Método para obtener el jugador con más victorias en un intervalo de tiempo
+        public Task<IEnumerable<UserDto>> GetPlayersWithMostVictories(int n, IRangeTime rangeTime);
+        // Método para obtener los arquetipos más utilizados por al menos un jugador en los torneos
+        public Task<IEnumerable<string>> GetTopArchetypesUsedByAtLeastOnePlay(int n);
 
-        public Task<UserDto> BestWinerInTime(DateTime init, DateTime end);
-        
-        public Task<string> MostUsedArchetypeInTournament(int id);
-
-        public Task<int> MostWinnerArchetype(DateTime init, DateTime end);
-
-        public Task<string> MostWinnerProvince(DateTime init, DateTime end);
-
-        public Task<IEnumerable<ArchetypeDto>> MostUsedArchetypeInRound(int TournamentId, int Round);
-        public Task<IEnumerable<ArchetypeDto>> MostUsedArchetypeInTournament();
+        // Método para obtener al campeón de un torneo específico
+        public Task<UserDto?> GetTournamentChampion(int idTournament);
 
     }
 }

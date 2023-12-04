@@ -11,6 +11,7 @@ namespace YuGiOh.Domain.Models
 
         public DateTime StartDate { get; set; }
 
+        public int UserId { get; set; }
         public User User { get; set; }
 
         public object GetById()

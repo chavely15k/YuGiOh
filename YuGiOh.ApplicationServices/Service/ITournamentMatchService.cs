@@ -9,7 +9,9 @@ namespace YuGiOh.ApplicationServices.Service
 {
     public interface ITournamentMatchService
     {
-        public Task<IList<MatchDto>> InitPhase(PhaseDto phaseDto);
+        public Task<IList<MatchResultDto>> InitPhase(PhaseDto phaseDto);
+
+        public Task CreateRound(IList<MatchDto> matchDtos);
         
     }
 }

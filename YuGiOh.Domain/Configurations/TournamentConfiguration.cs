@@ -12,7 +12,7 @@ namespace YuGiOh.Domain.Configurations
         {
 
             builder.HasKey(t => t.Id);
-            
+
             builder.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(40);
@@ -22,9 +22,10 @@ namespace YuGiOh.Domain.Configurations
             builder.Property(t => t.StartDate)
                 .IsRequired();
 
-            builder.HasOne(t => t.User)
-                .WithMany();
-                
+            builder.HasOne(tournament => tournament.User)
+            .WithMany()
+            .HasForeignKey(tournament => tournament.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

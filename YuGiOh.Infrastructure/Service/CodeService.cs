@@ -1,12 +1,14 @@
 using YuGiOh.Domain.Models;
 using YuGiOh.ApplicationServices.Service;
 using YuGiOh.ApplicationCore.Repository;
+using AutoMapper;
 
 namespace YuGiOh.Infrastructure.Service {
-    public class CodeService : AbstractDataRepository, ICodeService
+    public class CodeService : AbstractDataServices, ICodeService
     {
-        public CodeService(IEntityRepository dataRepository) :
-            base(dataRepository){  }  
+        public CodeService(IEntityRepository dataRepository, IMapper mapper) : base(dataRepository, mapper)
+        {
+        }
 
         public async Task<string> GenerateAsync()
         {
@@ -38,4 +40,5 @@ namespace YuGiOh.Infrastructure.Service {
             return result;
         }
     }
+
 }
