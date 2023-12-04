@@ -21,8 +21,8 @@ namespace YuGiOh.Infrastructure.Service {
         }
 
 
-        public async Task<IList<MatchDto>> InitPhase(PhaseDto phaseDto) {
-            IList<Match> matches; IList<MatchDto> result = new List<MatchDto>();
+        public async Task<IList<MatchResultDto>> InitPhase(PhaseDto phaseDto) {
+            IList<Match> matches; IList<MatchResultDto> result = new List<MatchResultDto>();
             var data = (await _dataRepository.FindAsync<Match>(m => m.TournamentId == phaseDto.TournamentId)).ToList();
             
             int x;
@@ -37,7 +37,7 @@ namespace YuGiOh.Infrastructure.Service {
             else if (x == 1) matches = await GenerateFirstRound(phaseDto);
             else matches = await GenerateRoundMatches(phaseDto);
             foreach (var match in matches) {
-                result.Add(_mapper.Map<MatchDto>(match));
+                result.Add(_mapper.Map<MatchResultDto>(match));
             }
             return result;
         }

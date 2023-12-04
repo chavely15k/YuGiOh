@@ -22,7 +22,7 @@ namespace YuGiOh.API.Controllers
 
         [HttpPost]
         [Route("InitPhase")]
-        public async Task<ActionResult<IEnumerable<MatchDto>>> InitPhase(PhaseDto phaseDto)
+        public async Task<ActionResult<IEnumerable<MatchResultDto>>> InitPhase(PhaseDto phaseDto)
         {
             var matches = await _matchService.InitPhase(phaseDto);
             return Ok(matches);

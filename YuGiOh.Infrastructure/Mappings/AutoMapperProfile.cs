@@ -54,6 +54,8 @@ namespace YuGiOh.Infrastructure.Mappings
 
             CreateMap<Archetype,ArchetypeDto>();
                
+            CreateMap<Match, MatchResultDto>();
+            CreateMap<MatchResultDto, Match>();
 
             CreateMap<MatchDto,Match>()
                 .ForMember(dest => dest.PlayerOneId, ent => ent.MapFrom(src => src.PlayerOneId))
