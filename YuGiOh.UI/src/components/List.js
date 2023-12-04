@@ -117,7 +117,7 @@ export function List(props)
                     <div className="containerLi">
                       <li
                         key={uniqueId}
-                        id={`${element.tournamentId} ${element.deckId}`}>
+                        id={`${element.tournamentId} ${element.deckId} ${element.playerId}`}>
                         Tournament: {element.tournamentName} || User: {element.playerName}
                       </li>
                       <div className='containerIcons'>
