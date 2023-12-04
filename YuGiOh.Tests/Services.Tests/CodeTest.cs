@@ -34,7 +34,6 @@ namespace YuGiOh.Tests {
         [Fact]
         public async Task GetCodeTestAsync() {
             var code = await codeService.GetAsync();
-            Console.WriteLine(code);
             Assert.True(code == "1234abcd");
         }
     }
