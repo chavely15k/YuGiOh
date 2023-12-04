@@ -126,5 +126,29 @@ namespace YuGiOh.Infrastructure.Repository
 
             return true;
         }
+
+        public int GetHashCode(object obj)
+        {
+            if (obj == null)
+                return 0;
+
+            if (obj is int intKey)
+            {
+                return intKey.GetHashCode();
+            }
+
+            var properties = obj.GetType().GetProperties();
+            int hashCode = 17;
+
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(obj);
+                hashCode = hashCode * 23 + (value?.GetHashCode() ?? 0);
+            }
+
+            return hashCode;
+        }
     }
+
+
 }
