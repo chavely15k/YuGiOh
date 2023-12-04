@@ -38,5 +38,6 @@ namespace YuGiOh.Tests {
             int y = Context.Set<UserRole>().Count();
             Assert.True(x == 2 && y==0);
         }
+        
     }
 }
