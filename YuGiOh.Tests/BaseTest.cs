@@ -37,7 +37,6 @@ public abstract class BaseTest
             services.AddDbContext<YuGiOhDbContext>(opt =>
                 opt.UseInMemoryDatabase("testing", InMemoryDatabaseRoot), ServiceLifetime.Transient);
 
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services
@@ -69,8 +68,8 @@ public abstract class BaseTest
             //     .Where(c => c.BaseType == typeof(ControllerBase) || c.BaseType == typeof(Controller))
             //     .ToList().ForEach(t => services.AddScoped(t));
     }
-    public void Dispose()
-    {
+    public void CleanUp() {
+        // deletes the data base on each run
         Container.GetService<YuGiOhDbContext>().Database.EnsureDeleted();
     }
     public void InitializeDataAsync(IServiceProvider serviceProvider)
