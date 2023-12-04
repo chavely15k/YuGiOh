@@ -34,8 +34,8 @@ public class DeckService : AbstractDataServices, IDeckService
             deck.Archetype = archetype;
             await _dataRepository.CreateAsync<Deck>(deck);
 
-            if(deck.ExtraDeckSize > 60 || deck.ExtraDeckSize < 40 || deck.ExtraDeckSize > 15 
-                || deck.ExtraDeckSize < 0 || deck.SideDeckSize > 15 || deck.SideDeckSize < 0)
+            if(register.ExtraDeckSize > 60 || register.ExtraDeckSize < 40 || register.ExtraDeckSize > 15 
+                || register.ExtraDeckSize < 0 || register.SideDeckSize > 15 || register.SideDeckSize < 0)
                 {
                     return new ResponseDeckDto
                     {
