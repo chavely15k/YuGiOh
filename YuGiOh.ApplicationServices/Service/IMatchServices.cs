@@ -14,5 +14,7 @@ namespace YuGiOh.ApplicationServices.Service
         
         public Task<IEnumerable<MatchDto>> GetMatchesByTournament(int id);
 
+        public Task<MatchResultDto> CreateMatch(MatchDto match);
+
     }
 }

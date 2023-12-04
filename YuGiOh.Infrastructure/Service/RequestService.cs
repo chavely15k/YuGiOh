@@ -20,6 +20,7 @@ namespace YuGiOh.Infrastructure.Service
         public async Task<RequestDto> CreateRequest(RequestDto request)
         {
             var _request = _mapper.Map<Request>(request);
+            _request.Date = DateTime.Now;
             await _dataRepository.CreateAsync<Request>(_request);
             return _mapper.Map<RequestDto>(_request);
         }
