@@ -17,5 +17,9 @@ namespace YuGiOh.ApplicationCore.DTO
         public int PlayerTwoResult { get; set; }
         public int Round { get; set; }
         public int Group { get; set; }
+
+        public string Message { get; set; }
+
+        public bool Success { get; set; }
     }
 }

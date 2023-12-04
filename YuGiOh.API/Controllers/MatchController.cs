@@ -41,7 +41,13 @@ namespace YuGiOh.API.Controllers
             var match = await _matchService.UpdateMatch(matchDto);
             return Ok(match);
         }
-
+        [HttpPost]
+        [Route("create")]
+        public async Task<ActionResult<MatchResultDto>> CreateMatch(MatchDto match)
+        {
+            var result = _matchService.CreateMatch(match);
+            return Ok(result);
+        }
 
     }
 }

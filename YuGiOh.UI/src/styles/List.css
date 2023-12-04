@@ -159,5 +159,22 @@
   background-color: red;
 }
 
+.liAdmin
+{
+  cursor: pointer;
+}
+
+.liAdmin:hover
+{
+  color: green;
+  text-shadow: 1px 1px 3px green;
+}
+
+.containerFormMatch
+{
+  display: flex;
+  width: 100%;
+}
+
 
 
