@@ -11,7 +11,7 @@ import '../styles/styles-routes/User.css'
 
 export function User(props) 
 {
-  const {onClickSubmit, onInputChange} = useUser()
+  const {onClickSubmit, onInputChange} = useUser(props.info.id)
 
   useEffect(() => {
     props.setRenderBack(true)
@@ -33,13 +33,13 @@ export function User(props)
               Be Admin ?
             </label>
             <input
-              type="number"
+              type="text"
               className="inputBeAdmin"
               id="beAdmin"
               placeholder="Code" 
               onChange={onInputChange}/>
             <button
-              type="submit"
+              type="Submit"
               className="submitBeAdmin">
               send
             </button>
