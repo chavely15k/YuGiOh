@@ -75,7 +75,7 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             AdminId: id,
-            id: idDeckTournament
+            Id: idDeckTournament
           }
 
           newFormState.StartDate += 'Z'
@@ -94,7 +94,7 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             PlayerId: id,
-            id: idDeckTournament,
+            Id: idDeckTournament,
             ArchetypeId: archetype,
             ArchetypeName: ''
           }

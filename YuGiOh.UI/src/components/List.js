@@ -2,15 +2,17 @@
 import { NavLink } from 'react-router-dom';
 import { useUniqueId } from '../hooks/useUniqueId';
 import { useEffect } from 'react';
+import { useState } from 'react';
+import { Form } from './FormMatch';
+import { useNavigate } from 'react-router-dom'
 
 //styles
 import '../styles/List.css'
-import { useState } from 'react';
 
-export function List(props) 
-{
+export function List(props) {
   const { uniqueId } = useUniqueId()
   const [buttonRequestsAdmin, setButtonRequestsAdmin] = useState(false)
+  const navigate = useNavigate()
   useEffect(() => props.page == 'admin' ? setButtonRequestsAdmin(true) : setButtonRequestsAdmin(false), [])
 
   return (
@@ -22,10 +24,16 @@ export function List(props)
         {props.page == 'admin'
           ?
           props.list.map(element => (
-            <div className="containerLi">
+            <div
+              className="containerLi">
               <li
+                onClick={() => {
+                  props.setTournament(element)
+                  navigate('/Login/Admin/TournamentMatchs')
+                }}
                 key={uniqueId}
-                id={element.id}>
+                id={element.id}
+                className='liAdmin'>
                 Name: {element.name} || {element.address} || {element.startDate} || Users: {element.signedPlayers}
               </li>
               <div className="containerIcons">
@@ -112,27 +120,40 @@ export function List(props)
                       </div>
                     </div>
                   ))
-                  :
-                  props.list.map(element => (
-                    <div className="containerLi">
-                      <li
-                        key={uniqueId}
-                        id={`${element.tournamentId} ${element.deckId} ${element.playerId}`}>
-                        Tournament: {element.tournamentName} || User: {element.playerName}
-                      </li>
-                      <div className='containerIcons'>
-                        <p
-                          className='containerIcon editIcon'
-                          onClick={props.onClickAccept}>
-                          ok
-                        </p>
-                        <p
-                          className='containerIcon deleteIcon'
-                          onClick={props.onClickDeny}>
-                          x
-                        </p>
+                  : props.page == 'adminRequests'
+                    ?
+                    props.list.map(element => (
+                      <div className="containerLi">
+                        <li
+                          key={uniqueId}
+                          id={`${element.tournamentId} ${element.deckId} ${element.playerId}`}>
+                          Tournament: {element.tournamentName} || User: {element.playerName}
+                        </li>
+                        <div className='containerIcons'>
+                          <p
+                            className='containerIcon editIcon'
+                            onClick={props.onClickAccept}>
+                            ok
+                          </p>
+                          <p
+                            className='containerIcon deleteIcon'
+                            onClick={props.onClickDeny}>
+                            x
+                          </p>
+                        </div>
+                      </div>))
+                    :
+                    props.list.map(element => (
+                      <div className='containerLi'>
+                        <li
+                          className='containerFormMatch'
+                          id={uniqueId}>
+                          <Form
+                            playerOneNick={element.playerOneNick}
+                            playerTwoNick={element.playerTwoNick} />
+                        </li>
                       </div>
-                    </div>))}
+                    ))}
       </ul>
       <div className='containerButtonsList'>
         <NavLink
@@ -144,7 +165,7 @@ export function List(props)
           <NavLink
             to='/Login/Admin/RequestsAdmin'
             className='buttonTournament'>
-              requests
+            requests
           </NavLink>}
       </div>
     </div>

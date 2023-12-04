@@ -1,0 +1,56 @@
+.formMatch
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.match
+{
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  justify-content: flex-start;
+  width: 70%;
+}
+
+.player
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 5px;
+  margin: 0px 5px;
+}
+
+.result
+{
+  width: 40px;
+  margin: 0px 10px;
+  border: none;
+  background-color: blueviolet;
+  color: white;
+  font-weight: bold;
+}
+
+.date
+{
+  width: 70%;
+}
+
+.buttonSubmitMatch
+{
+  padding: 1px 5px;
+  color: white;
+  cursor: pointer;
+  border-radius: 15px;
+  background-color: green;
+  border: none;
+}
+
+.buttonSubmitMatch:hover
+{
+  background-color: black;
+  color: yellow;
+}
