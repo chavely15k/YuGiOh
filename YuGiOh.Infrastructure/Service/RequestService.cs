@@ -24,10 +24,10 @@ namespace YuGiOh.Infrastructure.Service
             return _mapper.Map<RequestDto>(_request);
         }
 
-        public async Task<bool> DeleteRequest(int PlayerId, int TournametId)
+        public async Task<bool> DeleteRequest(int PlayerId, int TournamentId)
         {
             var result = await _dataRepository.DeleteAsync<Request>(
-                new {PlayerId,TournametId});
+                new {PlayerId,TournamentId});
             return result != null;
         }
 
