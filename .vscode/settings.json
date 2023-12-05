@@ -1,3 +1,7 @@
 {
-    "dotnet.defaultSolution": "YuGiOh.sln"
+    "omnisharp.path": "latest",
+    "omnisharp.useGlobalMono": "always",
+    "csharp.solution": "YuGiOh.sln",
+    "csharp.targetFramework": "net7.0",
+    "csharp.defaultProject": "YuGiOh.API.csproj"
 }

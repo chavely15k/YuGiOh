@@ -43,10 +43,10 @@ namespace YuGiOh.API.Controllers
         }   
 
         [HttpDelete]
-        [Route("delete/{Pid}/{Tid}")]
-        public async Task<ActionResult> DeleteRequest(int Pid, int Tid )
+        [Route("delete/{PlayerId}/{TournametId}")]
+        public async Task<ActionResult> DeleteRequest(int PlayerId, int TournametId )
         {
-            var result = await _requestService.DeleteRequest(Pid, Tid);
+            var result = await _requestService.DeleteRequest(PlayerId,TournametId);
             return Ok(result);
         }
         [HttpPut]

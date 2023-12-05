@@ -13,9 +13,10 @@ export function RequestsUser(props)
 {
   const [list, setList] = useState([])
   const { infoAPI } = useFetch()
-  const { onClickCancel } = useRequest(props.info.id, setList, props.setInfoMessage,)
+  const { onClickCancel } = useRequest(props.info.id, setList, props.setInfoMessage)
 
   useEffect(() => {
+    console.log(list)
     props.setRenderBack(false)
     infoAPI(`http://localhost:5138/api/Request/playerId/${props.info.id}`, 'GET', setList)
   }, [])

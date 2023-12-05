@@ -38,6 +38,19 @@ namespace YuGiOh.Infrastructure.Repository
 
             return entityToDelete;
         }
+        public async Task<TEntity?> GetByIdAsync<TEntity>(object key)
+    where TEntity : class, IEntity
+        {
+            var entities = await _dbContext.Set<TEntity>().ToListAsync();
+
+            if (key != null)
+            {
+                var comparer = new KeyComparer();
+                return entities.SingleOrDefault(e => comparer.Equals(e.GetById(), key));
+            }
+
+            return null;
+        }
 
 
         public async Task<IEnumerable<TEntity>> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IEntity
@@ -49,23 +62,6 @@ namespace YuGiOh.Infrastructure.Repository
         {
             return await _dbContext.Set<TEntity>().ToListAsync();
         }
-
-
-        public async Task<TEntity?> GetByIdAsync<TEntity>(object key)
-            where TEntity : class, IEntity
-        {
-            var entities = await _dbContext.Set<TEntity>().ToListAsync();
-
-            if (key != null)
-            {
-                return entities.SingleOrDefault(e => e.GetById().Equals(key));
-            }
-
-            return null;
-        }
-
-
-
 
         public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : class, IEntity
         {
@@ -88,4 +84,71 @@ namespace YuGiOh.Infrastructure.Repository
 
 
     }
+
+
+    public class KeyComparer : IEqualityComparer<object>
+    {
+        public bool Equals(object x, object y)
+        {
+            if (x == null || y == null)
+                return false;
+
+            if (x is int xInt && y is int yInt)
+            {
+                return xInt == yInt;
+            }
+
+            var propertiesX = x.GetType().GetProperties();
+            var propertiesY = y.GetType().GetProperties();
+
+            if (propertiesX.Length != propertiesY.Length)
+            {
+                return false; // Número diferente de propiedades, consideramos diferentes
+            }
+
+            foreach (var propX in propertiesX)
+            {
+                var propY = propertiesY.FirstOrDefault(p => p.Name == propX.Name);
+
+                if (propY == null)
+                {
+                    return false; // No hay una propiedad correspondiente en y
+                }
+
+                var valueX = propX.GetValue(x);
+                var valueY = propY.GetValue(y);
+
+                if (!object.Equals(valueX, valueY))
+                {
+                    return false; // Los valores de las propiedades no son iguales
+                }
+            }
+
+            return true;
+        }
+
+        public int GetHashCode(object obj)
+        {
+            if (obj == null)
+                return 0;
+
+            if (obj is int intKey)
+            {
+                return intKey.GetHashCode();
+            }
+
+            var properties = obj.GetType().GetProperties();
+            int hashCode = 17;
+
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(obj);
+                hashCode = hashCode * 23 + (value?.GetHashCode() ?? 0);
+            }
+
+            return hashCode;
+        }
+    }
+
+
 }

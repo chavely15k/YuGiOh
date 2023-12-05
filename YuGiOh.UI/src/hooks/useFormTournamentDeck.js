@@ -58,15 +58,20 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
             ArchetypeName: ''
           }
 
-          if (archetype != '')
-          {
-            infoAPI('http://localhost:5138/Deck/register', 'POST', almac, newFormState) 
+          if (archetype != '') {
+            infoAPI('http://localhost:5138/Deck/register', 'POST', almac, newFormState)
 
             setTimeout(() => {
+              if (!data[0].success) 
+              {
+                alert(data[0].message)
+                return
+              }
+
               navigate('/Login/User/Decks')
             }, 1000)
           }
-          
+
           break
         }
 
@@ -75,14 +80,15 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             AdminId: id,
-            id: idDeckTournament
+            Id: idDeckTournament
           }
 
           newFormState.StartDate += 'Z'
 
           infoAPI('http://localhost:5138/Tournament/update', 'PUT', almac, newFormState)
 
-          setTimeout(() => {
+          setTimeout(() => 
+          {
             navigate('/Login/Admin')
           }, 1000)
 
@@ -94,17 +100,20 @@ export const useForm = (initialForm, id, page, idDeckTournament, archetype) => {
           newFormState = {
             ...formState,
             PlayerId: id,
-            id: idDeckTournament,
+            Id: idDeckTournament,
             ArchetypeId: archetype,
             ArchetypeName: ''
           }
 
-          if(archetype != '')
-          {
+          if (archetype != '') {
             console.log(newFormState)
             infoAPI('http://localhost:5138/Deck/update', 'PUT', almac, newFormState)
 
             setTimeout(() => {
+              if (!data[0].success) {
+                alert(data[0].message)
+                return
+              }
               navigate('/Login/User/Decks')
             }, 1000)
           }

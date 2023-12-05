@@ -22,13 +22,27 @@ namespace YuGiOh.Infrastructure.Service {
         }
 
         public async Task<IEnumerable<MatchDto>> GetMatchesByPhase(MatchByPhaseDto matchByPhaseDto) {
-            var matches = _dataRepository.FindAsync<Match>(m => (m.Round == matchByPhaseDto.Round && m.TournamentId == matchByPhaseDto.TournamentId));
+            var matches = await _dataRepository.FindAsync<Match>(m => (m.Round == matchByPhaseDto.Round && m.TournamentId == matchByPhaseDto.TournamentId));
             return _mapper.Map<IEnumerable<MatchDto>>(matches);
         }
         
         public async Task<IEnumerable<MatchDto>> GetMatchesByTournament(int id) {
-            var matches = _dataRepository.FindAsync<Match>(m => (m.TournamentId == id));
+            var matches = await _dataRepository.FindAsync<Match>(m => (m.TournamentId == id));
             return _mapper.Map<IEnumerable<MatchDto>>(matches);
+        }
+        public async Task<MatchResultDto> CreateMatch(MatchDto newMatch) 
+        {
+            var matches = await _dataRepository.FindAsync<Match>(d => (d.PlayerOneId == newMatch.PlayerOneId && d.Date == newMatch.Date)||
+                                                                        (d.PlayerTwoId == newMatch.PlayerTwoId && d.Date == newMatch.Date));
+            if(matches.Count() > 0) return new MatchResultDto{
+                Message = "uno de los jugadores ya tiene otra partida a esa hora",
+                Success = false
+            };
+            var match = await _dataRepository.CreateAsync<Match>(_mapper.Map<Match>(newMatch));
+            return new MatchResultDto{
+                        Message = "Succesfuly added",
+                        Success = true
+            };
         }
     }
 }

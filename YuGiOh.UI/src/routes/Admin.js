@@ -31,6 +31,7 @@ export function Admin(props)
           list={list}
           onClickDelete={onClickDelete}
           onClickEdit={onClickEdit}
+          setTournament={props.setTournament}
           header='My Tournaments'
           addPage='/Login/Admin/AddTournament'
           nameAddPage='add tournament'

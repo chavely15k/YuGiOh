@@ -52,8 +52,7 @@ export const useRequest = (id, setList, setInfoMessage) => {
       Status: 'Approved',
       StartDate: ''
     }
-
-    console.log(bodyRequest)
+    
     infoAPI('http://localhost:5138/api/Request/update', 'PUT', setList, bodyRequest)
 
     setInfoMessage({

@@ -6,8 +6,12 @@ import { useNavigate } from 'react-router-dom'
 export const useUser = (id) => {
   const [code, setCode] = useState('')
   const { infoAPI } = useFetch()
-  const [valid, setValid] = useState(false)
+  var data = [false]
   const navigate = useNavigate()
+
+  const almac = (value) => {
+    data[0] = value
+  }
 
   const onInputChange = (e) => {
     setCode(e.target.value)
@@ -23,9 +27,10 @@ export const useUser = (id) => {
     }
 
     console.log(bodyRequest)
-    infoAPI('http://localhost:5138/Account/BeAdmin', 'PUT', setValid, bodyRequest)
+    infoAPI('http://localhost:5138/Account/BeAdmin', 'PUT', almac, bodyRequest)
 
     setTimeout(() => {
+      var valid = data[0]
       if (valid)
         navigate('/Login')
 
