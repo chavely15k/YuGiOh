@@ -35,7 +35,7 @@ namespace YuGiOh.Infrastructure.Service {
             else if (data.Where(m => m.Round > 0).Count() == 0) x = 1;
             else {
                 data.ToList().Sort((x, y) => y.Round - x.Round);
-                x = data[0].Round+1;
+                x = data[data.Count()-1].Round+1;
             }
             phaseDto.Round = x;
             if (x == 0) matches = await GenerateClassificationMatches(phaseDto);
@@ -181,7 +181,7 @@ namespace YuGiOh.Infrastructure.Service {
                     });
                 if(!temp) return false;
             }
-            var matchesF = await InitPhase(new PhaseDto{ Round = 2, TournamentId = tournament});
+            var matchesF = await InitPhase(new PhaseDto{ Round = 2, TournamentId = tournament, Base = 2});
             foreach(var match in matchesF)
             {
                 var result = results[rdm.Next(4)];
