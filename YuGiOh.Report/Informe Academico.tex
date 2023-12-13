@@ -1,0 +1,125 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\setlist[description]{}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\title{Torneos de Yu-Gi-Oh}
+\author{
+  \begin{tabular}{c}
+    Chavely Gonz\'alez Acosta C312 \\
+    Jos\'e Carlos Pendas Rodrigu\'ez C311 \\
+    L\'azaro David Alba Ajete C311 \\
+    Max Bengochea Mor\'e C311
+  \end{tabular}
+}
+\date{\today}
+\maketitle
+\newpage
+
+\section{Introducci\'on}
+
+\newpage
+
+\section{An\'alisis y reformulaci\'on enriquecedora de los requerimientos funcionales e informacionales del sistema}
+\subsection{Requerimientos funcionales:}
+\begin{enumerate}
+	\item \textbf{Registro de usuarios:} Los usuarios se registran en la aplicación proporcionando su información personal: nombre completo, municipio, provincia, teléfono (opcional) y dirección.
+	\item \textbf{Registro de Decks:} Los jugadores registraran sus decks (mazos de cartas) asoci\'andolos con su perfil, incluyendo detalles como: nombre del deck, cantidad de cartas en el mazo principal, en el mazo alternativo y en el mazo extra, así como su arquetipo.
+	\item \textbf{Creaci\'on de torneos:} Los administradores pueden crear torneos especificando: nombre del torneo, fecha de inicio y dirección, un torneo puede ser creado por un solo administrador.
+	\item \textbf{Solicitud de inscripci\'on en torneos:} Los jugadores solicitan inscribirse en los torneos disponibles, asegur\'andose de que no puedan inscribirse despu\'es de la fecha de inicio del torneo, y con esactamente un deck. 
+	\item \textbf{Inscripci\'on en torneos:} Los administradores reciben las solicitudes de inscripci\'on de los jugadores a los torneos y se encargan de inscribirlos en los mismos.
+    \item \textbf{Gestión de Rondas y Partidas:} La aplicaci\'on administra las rondas de los torneos, asignando aleatoriamente los emparejamientos.
+    \item \textbf{Registro de los resultados de las partidas:} Los administradores registran los resultados de las partidas, asegurando que una partida de Yu-Gi-Oh! es de 3 a ganar 2.
+    \item \textbf{Consultas y Estad\'isticas}: La aplicaci\'on ofrece una interfaz donde los usuarios pueden realizar consultas y obtener estad\'isticas, as\'i como exportar los resultados a otros formatos. Las consultas a modelarse son las siguientes:
+    \begin{itemize}
+    \item Los n jugadores con m\'as decks en su poder(de mayor a menor).
+    \item Los n jugadores m\'as populares entre los jugadores(de mayor a menor).
+    \item La provincia/municipio donde es m\'as popular un arquetipo.
+    \item El campe\'on de un torneo.
+    \item Los n jugadores con m\'as victorias (ordenados de mayor a menor).
+    \item El arquetipo m\'as utilizado en un torneo dado.
+    \item La cantidad de veces que los arquetipos han sido el arquetipo del campe\'on en un grupo de torneos(en un intervalo de tiempo).
+    \item La provincia/municipio con m\'as campeones(en un intervalo de tiempo)
+    \item Dado un torneo y una ronda, cu\'ales son los arquetipos m\'as representados(cantidad de jugadores us\'andolos)
+    \item Los n arquetipos m\'as utilizados por al menos un jugador en el torneo(de mayor a menor)    
+    \end{itemize}
+    \item \textbf{Seguridad}: La aplicaci\'on implementa autenticaci\'on y autorizaci\'on para asegurarse de que solo los administradores pueden realizar acciones como crear torneos y registrar resultados de partidas. Adem\'as, se deben validar los datos de entrada para evitar errores o datos incorrectos en la base de datos.
+\end{enumerate} 
+\subsection{Requerimientos informacionales del sistema:}
+Con el objetivo de validar las peticiones de los usuarios, as\'i como dar respuesta a las consultas de los mismos, es necesario mantener diversas informaciones en una base de datos:
+\begin{enumerate}
+	\item \textbf{Usuario:} De los usuarios se deben almacenar: un identificador para cada usuario, el nombre completo, el tel\'efono, la direcci\'on, el municipio y la provincia.
+	\item \textbf{Deck:} De los decks se deben almacenar: un identificador para cada deck distinto, el nombre del deck, la cantidad de cartas en el mazo principal, en el mazo alternativo y en el mazo extra, el arquetipo y el usuario que lo cre\'o.
+	\item \textbf{Torneo:} De los torneos se debe almacenar: un identificador para cada torneo, nombre del torneo, fecha de inicio, direcci\'on y el administrador que lo cre\'o.
+	\item \textbf{Rol:} Para cada uno de los roles que puede desempe\~nar un usuario en la aplicaci\'on se guarda un identificador y el nombre del rol.
+	\item \textbf{Partida:} De las partidas se debe almacenar: el identificador de cada usuario que participa(2 en total), el identificador del torneo al cual pertenece, la fecha exacta en la cual se realiza, el resultado de la partida(solo hay 4 resultados posibles: "2:1", "2:0", "1:2", "0:2") y la ronda del torneo en la cual se realiza.
+	\item \textbf{Solicitud de inscripci\'on en torneos:} Los jugadores solicitan inscribirse en alg\'un torneo disponible y estas solicitudes se almacenan como pendientes hasta que alg\'un administrador las acepte e iscriba al jugador o las rechase. Para esto es necesario almacenar: el identificador del usuario, el identificador del torneo, el identificador del deck con el cual se desea inscribir, la fecha en la cual raliz\'o la solicitud y el estado de la solicitud. Los posibles estados son: pendiente, aceptado, rechazado.
+	\item \textbf{Registro de usuario:} Para todos los usuarios se debe almacenar el identificador del usuario relacionado con el identificador de cada rol que este desempe\~na.
+\end{enumerate} 
+\newpage
+
+\section{Solucion Propuesta}
+Hemos optado por la Arquitectura Onion, presentada por Jeffrey Palermo, debido a
+su sólido historial de éxito en proyectos de software. Esta elección se basa en los
+siguientes motivos clave:
+\begin{enumerate}
+\item Principio de Inversión de Dependencias: La Arquitectura Onion se adhiere al
+Principio de Inversión de Dependencias, promoviendo la independencia entre
+capas y la flexibilidad del sistema.
+\item Modularidad y Separación de Responsabilidades: Nos permite mantener una
+estructura modular y una clara separación de responsabilidades, esenciales
+para el desarrollo y mantenimiento eficaz.
+\item Testabilidad: Facilita pruebas efectivas, garantizando la calidad y confiabilidad
+del código en nuestro proyecto.
+\item Flexibilidad y Adaptabilidad: Nos permite adaptarnos a cambios futuros y
+nuevas tecnologías sin afectar significativamente la funcionalidad existente.
+\item Colaboración Efectiva: Con múltiples ingenieros trabajando en el proyecto, la
+Arquitectura Onion establece contratos claros entre capas y componentes, lo
+que facilita la colaboración.
+\end{enumerate}
+\subsection{Capas Externas (Outer Layers)}
+\textbf{YuGiOh.Infrastructure:} En esta capa reside nuestra base de datos.\\
+%\textbf{YuGiOh.Tests:} En esta capa residen pruebas unitarias, de integración y de extremo a
+%extremo esenciales para garantizar la calidad y la confiabilidad del código.\\
+\textbf{YuGiOh.API:} Es la capa más cercana a la interfaz de usuario y proporciona una
+forma de comunicarse con el núcleo de la aplicación. Esta capa interactúa con la
+primera capa del "application core"(application services layer).
+\subsection{Capas Internas}
+\textbf{YuGiOh.ApplicationServices (Transport Layer):} En esta capa es donde reside la mayor parte de nuestra lógica
+de negocios. Lleva a cabo las operaciones para convertir A en B, entrada en salida.
+Específicamente en nuestro proyecto, esta capa se encargará de aspectos como la
+gestión de emparejamientos, el control de estadísticas, el manejo de algunas reglas
+del torneo, la gestión de resultados, el control de decks, entre otros.\\
+%Dentro de esta capa, definimos lo que
+%nuestro servicio puede hacer a través de una serie de contratos.
+\textbf{YuGiOh.ApplicationCore:} En esta capa definimos los crud realizables.\\
+\textbf{YuGiOh.Domain:} Es la capa de representación de los objetos de datos de alto nivel
+que utilizamos. Aquí se definen y encapsulan los conceptos fundamentales y los
+elementos clave de los torneos, lo que permite una representación fiel y coherente de los
+datos en la aplicación. Algunos de los aspectos esenciales que se manejan en esta
+capa incluyen la representación de entidades o conceptos fundamentales de la
+lógica del proyecto, como jugadores, decks, mazos, partidas y torneos.
+\newpage
+
+\section{Resultados Obtenidos}
+Vacio pk hacen falta im\'agenes del front.
+
+\newpage
+
+\section{Concusiones y recomendaciones}
+Den muela amiguitos. Y recuerden k aki va lo de como se terminaria el proyecto. Hasta la proxima amiguitos.
+
+\newpage
+
+\section{Bibliograf\'ia}
+
+\begin{enumerate}
+\item Agility The Good, The Hype and The Ugly, B Meyer, Springer
+\item Ingenier\'ia de software enfoque pr\'actico 7ed Pressman
+\end{enumerate}
+
+\end{document}
