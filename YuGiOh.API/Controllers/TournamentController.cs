@@ -10,11 +10,11 @@ namespace YuGiOh.API.Controllers
 {
     [ApiController]
     [Route("Tournament")]
-    public class TournamentControler: ControllerBase
+    public class TournamentController: ControllerBase
     {
         private readonly ITournamentServices _TournamentService;
 
-        public TournamentControler(ITournamentServices services)
+        public TournamentController(ITournamentServices services)
         {
             _TournamentService = services;
         }
