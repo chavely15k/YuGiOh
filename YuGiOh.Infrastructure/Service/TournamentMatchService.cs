@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System.Globalization;
 using System.Data.Common;
 using System.Numerics;
 using System;
@@ -12,6 +14,8 @@ using YuGiOh.ApplicationServices.Service;
 using YuGiOh.Domain.Models;
 using YuGiOh.Domain.Enums;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using iText.Signatures;
+using Microsoft.EntityFrameworkCore;
 
 namespace YuGiOh.Infrastructure.Service {
     //TODO: probar todas las funciones de este servicio
@@ -119,5 +123,89 @@ namespace YuGiOh.Infrastructure.Service {
             return result;
         }
 
+        public async Task<bool> TournamentTest(int tournament)
+        {
+            var AllPlayers = await _dataRepository.Include<User>(p => p.Decks).Where(p => p.Decks.Count() > 0).ToListAsync();
+            Tournament? tourney = await _dataRepository.GetByIdAsync<Tournament>(tournament);
+            foreach(var player in AllPlayers) 
+            {
+                if(tourney == null) return false;
+                var temp = await _dataRepository.CreateAsync<Request>(new Request
+                {
+                    PlayerId = player.Id,
+                    Player = player,
+                    DeckId = player.Decks.First().Id,
+                    Deck = player.Decks.First(),
+                    TournamentId = tourney.Id,
+                    Tournament = tourney,
+                    Status = RequestStatus.Approved,
+                    Date = DateTime.Now.ToUniversalTime(),
+                }); 
+                if(temp == null) return false;
+            }
+
+            var matchesGP = await InitPhase(new PhaseDto{
+                TournamentId = tournament,
+            });
+            Random rdm = new Random();
+            (int left, int right)[] results = {(1,2), (2,1), (2,0), (0,2)};
+            int i = 0;
+            foreach(var match in matchesGP)
+            {
+                var result = results[rdm.Next(4)];
+                var temp = await createMatch(new MatchDto{ 
+                    Date = tourney.StartDate.AddMinutes(i++).ToUniversalTime(), 
+                    Group = match.Group,
+                    Round = match.Round,
+                    PlayerOneId = match.PlayerOneId,
+                    PlayerOneResult = result.left,
+                    PlayerTwoId = match.PlayerTwoId,
+                    PlayerTwoResult = result.right,
+                    TournamentId = tournament,
+                    });
+                if(!temp) return false;
+            }
+            var matchesSF = await InitPhase(new PhaseDto{ Base = 4, Round = 1, TournamentId = tournament});
+            foreach(var match in matchesSF)
+            {
+                var result = results[rdm.Next(4)];
+                var temp = await createMatch(new MatchDto{ 
+                    Date = tourney.StartDate.AddMinutes(i++).ToUniversalTime(), 
+                    Group = match.Group,
+                    Round = match.Round,
+                    PlayerOneId = match.PlayerOneId,
+                    PlayerOneResult = result.left,
+                    PlayerTwoId = match.PlayerTwoId,
+                    PlayerTwoResult = result.right,
+                    TournamentId = tournament,
+                    });
+                if(!temp) return false;
+            }
+            var matchesF = await InitPhase(new PhaseDto{ Round = 2, TournamentId = tournament});
+            foreach(var match in matchesF)
+            {
+                var result = results[rdm.Next(4)];
+                var temp = await createMatch(new MatchDto{ 
+                    Date = tourney.StartDate.AddMinutes(i++).ToUniversalTime(), 
+                    Group = match.Group,
+                    Round = match.Round,
+                    PlayerOneId = match.PlayerOneId,
+                    PlayerOneResult = result.left,
+                    PlayerTwoId = match.PlayerTwoId,
+                    PlayerTwoResult = result.right,
+                    TournamentId = tournament,
+                    });
+                if(!temp) return false;
+            }
+            return true;
+        }
+        private async Task<bool> createMatch(MatchDto newMatch)
+        {
+            var matches = await _dataRepository.FindAsync<Match>(d => (d.PlayerOneId == newMatch.PlayerOneId && d.Date == newMatch.Date)||
+                                                                        (d.PlayerTwoId == newMatch.PlayerTwoId && d.Date == newMatch.Date));
+            if(matches.Count() > 0) return false;
+            var match = await _dataRepository.CreateAsync<Match>(_mapper.Map<Match>(newMatch));
+            return true;
+        }
     }
 }

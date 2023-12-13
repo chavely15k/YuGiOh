@@ -12,6 +12,8 @@ namespace YuGiOh.ApplicationServices.Service
         public Task<IList<MatchResultDto>> InitPhase(PhaseDto phaseDto);
 
         public Task CreateRound(IList<MatchDto> matchDtos);
+
+        public Task<bool> TournamentTest(int tournament);
         
     }
 }

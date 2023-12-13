@@ -34,6 +34,13 @@ namespace YuGiOh.API.Controllers
             await _matchService.CreateRound(matchDtos);
             return Ok();
         }
+        [HttpPost]
+        [Route("test/{id}")]
+        public async Task<ActionResult> Test(int id) 
+        {
+            var result = await _matchService.TournamentTest(id);
+            return Ok(result);
+        }
 
     }
 }
