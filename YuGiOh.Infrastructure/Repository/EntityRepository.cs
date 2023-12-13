@@ -48,7 +48,7 @@ namespace YuGiOh.Infrastructure.Repository
                 var comparer = new KeyComparer();
                 return entities.SingleOrDefault(e => comparer.Equals(e.GetById(), key));
             }
-
+            DateTime a = DateTime.Now.ToUniversalTime();
             return null;
         }
 

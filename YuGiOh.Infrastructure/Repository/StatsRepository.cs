@@ -125,7 +125,7 @@ namespace YuGiOh.Infrastructure.Repository
         public async Task<IEnumerable<User>> GetPlayersWithMostVictories(int n, IRangeTime rangeTime)
         {
             var baseQuery = await _dbContext.Matches
-                .Where(match => rangeTime.IsWithinRange(match.Date))
+                .Where(match => rangeTime._startTime >= rangeTime._startTime && match.Date <= rangeTime._endTime)                
                 .Include(match => match.PlayerOne)
                 .Include(match => match.PlayerTwo)
                 .ToListAsync();
