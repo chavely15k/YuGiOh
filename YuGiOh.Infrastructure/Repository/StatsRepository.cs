@@ -165,19 +165,24 @@ namespace YuGiOh.Infrastructure.Repository
                 .Select(group => group.First());
         }
         // Método para obtener los arquetipos más utilizados por al menos un jugador en los torneos
-        public async Task<IEnumerable<Archetype>> GetTopArchetypesUsedByAtLeastOnePlay(int n)
+        public async Task<IEnumerable<(string, int)>> GetTopArchetypesUsedByAtLeastOnePlay(int n)
         {
-            return await _dbContext.Requests
+            var currentDate = DateTime.UtcNow;
+            var result = await _dbContext.Requests
                 .Include(request => request.Tournament)
                 .Include(request => request.Deck)
-                .Where(request => request.Tournament.StartDate < DateTime.Now)
-                .Select(request => request.Deck)
-                .GroupBy(deck => deck.Archetype)
+                    .ThenInclude(deck => deck.Archetype)
+                .Where(request => request.Tournament.StartDate < currentDate && request.Status == RequestStatus.Approved)
+                .Select(request => request.Deck.Archetype)
+                .GroupBy(archetype => archetype.Id)
                 .OrderByDescending(group => group.Count())
-                .Select(group => group.Key)
+                .Select(group => new { Name = group.First().Name, Count = group.Count() })
                 .Take(n)
                 .ToListAsync();
+
+            return result.Select(item => (item.Name, item.Count)).ToList();
         }
+
         // Método para obtener al campeón de un torneo específico
         public async Task<User?> GetTournamentChampion(int idTournament)
         {

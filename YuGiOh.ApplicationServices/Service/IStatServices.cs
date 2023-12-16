@@ -28,7 +28,7 @@ namespace YuGiOh.ApplicationServices.Service
         // Método para obtener el jugador con más victorias en un intervalo de tiempo
         public Task<IEnumerable<UserDto>> GetPlayersWithMostVictories(int n, IRangeTime rangeTime);
         // Método para obtener los arquetipos más utilizados por al menos un jugador en los torneos
-        public Task<IEnumerable<string>> GetTopArchetypesUsedByAtLeastOnePlay(int n);
+        public Task<IEnumerable<(string,int)>> GetTopArchetypesUsedByAtLeastOnePlay(int n);
 
         // Método para obtener al campeón de un torneo específico
         public Task<UserDto?> GetTournamentChampion(int idTournament);

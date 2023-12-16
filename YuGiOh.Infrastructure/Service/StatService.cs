@@ -72,10 +72,10 @@ namespace YuGiOh.Infrastructure.Service
             return _mapper.Map<IEnumerable<UserDto>>(playersWithMostVictories);
         }
 
-        public async Task<IEnumerable<string>> GetTopArchetypesUsedByAtLeastOnePlay(int n)
+        public async Task<IEnumerable<(string,int)>> GetTopArchetypesUsedByAtLeastOnePlay(int n)
         {
             var archetypes = await _statsRepository.GetTopArchetypesUsedByAtLeastOnePlay(n);
-            return archetypes.Select(archetype => archetype.Name);
+            return archetypes;
         }
 
 
