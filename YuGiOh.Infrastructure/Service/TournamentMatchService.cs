@@ -18,7 +18,7 @@ using iText.Signatures;
 using Microsoft.EntityFrameworkCore;
 
 namespace YuGiOh.Infrastructure.Service {
-    //TODO: probar todas las funciones de este servicio
+    
     public class TournamentMatchService : AbstractDataServices, ITournamentMatchService {
         public TournamentMatchService(IEntityRepository dataRepository, IMapper mapper) 
             : base(dataRepository, mapper)

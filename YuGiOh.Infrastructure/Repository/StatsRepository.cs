@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using YuGiOh.ApplicationCore.Repository;
 using YuGiOh.Domain.Interfaces;
 using YuGiOh.Domain.Models;
-
+using YuGiOh.Domain.Enums;
 namespace YuGiOh.Infrastructure.Repository
 {
     public class StatsRepository : IStatsRepository
@@ -99,19 +99,42 @@ namespace YuGiOh.Infrastructure.Repository
                 .FirstOrDefaultAsync();
         }
         // Método para obtener los arquetipos más utilizados en una ronda específica de un torneo
-        public async Task<IEnumerable<Archetype>> GetMostUsedArchetypesInRound(int TournamentId, int Round)
+        public async Task<IEnumerable<(string, int)>> GetMostUsedArchetypesInRound(int TournamentId, int Round)
         {
-            return await _dbContext.Matches
+            Dictionary<string, int> rankDeck = new();
+            var playerDeckDict = await _dbContext.Requests
+                .Where(request => request.TournamentId == TournamentId && request.Status == RequestStatus.Approved)
+                .Include(request => request.Deck)
+                    .ThenInclude(deck => deck.Archetype)
+                .ToDictionaryAsync(request => request.PlayerId, request => request.Deck);
+
+            foreach (var deck in playerDeckDict.Values)
+            {
+                rankDeck[deck.Archetype.Name] = 0;
+            }
+
+            var playerIds = await _dbContext.Matches
                 .Where(match => match.TournamentId == TournamentId && match.Round == Round)
-                .SelectMany(match => new[] { match.PlayerOneId, match.PlayerTwoId })
-                .SelectMany(playerId => _dbContext.Decks
-                    .Where(deck => deck.PlayerId == playerId))
-                    .Include(deck => deck.Archetype)
-                .GroupBy(deck => deck.Archetype)
-                .OrderByDescending(group => group.Count())
-                .Select(group => group.Key)
+                .Select(match => match.PlayerOneId)
+                .Union(_dbContext.Matches
+                    .Where(match => match.TournamentId == TournamentId && match.Round == Round)
+                    .Select(match => match.PlayerTwoId))
+                .Distinct()
                 .ToListAsync();
+
+            foreach (var playerId in playerIds)
+            {
+                var deck = playerDeckDict[playerId];
+                rankDeck[deck.Archetype.Name] += 1;
+            }
+
+            // Ordenar rankDeck por valor (número de ocurrencias)
+            var sortedRankDeck = rankDeck.OrderByDescending(kv => kv.Value)
+                .Select(kv => (kv.Key, kv.Value));
+
+            return sortedRankDeck;
         }
+
         // Método para obtener los jugadores con más decks en su poder (ordenados de mayor a menor)
         public async Task<IEnumerable<User>> GetPlayersWithMostDecks(int n)
         {
@@ -166,10 +189,10 @@ namespace YuGiOh.Infrastructure.Repository
                 .OrderByDescending(group => group.Key)
                 .Take(2)
                 .Select(group => new
-                    {
-                        Match = group.First(),  // Obtener el primer Match del grupo
-                        MatchCount = group.Count()   // Obtener la cantidad de Match en el grupo
-                    })
+                {
+                    Match = group.First(),  // Obtener el primer Match del grupo
+                    MatchCount = group.Count()   // Obtener la cantidad de Match en el grupo
+                })
                 .ToListAsync();
 
 

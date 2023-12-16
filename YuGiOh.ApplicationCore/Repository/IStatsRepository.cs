@@ -20,7 +20,7 @@ namespace YuGiOh.ApplicationCore.Repository
         // Método para obtener el arquetipo más utilizado en un torneo específico
         public Task<Archetype?> GetMostUsedArchetypeInTournament(int tournamentId);
         // Método para obtener los arquetipos más utilizados en una ronda específica de un torneo
-        public Task<IEnumerable<Archetype>> GetMostUsedArchetypesInRound(int TournamentId, int Round);
+        public Task<IEnumerable<(string, int)>> GetMostUsedArchetypesInRound(int TournamentId, int Round);
 
         // Método para obtener los jugadores con más decks en su poder (ordenados de mayor a menor)
         public Task<IEnumerable<User>> GetPlayersWithMostDecks(int n);

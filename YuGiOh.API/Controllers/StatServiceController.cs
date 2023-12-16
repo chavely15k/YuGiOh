@@ -70,7 +70,7 @@ namespace YuGiOh.API.Controllers
         }
         //TODO: error- System.InvalidOperationException: The LINQ expression 'match => new int[]
         [HttpGet("mostUsedArchetypesInRound")]
-        public async Task<ActionResult<IEnumerable<string>>> GetMostUsedArchetypesInRound([FromQuery] int tournamentId, [FromQuery] int round)
+        public async Task<ActionResult<IEnumerable<(string,int)>>> GetMostUsedArchetypesInRound([FromQuery] int tournamentId, [FromQuery] int round)
         {
             var archetypes = await _statService.GetMostUsedArchetypesInRound(tournamentId, round);
             return Ok(archetypes);
